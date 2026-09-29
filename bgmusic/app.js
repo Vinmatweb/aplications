@@ -361,7 +361,59 @@ const seededPrompts={
     "text": "10 – Creature Collection\n\nCreate a soft premium instrumental background track for long building instructions featuring collectible creature characters displayed on a shelf.\n\nStyle: cinematic chill with light magical textures.\nMood: elegant, cute, calm, refined and family-friendly.\nUse warm piano, subtle strings, soft synth pads, delicate percussion and smooth bass.\nAround 85 BPM.\n\nKeep the arrangement consistent and non-distracting while still feeling magical and collectible.\n\nAvoid strong lead melodies, dramatic storytelling and imitation of existing franchise soundtrack elements. Instrumental only. Original composition only.",
     "generated": false,
     "approved": false
+  },
+
+  {
+    "text": "11 – Crystal Creature Glow\n\nCreate a calm magical instrumental background track for long step-by-step building instructions featuring a premium collectible fantasy creature display.\n\nStyle: ambient melodic chill with soft crystalline textures.\nMood: serene, magical, polished, gentle and slightly mysterious.\nUse airy pads, soft bell-like plucks, warm piano, smooth bass and very light percussion.\nAround 84 BPM.\n\nKeep the arrangement spacious, repetitive and consistent, with subtle gradual variation suitable for very long instruction videos.\n\nAvoid dramatic crescendos, strong hooks, battle energy and any recognizable game or anime melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "12 – Meadow Companion\n\nCreate a warm relaxed instrumental background track for step-by-step building instructions featuring a friendly collectible creature display.\n\nStyle: acoustic ambient chill.\nMood: peaceful, charming, sunny, gentle and comforting.\nUse soft acoustic guitar, warm piano, subtle pads, delicate percussion and a smooth bass line.\nAround 86 BPM.\n\nMaintain a steady low-key flow with consistent dynamics while instruction pages change every five seconds.\n\nAvoid overly playful cartoon music, dramatic changes and recognizable franchise melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "13 – Legendary Presence\n\nCreate an elegant instrumental background track for long building instructions featuring a large legendary fantasy creature display model.\n\nStyle: cinematic ambient chill with restrained orchestral textures.\nMood: majestic, calm, mysterious, refined and powerful without becoming dramatic.\nUse soft low strings, airy pads, subtle piano, gentle bass pulses and sparse percussion.\nAround 80 BPM.\n\nSuggest scale and importance through atmosphere rather than loudness. Keep the track steady and unobtrusive for long tutorials.\n\nAvoid epic battle scoring, heroic fanfares, dramatic climaxes and recognizable soundtrack material.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "14 – Gentle Evolution\n\nCreate a soft melodic instrumental background track for step-by-step building instructions featuring a charming fantasy creature character.\n\nStyle: melodic acoustic-electronic chill.\nMood: warm, optimistic, cute, lightly magical and calm.\nUse soft piano, fingerpicked guitar, gentle synth plucks, delicate bells and understated percussion.\nAround 90 BPM.\n\nKeep the melody simple and subtle with a smooth repeating rhythm and consistent energy.\n\nAvoid strong emotional swells, catchy pop hooks and recognizable game or anime melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "15 – Sky Creature Drift\n\nCreate a spacious instrumental background track for long building instructions featuring a flying or dragon-like fantasy creature display.\n\nStyle: airy cinematic ambient with light electronic elements.\nMood: floating, serene, majestic, magical and open.\nUse wide atmospheric pads, gentle arpeggios, soft piano accents, subtle low bass and minimal percussion.\nAround 82 BPM.\n\nMaintain a smooth drifting feel and very consistent dynamics, suitable for long-form building instructions.\n\nAvoid intense action, dramatic orchestration, heavy drums and recognizable franchise themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "16 – Cozy Collector Corner\n\nCreate a warm unobtrusive instrumental background track for step-by-step building instructions featuring collectible creature models displayed in a cozy room.\n\nStyle: soft lounge chill with acoustic and electronic textures.\nMood: cozy, polished, friendly, relaxed and lightly whimsical.\nUse warm electric piano, soft guitar, smooth pads, gentle bass and subtle brushed-style percussion.\nAround 88 BPM.\n\nKeep the groove very steady and low-key with small variations so it works comfortably behind instruction pages changing every five seconds.\n\nAvoid strong lead melodies, dramatic transitions and imitation of existing soundtrack music.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "17 – Moonlit Creature\n\nCreate a dreamy instrumental background track for long step-by-step building instructions featuring a mysterious fantasy creature display.\n\nStyle: dreamy ambient electronic.\nMood: calm, nocturnal, magical, elegant and gentle.\nUse soft synth pads, delicate bell tones, low warm bass, sparse piano and very light electronic percussion.\nAround 78 BPM.\n\nKeep the track minimal and slowly evolving, with stable volume and no sudden changes.\n\nAvoid dark horror moods, dramatic tension, battle elements and recognizable game or anime themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "18 – Bright Character Display\n\nCreate a cheerful but calm instrumental background track for building instructions featuring a colorful fantasy creature character model.\n\nStyle: light melodic chill pop with soft electronic production.\nMood: bright, friendly, playful, clean and relaxed.\nUse gentle synth plucks, warm piano, soft bass, light electronic drums and subtle percussion.\nAround 94 BPM.\n\nMaintain a steady repetitive groove and consistent energy suitable for long instructional videos.\n\nAvoid overly catchy lead melodies, cartoon comedy sounds, heavy drops and recognizable franchise music.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "19 – Ancient Creature Shrine\n\nCreate a calm atmospheric instrumental background track for long building instructions featuring a rare or legendary creature display.\n\nStyle: cinematic ambient chill with subtle mystical textures.\nMood: timeless, mysterious, peaceful, refined and magical.\nUse deep warm pads, soft bells, restrained strings, subtle low percussion and gentle bass movement.\nAround 76 BPM.\n\nCreate a sense of ancient significance while keeping the arrangement minimal and background-friendly.\n\nAvoid epic fantasy scoring, dramatic crescendos, battle drums and recognizable soundtrack motifs.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "20 – Creature Gallery Evening\n\nCreate a polished instrumental background track for long step-by-step building instructions featuring multiple collectible fantasy creature display models.\n\nStyle: premium ambient chill with light cinematic and electronic elements.\nMood: elegant, calm, magical, modern and soothing.\nUse warm pads, soft electric piano, subtle synth arpeggios, smooth bass and very light percussion.\nAround 84 BPM.\n\nKeep the structure repetitive and consistent with gradual tonal variation so it remains comfortable across very long tutorials.\n\nAvoid strong hooks, dramatic transitions, battle energy and imitation of any existing game or anime soundtrack.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
   }
+
 ],
   "pokemon__battle-action": [
   {
@@ -416,7 +468,7 @@ const seededPrompts={
   }
 ]
 };
-const SEED_KEY="ytMusicLibrary.seed.catalog.v4";
+const SEED_KEY="ytMusicLibrary.seed.catalog.v5";
 const subDescriptions={
  "star-wars__imperial-dark-space":"Star Destroyery, Executor, Death Star, Imperial ships",
  "star-wars__jedi-force-mystical":"Jedi Temple, Yoda, Luke, Force-related sety, lightsaber display",
