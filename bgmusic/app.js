@@ -12,9 +12,84 @@ const catalog=[
 {name:"Sonic",subs:["Characters","Levels","Vehicles"]},{name:"Super Mario",subs:["Mario Kart","Characters","Courses","Display"]},
 {name:"Art",subs:["Music","Nature","Characters","Landmarks"]},{name:"Architecture",subs:["Skylines","Landmarks"]},
 {name:"Seasonal",subs:["Halloween","Christmas","Easter","Valentine"]}];
+const seededPrompts={
+  "seasonal__christmas": [
+    {
+      "text": "40874 Santa’s Holiday Countdown — Advent Glow\n\nCreate a warm, cheerful instrumental background track for step-by-step building instructions featuring a festive Santa holiday countdown and advent display.\n\nStyle: light Christmas chill with acoustic and electronic elements.\nMood: cozy, expectant, playful, magical and family-friendly.\nUse soft acoustic guitar, warm electric piano, gentle sleigh bells, celesta-like plucks, light percussion and a smooth bass line.\nAround 100 BPM.\n\nKeep the rhythm steady, simple and unobtrusive with consistent energy while instruction pages change every five seconds. Suggest the pleasant anticipation of counting down to Christmas without becoming cinematic or dramatic.\n\nAvoid recognizable Christmas melodies, dramatic transitions, drops, breakdowns, heavy bass and dominant lead themes.\n\nInstrumental only. No vocals, vocal chops or spoken words. Original composition only.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40874 Santa’s Holiday Countdown — December Morning\n\nCreate a calm festive instrumental background track for step-by-step building instructions featuring Santa and an advent countdown.\n\nStyle: acoustic holiday chill with subtle lo-fi and light electronic touches.\nMood: warm, peaceful, bright, cozy and gently playful.\nUse soft fingerpicked acoustic guitar, warm piano, subtle glockenspiel, delicate sleigh-bell percussion, soft bass and understated electronic drums.\nAround 92 BPM.\n\nMaintain a smooth repeating flow and very consistent dynamics so the music stays comfortably in the background as instruction images change every five seconds.\n\nAvoid famous carol melodies, large musical events, dramatic chord changes, long intros, heavy percussion and strong lead instruments.\n\nInstrumental only. No vocals or spoken words. Family-friendly and original.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40866 Santa’s Holiday Sleigh Adventure — Sleigh Ride Journey\n\nCreate a light upbeat instrumental background track for step-by-step building instructions featuring Santa’s sleigh on a cheerful holiday adventure.\n\nStyle: melodic Christmas house with acoustic and orchestral accents.\nMood: joyful, adventurous, festive, bright and friendly.\nUse gentle sleigh bells, warm string pizzicato, soft melodic synth plucks, acoustic guitar, light electronic drums and smooth bass.\nAround 108 BPM.\n\nCreate a steady sense of forward motion like a relaxed sleigh journey while keeping the arrangement simple and unobtrusive for instruction pages changing every five seconds.\n\nAvoid dramatic cinematic scoring, recognizable Christmas melodies, big drops, heavy bass and attention-grabbing solos.\n\nInstrumental only. No vocals, vocal chops or spoken words. Original composition only.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40866 Santa’s Holiday Sleigh Adventure — Snowy Route\n\nCreate a relaxed festive instrumental background track for step-by-step building instructions featuring Santa’s sleigh traveling through a snowy holiday landscape.\n\nStyle: soft acoustic-electronic Christmas chill.\nMood: peaceful, magical, warm, gently adventurous and family-friendly.\nUse soft acoustic guitar, warm piano, subtle celesta, delicate sleigh bells, light percussion, airy pads and gentle bass.\nAround 96 BPM.\n\nKeep a smooth repetitive pulse with small variations and consistent dynamics. The track should feel festive but remain subtle behind instruction images changing every five seconds.\n\nAvoid famous carols, dramatic swells, action-movie tension, drops and prominent lead melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40875 Up-Scaled Mrs. Claus Minifigure — Mrs. Claus Workshop\n\nCreate a warm playful instrumental background track for step-by-step building instructions featuring a large festive Mrs. Claus character display.\n\nStyle: cozy Christmas acoustic-electronic with light whimsical elements.\nMood: welcoming, cheerful, crafty, warm and gently playful.\nUse warm piano, soft acoustic guitar, pizzicato strings, subtle glockenspiel, light sleigh bells, soft electronic drums and smooth bass.\nAround 98 BPM.\n\nKeep the arrangement friendly, repetitive and consistent so it supports instruction pages changing every five seconds without demanding attention.\n\nAvoid cartoon comedy effects, recognizable Christmas melodies, dramatic transitions, drops and heavy orchestration.\n\nInstrumental only. No vocals or spoken words. Family-friendly and original.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40875 Up-Scaled Mrs. Claus Minifigure — Cozy Holiday Character\n\nCreate a calm festive instrumental background track for step-by-step building instructions featuring a cheerful Mrs. Claus holiday character display.\n\nStyle: soft holiday lounge with acoustic and light electronic elements.\nMood: cozy, elegant, friendly, warm and relaxed.\nUse gentle electric piano, soft acoustic guitar, muted bells, subtle brushed-style percussion, warm bass and delicate synth pads.\nAround 90 BPM.\n\nMaintain steady low-key energy and a simple repeating musical theme while instruction images change every five seconds.\n\nAvoid famous seasonal tunes, dramatic buildups, strong rhythmic breaks and dominant melodies.\n\nInstrumental only. No vocals, vocal chops or spoken words. Original composition only.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40958 Christmas Stocking — Stocking by the Fireplace\n\nCreate a cozy instrumental background track for step-by-step building instructions featuring a decorative Christmas stocking.\n\nStyle: acoustic Christmas chill with warm ambient elements.\nMood: cozy, intimate, festive, peaceful and nostalgic without sounding sad.\nUse soft acoustic guitar, warm piano, subtle celesta, light sleigh bells, gentle percussion and smooth bass.\nAround 92 BPM.\n\nKeep the music steady, simple and unobtrusive with consistent dynamics while instruction pages change every five seconds. Evoke a warm fireplace and quiet holiday evening.\n\nAvoid recognizable Christmas melodies, dramatic swells, orchestral climaxes and strong lead themes.\n\nInstrumental only. No vocals or spoken words. Family-friendly and original.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40958 Christmas Stocking — Holiday Hearth\n\nCreate a light warm instrumental background track for step-by-step building instructions featuring a festive Christmas stocking decoration.\n\nStyle: gentle melodic holiday chill with acoustic-electronic production.\nMood: bright, comforting, cheerful and relaxed.\nUse soft melodic plucks, warm electric piano, fingerpicked guitar, delicate bells, subtle electronic drums and warm bass.\nAround 98 BPM.\n\nMaintain an even repeating groove and consistent volume so the track remains in the background as instruction images change every five seconds.\n\nAvoid known carol melodies, drops, dramatic transitions, heavy bass and busy arrangements.\n\nInstrumental only. No vocals, vocal chops or spoken words. Original composition only.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40862 Holiday Ornament Selection 2 — Ornament Workshop\n\nCreate a delicate cheerful instrumental background track for step-by-step building instructions featuring colorful Christmas tree ornaments and holiday decorations.\n\nStyle: light festive acoustic-electronic with gentle whimsical details.\nMood: bright, creative, sparkling, friendly and calm.\nUse soft pizzicato strings, gentle glockenspiel, acoustic guitar, warm piano, subtle sleigh bells, light percussion and smooth bass.\nAround 102 BPM.\n\nUse small sparkling accents while keeping the rhythm steady and the dynamics consistent for instruction pages changing every five seconds.\n\nAvoid recognizable Christmas melodies, overly childish sound effects, dramatic transitions and dominant lead instruments.\n\nInstrumental only. No vocals or spoken words. Family-friendly and original.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40862 Holiday Ornament Selection 2 — Winter Decorations\n\nCreate a calm elegant instrumental background track for step-by-step building instructions featuring festive ornaments and Christmas decorations.\n\nStyle: ambient Christmas chill with acoustic touches.\nMood: peaceful, clean, magical, warm and gently festive.\nUse airy pads, warm piano, soft acoustic guitar, delicate bell tones, very light percussion and gentle bass.\nAround 88 BPM.\n\nKeep the arrangement minimal, repetitive and smooth with consistent dynamics. The music should remain subtle while instructional images change every five seconds.\n\nAvoid famous holiday tunes, dramatic cinematic swells, heavy percussion and strong melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40865 Buddy the Elf — Playful Holiday Movie\n\nCreate a cheerful playful instrumental background track for step-by-step building instructions featuring a colorful Christmas comedy character display.\n\nStyle: light festive pop-electronic with acoustic and whimsical orchestral accents.\nMood: upbeat, playful, optimistic, quirky and family-friendly.\nUse pizzicato strings, soft brass-like accents, warm piano, acoustic guitar, subtle bells, light electronic drums and smooth bass.\nAround 106 BPM.\n\nKeep the groove steady and the musical humor subtle so the track stays useful as background music while instruction pages change every five seconds.\n\nDo not imitate any existing movie score, song or soundtrack. Avoid recognizable Christmas melodies, slapstick sound effects, dramatic transitions, drops and heavy bass.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "40865 Buddy the Elf — North Pole Cheer\n\nCreate a light relaxed instrumental background track for step-by-step building instructions featuring a playful Christmas movie character.\n\nStyle: cozy festive acoustic-electronic with gentle whimsical elements.\nMood: cheerful, innocent, warm, playful and easygoing.\nUse acoustic guitar, warm electric piano, soft pizzicato strings, delicate glockenspiel, subtle sleigh bells and light percussion.\nAround 96 BPM.\n\nMaintain a simple repeating structure, consistent energy and unobtrusive melody for instructional images changing every five seconds.\n\nDo not imitate any existing film music or songs. Avoid famous Christmas melodies, big buildups, dramatic orchestration and strong lead themes.\n\nInstrumental only. No vocals or spoken words. Family-friendly and original.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "11387 Holiday House — Christmas House Evening\n\nCreate a warm atmospheric instrumental background track for step-by-step building instructions featuring a detailed festive holiday house.\n\nStyle: cinematic Christmas chill with acoustic and light electronic elements.\nMood: cozy, elegant, magical, peaceful and welcoming.\nUse warm piano, soft acoustic guitar, gentle strings, delicate celesta, subtle sleigh bells, airy pads and understated percussion.\nAround 94 BPM.\n\nCreate the feeling of a warmly lit Christmas house on a quiet winter evening while keeping the arrangement steady and unobtrusive for instruction pages changing every five seconds.\n\nAvoid recognizable Christmas melodies, dramatic movie-score climaxes, large transitions and dominant lead instruments.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+      "generated": false,
+      "approved": false
+    },
+    {
+      "text": "11387 Holiday House — Snowy Home\n\nCreate a gentle festive instrumental background track for step-by-step building instructions featuring a cozy Christmas holiday house in a snowy setting.\n\nStyle: acoustic ambient holiday chill.\nMood: warm, calm, nostalgic, peaceful and softly magical.\nUse fingerpicked acoustic guitar, warm piano, subtle string pads, soft bell tones, light brushed percussion and gentle bass.\nAround 88 BPM.\n\nMaintain very consistent dynamics and a smooth repeating flow so the music stays comfortably behind instruction images changing every five seconds.\n\nAvoid famous carols, dramatic crescendos, heavy percussion, drops and prominent melodic hooks.\n\nInstrumental only. No vocals, vocal chops or spoken words. Family-friendly and original.",
+      "generated": false,
+      "approved": false
+    }
+  ]
+};
+const SEED_KEY="ytMusicLibrary.seed.seasonalChristmas.v1";
 const KEY="ytMusicLibrary.v2",OLD="ytMusicLibrary.v1";
 let data=load();
-function load(){try{let x=localStorage.getItem(KEY)||localStorage.getItem(OLD);let d=x?JSON.parse(x):{};return {prompts:d.prompts||{},audio:d.audio||{}}}catch(e){return {prompts:{},audio:{}}}}
+function load(){try{let x=localStorage.getItem(KEY)||localStorage.getItem(OLD);let d=x?JSON.parse(x):{},prompts=d.prompts||{};if(localStorage.getItem(SEED_KEY)!=="1"){for(const [k,items] of Object.entries(seededPrompts)){let arr=prompts[k]??=[];let seen=new Set(arr.map(x=>x.text));for(const item of items)if(!seen.has(item.text))arr.push({...item});prompts[k]=arr}localStorage.setItem(SEED_KEY,"1");localStorage.setItem(KEY,JSON.stringify({prompts,audio:d.audio||{}}))}return {prompts,audio:d.audio||{}}}catch(e){let prompts={};for(const [k,items] of Object.entries(seededPrompts))prompts[k]=items.map(x=>({...x}));localStorage.setItem(SEED_KEY,"1");return {prompts,audio:{}}}}
 const slug=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const key=(t,s)=>slug(t)+"__"+slug(s), esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
