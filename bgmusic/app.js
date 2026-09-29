@@ -186,9 +186,81 @@ const seededPrompts={
     "generated": false,
     "approved": false
   }
+],
+  "star-wars__display-collectors": [
+  {
+    "text": "01 – Collector’s Chamber\n\nCreate a slow elegant instrumental background track for long step-by-step building instructions featuring a premium sci-fi collector display model.\n\nStyle: cinematic chill with ambient electronic textures.\nMood: refined, spacious, mysterious, calm and sophisticated.\nUse warm atmospheric pads, soft piano notes, restrained low strings, subtle electronic pulses and very light percussion.\nAround 78 BPM.\n\nKeep the arrangement smooth, minimal and consistent so it stays unobtrusive while instruction pages change every five seconds. Create a museum-like sense of scale and importance without becoming dramatic.\n\nAvoid recognizable movie themes, heroic fanfares, large crescendos, heavy bass and strong lead melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "02 – Saber Relic\n\nCreate a calm cinematic ambient instrumental background track for step-by-step building instructions featuring a collectible sci-fi energy sword display.\n\nStyle: ambient cinematic chill with subtle electronic details.\nMood: elegant, mysterious, focused, iconic and restrained.\nUse airy synth pads, soft low piano, delicate metallic textures, a gentle bass pulse and sparse atmospheric percussion.\nAround 76 BPM.\n\nMaintain steady low-intensity energy and gradual texture changes suitable for a long building tutorial. The music should suggest a powerful ancient technological relic without using sound effects.\n\nAvoid recognizable franchise melodies, dramatic orchestral writing, battle music, drops and attention-grabbing solos.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "03 – 40897 Dark Relic Display\n\nCreate a dark refined instrumental background track for long step-by-step building instructions featuring a black-and-red sci-fi energy sword collector display.\n\nStyle: dark cinematic chill with minimal electronic pulse.\nMood: controlled, elegant, ominous, premium and mysterious.\nUse deep atmospheric pads, restrained low synth pulses, subtle metallic resonance, soft bass and sparse cinematic percussion.\nAround 74 BPM.\n\nKeep the dynamics very consistent and the melody minimal. The track should feel powerful and prestigious while remaining quiet enough for instruction pages changing every five seconds.\n\nDo not imitate or reference any existing movie score, character theme or recognizable franchise melody. Avoid dramatic rises, aggressive action rhythms and heavy industrial sounds.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "04 – 40897 Shadow Blade\n\nCreate a slow atmospheric instrumental background track for detailed building instructions featuring a dark sci-fi collector energy blade.\n\nStyle: ambient electronic with subtle cinematic tension.\nMood: shadowy, precise, elegant, calm and imposing.\nUse dark synth pads, low warm drones, a very soft repeating pulse, distant metallic textures and minimal percussion.\nAround 72 BPM.\n\nMaintain a smooth continuous atmosphere with subtle evolution rather than obvious sections. Keep volume and intensity stable for long instructional use.\n\nAvoid recognizable soundtrack motifs, horror effects, dramatic impacts, fast rhythms and dominant melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "05 – Helmet Gallery\n\nCreate a sophisticated instrumental background track for step-by-step building instructions featuring collectible sci-fi helmets and display pieces.\n\nStyle: cinematic ambient chill with modern electronic production.\nMood: clean, prestigious, futuristic, calm and slightly mysterious.\nUse soft pads, restrained electronic arpeggios, warm low bass, subtle metallic accents and very light percussion.\nAround 82 BPM.\n\nKeep a steady elegant flow with small gradual variations. The music should feel suitable for a premium display gallery and remain unobtrusive behind instruction pages changing every five seconds.\n\nAvoid heroic themes, recognizable movie music, dramatic transitions and aggressive percussion.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "06 – Black Pedestal\n\nCreate a minimal dark instrumental background track for long collector-model building instructions.\n\nStyle: minimalist cinematic electronic.\nMood: premium, dark, architectural, controlled and quiet.\nUse deep soft pads, sparse piano notes, subtle low pulses, muted electronic percussion and wide ambient textures.\nAround 70 BPM.\n\nCreate the feeling of a carefully lit display object on a black museum pedestal. Maintain very consistent dynamics and a restrained arrangement throughout.\n\nAvoid action music, dramatic crescendos, heavy bass, bright synth leads and recognizable franchise melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "07 – Museum of Stars\n\nCreate a spacious elegant instrumental background track for long step-by-step sci-fi display model building instructions.\n\nStyle: cinematic ambient with gentle electronic and acoustic textures.\nMood: timeless, reflective, sophisticated, spacious and quietly inspiring.\nUse warm piano, airy pads, subtle strings, delicate synth plucks and very light percussion.\nAround 80 BPM.\n\nKeep the music slow-moving and consistent, with understated melodic fragments and gradual texture changes. It should support long instruction videos without drawing attention away from the build.\n\nAvoid recognizable soundtrack themes, emotional orchestral climaxes, strong hooks and dramatic rhythm changes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "08 – Diorama Silence\n\nCreate a calm atmospheric instrumental background track for step-by-step building instructions featuring a detailed sci-fi diorama display.\n\nStyle: ambient cinematic chill.\nMood: immersive, quiet, detailed, mysterious and contemplative.\nUse soft environmental-style synth pads, warm low tones, subtle piano notes, gentle electronic pulses and sparse percussion.\nAround 74 BPM.\n\nMaintain a smooth continuous flow with very subtle variation. The music should create atmosphere without suggesting a specific scene or existing film soundtrack.\n\nAvoid battle music, recognizable melodies, dramatic swells, sudden impacts and heavy percussion.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "09 – Collector’s Shelf\n\nCreate a relaxed premium instrumental background track for long building instructions featuring collectible sci-fi display models.\n\nStyle: cinematic lounge ambient with light electronic elements.\nMood: polished, calm, modern, tasteful and slightly futuristic.\nUse warm electric piano, smooth synth pads, soft bass, restrained electronic percussion and delicate atmospheric plucks.\nAround 84 BPM.\n\nKeep a steady low-key groove and consistent dynamics while instruction pages change every five seconds. The track should feel sophisticated but never distracting.\n\nAvoid club rhythms, strong hooks, dramatic soundtrack moments and recognizable franchise material.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "10 – Legacy Display\n\nCreate a slow cinematic instrumental background track for step-by-step building instructions featuring a prestigious sci-fi collector model.\n\nStyle: cinematic chill with restrained orchestral and electronic layers.\nMood: timeless, dignified, mysterious, calm and monumental.\nUse soft low strings, warm atmospheric pads, subtle piano, gentle bass pulses and minimal percussion.\nAround 76 BPM.\n\nSuggest history and importance through texture and harmony rather than loudness. Keep transitions gradual and dynamics stable for long instructional videos.\n\nAvoid heroic fanfares, recognizable film themes, dramatic crescendos and dominant melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "11 – Galactic Blueprint\n\nCreate a clean precise instrumental background track for detailed sci-fi collector building instructions.\n\nStyle: ambient electronic chill with subtle technical rhythm.\nMood: focused, modern, elegant, precise and spacious.\nUse soft repeating synth patterns, smooth pads, gentle low bass, subtle digital textures and understated percussion.\nAround 86 BPM.\n\nCreate the feeling of studying a futuristic blueprint while assembling a premium display model. Maintain a predictable rhythm and consistent energy throughout.\n\nAvoid video-game sounds, club-style beats, dramatic drops and recognizable soundtrack motifs.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "12 – Monument in Orbit\n\nCreate a spacious cinematic ambient instrumental background track for long step-by-step building instructions featuring a large premium sci-fi display model.\n\nStyle: deep ambient cinematic chill.\nMood: monumental, serene, mysterious, elegant and vast.\nUse wide synth pads, soft drones, minimal low percussion, subtle piano accents and gentle bass movement.\nAround 70 BPM.\n\nEmphasize scale through space and texture rather than volume. Keep the music smooth and restrained with gradual changes suitable for very long tutorials.\n\nAvoid dramatic orchestral climaxes, battle rhythms, recognizable franchise melodies and sudden transitions.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "13 – Quiet Showcase\n\nCreate a soft modern instrumental background track for step-by-step building instructions featuring sci-fi helmets, logos, dioramas and collector display pieces.\n\nStyle: ambient electronic chill.\nMood: clean, understated, polished, calm and futuristic.\nUse warm pads, subtle synth plucks, smooth bass, light electronic percussion and sparse piano accents.\nAround 82 BPM.\n\nMaintain a simple repeating structure, consistent volume and gentle variation so the track remains useful across many different collector sets.\n\nAvoid dramatic storytelling, strong lead themes, heavy bass and recognizable movie soundtrack elements.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "14 – Archive Display\n\nCreate an elegant atmospheric instrumental background track for long sci-fi collector building instructions.\n\nStyle: cinematic ambient with soft electronic pulse.\nMood: archival, mysterious, premium, reflective and calm.\nUse deep warm pads, gentle repeating pulses, subtle low piano, delicate metallic textures and minimal percussion.\nAround 78 BPM.\n\nCreate the feeling of a valuable artifact preserved in a futuristic archive. Keep the music restrained, repetitive and consistent while instruction pages change every five seconds.\n\nAvoid recognizable franchise themes, dramatic orchestration, aggressive rhythms, drops and strong melodic hooks.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  }
 ]
 };
-const SEED_KEY="ytMusicLibrary.seed.catalog.v2";
+const SEED_KEY="ytMusicLibrary.seed.catalog.v3";
 const KEY="ytMusicLibrary.v2",OLD="ytMusicLibrary.v1";
 let data=load();
 function load(){try{let x=localStorage.getItem(KEY)||localStorage.getItem(OLD);let d=x?JSON.parse(x):{},prompts=d.prompts||{};if(localStorage.getItem(SEED_KEY)!=="1"){for(const [k,items] of Object.entries(seededPrompts)){let arr=prompts[k]??=[];let seen=new Set(arr.map(x=>x.text));for(const item of items)if(!seen.has(item.text))arr.push({...item});prompts[k]=arr}localStorage.setItem(SEED_KEY,"1");localStorage.setItem(KEY,JSON.stringify({prompts,audio:d.audio||{}}))}return {prompts,audio:d.audio||{}}}catch(e){let prompts={};for(const [k,items] of Object.entries(seededPrompts))prompts[k]=items.map(x=>({...x}));localStorage.setItem(SEED_KEY,"1");return {prompts,audio:{}}}}
