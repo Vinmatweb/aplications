@@ -621,9 +621,111 @@ const seededPrompts={
     "generated": false,
     "approved": false
   }
+],
+  "seasonal__halloween": [
+  {
+    "text": "01 – Pumpkin Lantern Walk\n\nCreate a playful spooky instrumental background track for long step-by-step building instructions featuring pumpkins, lanterns and a friendly Halloween night.\n\nStyle: whimsical Halloween chill with light acoustic and electronic elements.\nMood: cozy, mysterious, playful, family-friendly and slightly magical.\nUse soft pizzicato strings, muted piano, gentle bells, warm bass and light percussion.\nAround 92 BPM.\n\nKeep the rhythm steady and unobtrusive while instruction pages change every five seconds. Create a Halloween atmosphere without becoming scary.\n\nAvoid recognizable Halloween songs, horror stingers, screams and dramatic jumps.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "02 – Haunted House Evening\n\nCreate a calm spooky instrumental background track for step-by-step building instructions featuring a haunted house with glowing windows and playful supernatural details.\n\nStyle: cinematic Halloween chill.\nMood: mysterious, cozy, atmospheric, curious and family-friendly.\nUse soft piano, dark warm pads, subtle pizzicato strings, gentle bass and restrained percussion.\nAround 86 BPM.\n\nMaintain smooth consistent dynamics and gradual variation for long instructional videos.\n\nAvoid horror intensity, sudden impacts, recognizable movie themes and strong lead melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "03 – Friendly Ghosts\n\nCreate a light whimsical instrumental background track for long building instructions featuring cute friendly ghosts and Halloween decorations.\n\nStyle: playful ambient electronic with soft acoustic touches.\nMood: charming, airy, magical, gentle and fun.\nUse bell-like plucks, soft synth pads, light piano, smooth bass and subtle percussion.\nAround 96 BPM.\n\nKeep the groove simple, repetitive and background-friendly while pages change every five seconds.\n\nAvoid creepy voices, horror effects, dramatic transitions and recognizable melodies.\n\nInstrumental only. No vocals. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "04 – Witch’s Cozy Workshop\n\nCreate a warm magical instrumental background track for step-by-step building instructions featuring a witch’s workshop, potions and playful Halloween objects.\n\nStyle: whimsical acoustic-electronic chill.\nMood: magical, cozy, mysterious, clever and family-friendly.\nUse soft piano, plucked strings, gentle woodwind-like tones, subtle bells and light percussion.\nAround 90 BPM.\n\nMaintain a steady calm flow and consistent dynamics suitable for long tutorials.\n\nAvoid dark horror scoring, cackling voices, sudden effects and recognizable fantasy themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "05 – Skeleton Parade\n\nCreate a cheerful spooky instrumental background track for long building instructions featuring playful skeletons and Halloween decorations.\n\nStyle: light rhythmic Halloween chill.\nMood: quirky, playful, upbeat, friendly and slightly spooky.\nUse muted marimba-like plucks, pizzicato strings, soft drums, warm bass and subtle bells.\nAround 102 BPM.\n\nKeep the rhythm steady and moderate with gentle variation, suitable for instruction pages changing every five seconds.\n\nAvoid slapstick effects, harsh percussion, scary sounds and recognizable seasonal songs.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "06 – Moonlit Pumpkin Patch\n\nCreate a calm atmospheric instrumental background track for step-by-step building instructions featuring pumpkins under a moonlit autumn sky.\n\nStyle: ambient acoustic Halloween chill.\nMood: peaceful, autumnal, magical, mysterious and warm.\nUse fingerpicked acoustic guitar, soft piano, airy pads, subtle bells and gentle percussion.\nAround 84 BPM.\n\nKeep the arrangement smooth, spacious and repetitive with consistent energy.\n\nAvoid dramatic tension, horror effects and recognizable Halloween melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "07 – Trick or Treat Street\n\nCreate a cheerful instrumental background track for long building instructions featuring decorated houses, candy and a friendly trick-or-treat night.\n\nStyle: light melodic Halloween pop-chill.\nMood: festive, playful, warm, bright and family-friendly.\nUse soft synth plucks, acoustic guitar, gentle electronic drums, smooth bass and subtle bells.\nAround 104 BPM.\n\nMaintain an even groove and consistent energy without becoming too pop-oriented.\n\nAvoid vocals, big drops, recognizable holiday melodies and overly childish effects.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "08 – Cobweb Attic\n\nCreate a quiet spooky instrumental background track for step-by-step building instructions featuring an old attic, cobwebs and mysterious Halloween objects.\n\nStyle: minimal cinematic ambient.\nMood: dusty, mysterious, curious, calm and gently eerie.\nUse soft piano, low warm pads, delicate plucked textures, subtle creaks translated into musical percussion, and minimal bass.\nAround 78 BPM.\n\nKeep dynamics very stable and avoid sudden changes.\n\nAvoid realistic scary sound effects, horror shocks and recognizable soundtrack material.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "09 – Magic Cauldron\n\nCreate a playful magical instrumental background track for long building instructions featuring a bubbling fantasy cauldron and Halloween potion theme.\n\nStyle: whimsical electronic-acoustic chill.\nMood: magical, curious, playful, warm and slightly mysterious.\nUse soft marimba-like tones, pizzicato strings, gentle synth pads, light percussion and smooth bass.\nAround 98 BPM.\n\nMaintain a simple repeating structure with subtle variation.\n\nAvoid cartoon sound effects, vocals, dramatic magical explosions and recognizable fantasy music.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "10 – Bat Flight at Dusk\n\nCreate a smooth atmospheric instrumental background track for step-by-step building instructions featuring bats flying across a purple autumn sky.\n\nStyle: cinematic ambient chill with light electronic motion.\nMood: airy, mysterious, elegant, calm and slightly spooky.\nUse soft arpeggios, wide pads, gentle bass pulses, sparse percussion and delicate piano.\nAround 88 BPM.\n\nKeep the movement subtle and continuous, suitable for long instruction videos.\n\nAvoid fast action, horror tension, dramatic crescendos and recognizable themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "11 – Monster Laboratory\n\nCreate a playful mysterious instrumental background track for long building instructions featuring a humorous monster laboratory or strange Halloween invention.\n\nStyle: quirky electronic chill with cinematic touches.\nMood: inventive, curious, fun, slightly spooky and family-friendly.\nUse soft synth pulses, muted percussion, warm bass, quirky plucks and subtle atmospheric pads.\nAround 100 BPM.\n\nKeep the groove steady and restrained so it remains useful behind instruction pages changing every five seconds.\n\nAvoid harsh industrial sounds, scary effects and recognizable monster-movie music.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "12 – Candlelit Manor\n\nCreate an elegant spooky instrumental background track for step-by-step building instructions featuring a candlelit old manor decorated for Halloween.\n\nStyle: neoclassical cinematic chill.\nMood: refined, mysterious, warm, gothic and calm.\nUse soft piano, restrained strings, gentle cello, subtle pads and minimal percussion.\nAround 76 BPM.\n\nMaintain smooth dynamics and a steady low-intensity atmosphere.\n\nAvoid horror crescendos, melodrama, recognizable gothic themes and sudden impacts.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "13 – Autumn Night Market\n\nCreate a warm festive instrumental background track for long building instructions featuring an autumn Halloween market with lights, pumpkins and decorations.\n\nStyle: acoustic-electronic seasonal chill.\nMood: cozy, lively, friendly, colorful and relaxed.\nUse acoustic guitar, warm piano, soft bass, light percussion and subtle bell accents.\nAround 96 BPM.\n\nKeep a gentle steady rhythm and consistent volume for long tutorial use.\n\nAvoid strong folk clichés, vocals, dramatic transitions and recognizable seasonal tunes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "14 – Haunted Carnival Lights\n\nCreate a playful eerie instrumental background track for step-by-step building instructions featuring a small haunted carnival or spooky fairground.\n\nStyle: whimsical cinematic chill.\nMood: quirky, colorful, mysterious, playful and family-friendly.\nUse soft organ-like textures, muted bells, pizzicato strings, gentle bass and light percussion.\nAround 98 BPM.\n\nKeep the carnival feeling subtle and tasteful, not chaotic.\n\nAvoid creepy clown effects, horror intensity, recognizable circus melodies and dramatic drops.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "15 – Dark Forest Trail\n\nCreate a calm mysterious instrumental background track for long building instructions featuring an autumn forest at night with Halloween atmosphere.\n\nStyle: ambient cinematic chill.\nMood: quiet, magical, mysterious, spacious and slightly eerie.\nUse airy pads, soft low piano, gentle wooden percussion, subtle bass and faint bell-like textures.\nAround 80 BPM.\n\nMaintain a smooth slowly evolving atmosphere with stable dynamics.\n\nAvoid scary sound effects, tension spikes, horror drones and recognizable melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "16 – Ghostly Library\n\nCreate a soft atmospheric instrumental background track for step-by-step building instructions featuring an old library with friendly ghostly Halloween details.\n\nStyle: cinematic acoustic ambient.\nMood: cozy, mysterious, thoughtful, magical and calm.\nUse felt piano, soft strings, subtle bells, warm pads and minimal percussion.\nAround 82 BPM.\n\nKeep the arrangement gentle and unobtrusive with gradual variations.\n\nAvoid dark horror scoring, whispers, vocals and recognizable soundtrack themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "17 – Spooky Castle Courtyard\n\nCreate a restrained cinematic instrumental background track for long building instructions featuring a fantasy castle courtyard decorated for Halloween.\n\nStyle: medieval-inspired ambient chill with modern production.\nMood: mysterious, magical, elegant, autumnal and family-friendly.\nUse soft lute-like plucks, gentle strings, low pads, subtle percussion and warm bass.\nAround 84 BPM.\n\nKeep medieval elements understated and maintain consistent background energy.\n\nAvoid epic battle music, scary choirs, dramatic orchestration and recognizable fantasy themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "18 – Candy Cauldron Night\n\nCreate a cheerful Halloween instrumental background track for step-by-step building instructions featuring candy, pumpkins and playful magical decorations.\n\nStyle: melodic seasonal chill with whimsical electronic elements.\nMood: sweet, playful, bright, magical and relaxed.\nUse gentle synth plucks, soft piano, bells, smooth bass and light electronic drums.\nAround 100 BPM.\n\nMaintain a steady simple groove and consistent dynamics for long instructional use.\n\nAvoid sugary pop hooks, vocals, dramatic drops and recognizable Halloween tunes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "19 – Midnight Decorations\n\nCreate a polished calm instrumental background track for long building instructions featuring elegant Halloween decorations and dark seasonal display models.\n\nStyle: dark ambient chill with subtle cinematic textures.\nMood: stylish, mysterious, quiet, premium and slightly spooky.\nUse deep soft pads, restrained piano, subtle bass pulses, delicate metallic tones and minimal percussion.\nAround 78 BPM.\n\nKeep the track smooth and consistent, suitable for display-focused building videos.\n\nAvoid horror effects, aggressive bass, dramatic rises and recognizable movie themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "20 – Cozy Halloween Night\n\nCreate a warm relaxing instrumental background track for long step-by-step building instructions featuring pumpkins, candles, autumn leaves and a cozy Halloween evening.\n\nStyle: acoustic ambient seasonal chill.\nMood: cozy, gentle, nostalgic, friendly and softly magical.\nUse fingerpicked guitar, warm piano, soft pads, subtle bells and light brushed percussion.\nAround 86 BPM.\n\nMaintain an even repetitive flow with very consistent dynamics while instruction pages change every five seconds.\n\nAvoid sadness, horror intensity, vocals and recognizable seasonal melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  }
 ]
 };
-const SEED_KEY="ytMusicLibrary.seed.catalog.v6";
+const SEED_KEY="ytMusicLibrary.seed.catalog.v7";
 const subDescriptions={
  "star-wars__imperial-dark-space":"Star Destroyery, Executor, Death Star, Imperial ships",
  "star-wars__jedi-force-mystical":"Jedi Temple, Yoda, Luke, Force-related sety, lightsaber display",
