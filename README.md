@@ -1,15 +1,12 @@
-# YouTube Music Library
+# Applications
 
-Static web app for tracking AI background-music prompts and downloaded YouTube Audio Library tracks by LEGO theme/subtheme.
+Repository for VinMat utility applications. Each application lives in its own folder.
 
-## Features
-- LEGO theme/subtheme tree with prompt/generated/approved counters
-- One page per theme with subtheme jump navigation
-- Prompt list with Copy, Generated and Approved workflow
-- Manual YouTube Audio Library track log
-- Browser localStorage persistence
-- JSON export
+## bgmusic — YouTube Music Library
+Tracks AI background-music prompts and downloaded YouTube Audio Library tracks by LEGO theme/subtheme.
 
-Open `youtube-music-library/index.html` locally or publish the folder with GitHub Pages.
+Public URL: https://vinmat.eu/aplications/bgmusic/
 
-> Note: progress is currently stored in the browser. A later version can move data to a shared JSON/database/Google Sheet.
+Development files: `bgmusic/`
+
+Progress is stored in browser localStorage and can be backed up/restored using JSON export/import.
