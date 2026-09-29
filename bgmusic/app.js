@@ -5,7 +5,7 @@ const catalog=[
 {name:"Ideas",subs:["Space","Nature","Movies & TV","Games","Music","Objects & Display"]},
 {name:"Creator 3in1",subs:["Animals","Vehicles","Buildings","Space"]},{name:"Speed Champions",subs:["Supercars","Racing","Formula 1"]},
 {name:"Friends",subs:["Adventure","Animals","City Life","Food","Travel"]},{name:"NINJAGO",subs:["Dragons","Mechs","Vehicles","Temples"]},
-{name:"Star Wars",subs:["Starships","Droids","Dioramas","Helmets","Battle"]},{name:"Minecraft",subs:["Biomes","Mobs","Buildings","Adventure"]},
+{name:"Star Wars",subs:["Imperial / Dark Space","Jedi / Force / Mystical","Space Battle / Action","Rebel / Adventure","Mandalorian / Bounty Hunters","Droids / Light & Playful","Display / Collectors"]},{name:"Minecraft",subs:["Biomes","Mobs","Buildings","Adventure"]},
 {name:"Disney",subs:["Princess","Movies","Characters","Castles"]},{name:"Harry Potter",subs:["Hogwarts","Diagon Alley","Creatures","Vehicles"]},
 {name:"Marvel",subs:["Avengers","Spider-Man","Guardians","Display"]},{name:"DC",subs:["Batman","Vehicles","Display"]},
 {name:"DreamZzz",subs:["Dream Creatures","Vehicles","Locations"]},{name:"Animal Crossing",subs:["Characters","Homes","Island"]},
@@ -84,9 +84,111 @@ const seededPrompts={
       "generated": false,
       "approved": false
     }
-  ]
+  ],
+  "star-wars__imperial-dark-space": [
+  {
+    "text": "01 – Imperial Void\n\nCreate a dark cinematic electronic instrumental background track for long step-by-step sci-fi building instructions featuring a massive authoritarian space warship.\n\nMood: imposing, cold, mysterious, controlled and powerful.\n\nUse deep atmospheric synth pads, restrained electronic percussion, low pulsing bass, subtle metallic textures and distant cinematic drones.\n\nAround 82 BPM.\n\nMaintain a slow steady pulse and very consistent dynamics. The music should suggest the enormous scale of a dark spacecraft moving silently through deep space while remaining unobtrusive behind instruction pages changing every five seconds.\n\nAvoid heroic melodies, dramatic orchestral climaxes, large drops, jump scares and aggressive industrial noise.\n\nInstrumental only. No vocals, no spoken words. Do not imitate or reference any existing movie soundtrack, franchise theme or recognizable melody. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "02 – Dark Fleet\n\nCreate a dark futuristic instrumental background track for long building instructions featuring a fleet of massive military spacecraft.\n\nStyle: cinematic ambient electronic.\n\nMood: serious, controlled, technological, ominous and spacious.\n\nUse deep synth pads, slow electronic pulses, subtle low percussion, soft metallic accents and restrained bass.\n\nAround 86 BPM.\n\nKeep the arrangement smooth and repetitive with gradual subtle evolution rather than dramatic changes. Maintain consistent volume and intensity throughout.\n\nThe music should feel like an enormous fleet traveling through deep space.\n\nAvoid recognizable film music, brass fanfares, aggressive battle music, dramatic transitions and prominent lead melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "03 – Executor Drift\n\nCreate a slow dark instrumental background track for step-by-step building instructions featuring an enormous futuristic flagship traveling through deep space.\n\nStyle: deep space ambient with subtle electronic rhythm.\n\nMood: monumental, mysterious, cold, calm and intimidating.\n\nUse deep drones, wide atmospheric pads, minimal electronic pulses, distant metallic resonance and very soft low-frequency percussion.\n\nAround 76 BPM.\n\nKeep the track spacious and highly consistent, with gradual texture changes suitable for very long instructional videos.\n\nAvoid intense action, strong melodies, orchestral themes, drops and dramatic crescendos.\n\nInstrumental only. No vocals. Do not imitate any existing science-fiction soundtrack or recognizable franchise music.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "04 – Imperial Machine\n\nCreate a dark minimal electronic instrumental background track for long sci-fi building instructions.\n\nStyle: restrained industrial electronic with cinematic atmosphere.\n\nMood: mechanical, precise, disciplined, cold and powerful.\n\nUse subtle metallic percussion, deep synth bass, repeating electronic pulses, muted industrial textures and dark atmospheric pads.\n\nAround 90 BPM.\n\nCreate a steady mechanical rhythm suggesting an enormous advanced military machine operating with perfect precision.\n\nKeep the dynamics consistent and unobtrusive for instruction pages changing every five seconds.\n\nAvoid harsh industrial noise, aggressive distortion, big drops and recognizable movie themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "05 – Shadow Command\n\nCreate a dark atmospheric instrumental background track for long step-by-step sci-fi building instructions.\n\nStyle: melodic ambient electronic with restrained cinematic elements.\n\nMood: commanding, mysterious, intelligent, cold and sophisticated.\n\nUse deep warm synth pads, subtle arpeggiated pulses, soft low percussion, restrained bass and a very simple original minor-key motif.\n\nAround 80 BPM.\n\nKeep the melody understated and repetitive, with slow subtle variations and consistent energy.\n\nAvoid dramatic orchestral writing, heroic themes, strong hooks and recognizable science-fiction melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "06 – Black Hull\n\nCreate a dark futuristic instrumental background track for detailed spacecraft building instructions.\n\nStyle: very restrained dark synthwave blended with cinematic ambient.\n\nMood: cold, technological, mysterious, heavy and controlled.\n\nUse deep analog-style synth pads, slow pulsing bass, subtle electronic drums, dark arpeggios and distant metallic ambience.\n\nAround 88 BPM.\n\nKeep the rhythm steady and subdued rather than dance-oriented. Maintain similar energy throughout the track.\n\nAvoid retro arcade sounds, bright synth leads, dramatic drops and recognizable movie soundtrack elements.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "07 – Deep Space Authority\n\nCreate a slow ominous instrumental background track for long building instructions featuring a massive dark military spacecraft.\n\nStyle: cinematic drone with minimal electronic pulse.\n\nMood: vast, imposing, controlled, mysterious and quiet.\n\nUse deep evolving drones, low synth pulses, subtle sub bass, distant metallic textures and sparse soft percussion.\n\nAround 74 BPM.\n\nThe track should feel enormous without becoming loud or dramatic. Maintain a continuous calm tension suitable for long instructional sequences.\n\nAvoid jump scares, orchestral crescendos, battle drums, recognizable franchise themes and strong melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "08 – Imperial Systems\n\nCreate a restrained futuristic instrumental background track for long step-by-step spacecraft building instructions.\n\nStyle: minimal electronic with subtle cinematic and techno influences.\n\nMood: precise, technical, controlled, efficient and dark.\n\nUse soft electronic pulses, muted kick and percussion, deep bass, minimal synth patterns and atmospheric pads.\n\nAround 94 BPM.\n\nMaintain a clean repetitive groove suggesting complex technological systems operating deep inside a massive spacecraft.\n\nKeep dynamics consistent and background-friendly.\n\nAvoid club-style drops, aggressive techno, bright melodies and recognizable soundtrack motifs.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "09 – Silent Destroyer\n\nCreate a very calm dark instrumental background track for long building instructions featuring a massive futuristic destroyer in deep space.\n\nStyle: cinematic space ambient.\n\nMood: silent, enormous, distant, cold and mysterious.\n\nUse expansive synth pads, deep drones, subtle low pulses, faint metallic resonance and minimal percussion.\n\nAround 70 BPM.\n\nAllow the track to evolve slowly through textures rather than melody. Keep a steady understated atmosphere throughout.\n\nAvoid dramatic action, strong rhythm changes, orchestral themes and recognizable science-fiction music.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "10 – Command Deck\n\nCreate a dark but calm instrumental electronic background track for long sci-fi building instructions.\n\nStyle: dark electronic chill with subtle cinematic atmosphere.\n\nMood: focused, technological, disciplined, intelligent and slightly ominous.\n\nUse smooth synth pads, subtle repeating arpeggios, soft electronic drums, warm low bass and quiet metallic accents.\n\nAround 92 BPM.\n\nCreate the feeling of working inside the command deck of an enormous futuristic spacecraft.\n\nMaintain consistent volume and energy while instruction pages change every five seconds.\n\nAvoid dramatic soundtrack moments, strong lead melodies and aggressive percussion.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "11 – Outer Rim Darkness\n\nCreate a dark atmospheric instrumental background track for long step-by-step spacecraft building instructions.\n\nStyle: cinematic ambient electronic.\n\nMood: remote, mysterious, cold, spacious and quietly threatening.\n\nUse airy dark pads, deep bass drones, subtle electronic pulses, distant percussive echoes and gentle evolving textures.\n\nAround 78 BPM.\n\nKeep the arrangement minimal and spacious, with small gradual changes to prevent repetition during long videos.\n\nAvoid recognizable movie melodies, dramatic crescendos, action percussion and orchestral fanfares.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "12 – Imperial Assembly\n\nCreate a steady dark instrumental background track for long building instructions featuring the construction and assembly of a massive futuristic warship.\n\nStyle: mechanical electronic chill.\n\nMood: productive, precise, industrial, controlled and futuristic.\n\nUse soft mechanical percussion, repeating synth plucks, low warm bass, subtle electronic drums and dark atmospheric pads.\n\nAround 96 BPM.\n\nKeep a steady work-like rhythm without sounding playful or upbeat. Maintain consistent dynamics throughout.\n\nAvoid aggressive industrial music, heavy distortion, drops and recognizable cinematic themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "13 – Dark Orbit\n\nCreate a dark melodic instrumental background track for long sci-fi building instructions.\n\nStyle: ambient electronic with subtle cinematic melody.\n\nMood: mysterious, elegant, powerful, distant and controlled.\n\nUse dark synth pads, gentle arpeggiated notes, smooth low bass, soft percussion and a restrained original minor-key motif.\n\nAround 84 BPM.\n\nThe melody should remain understated and atmospheric rather than memorable or dominant.\n\nMaintain consistent energy suitable for instruction pages changing every five seconds.\n\nAvoid recognizable soundtrack melodies, dramatic rises and heroic elements.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "14 – Steel in Space\n\nCreate a dark futuristic instrumental background track for detailed spacecraft building instructions.\n\nStyle: industrial ambient with restrained electronic rhythm.\n\nMood: metallic, heavy, technological, calm and imposing.\n\nUse muted metallic percussion, low synth drones, soft rhythmic pulses, deep bass and wide atmospheric textures.\n\nAround 88 BPM.\n\nSuggest the enormous metallic structure of a military spacecraft without using realistic machinery or harsh industrial effects.\n\nKeep the track smooth and consistent.\n\nAvoid dramatic transitions, heavy distortion, intense action music and recognizable film themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "15 – Imperial Night\n\nCreate a calm dark instrumental background track for long step-by-step sci-fi building instructions.\n\nStyle: dark cinematic chill electronic.\n\nMood: nocturnal, mysterious, controlled, elegant and quietly powerful.\n\nUse warm dark synth pads, gentle bass pulses, subtle electronic drums, atmospheric textures and occasional soft metallic accents.\n\nAround 80 BPM.\n\nKeep the arrangement smooth, repetitive and unobtrusive with subtle variation across the track.\n\nAvoid dramatic tension spikes, strong melodic hooks, orchestral climaxes and recognizable soundtrack material.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "16 – Starship Core\n\nCreate a dark technological instrumental background track for long spacecraft building instructions.\n\nStyle: deep electronic pulse with cinematic ambient atmosphere.\n\nMood: focused, mechanical, futuristic, powerful and controlled.\n\nUse repeating low synth pulses, deep bass, subtle rhythmic percussion, atmospheric pads and quiet digital textures.\n\nAround 90 BPM.\n\nCreate the feeling of an enormous spacecraft reactor and internal systems operating steadily.\n\nMaintain consistent volume and rhythm suitable for very long instructional videos.\n\nAvoid alarms, harsh machine effects, dramatic buildups and recognizable science-fiction themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "17 – Dreadnought Passage\n\nCreate a slow dark instrumental background track for long step-by-step building instructions featuring a gigantic futuristic dreadnought.\n\nStyle: cinematic electronic ambient.\n\nMood: massive, solemn, mysterious, restrained and intimidating.\n\nUse very deep pads, soft low percussion, subtle synth pulses, distant metallic reverberation and understated bass.\n\nAround 76 BPM.\n\nEmphasize scale through spacious sound design rather than loudness or dramatic orchestration.\n\nKeep dynamics stable and transitions gradual.\n\nAvoid recognizable movie soundtrack motifs, brass fanfares, dramatic crescendos and aggressive action music.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "18 – Tactical Grid\n\nCreate a dark precise instrumental background track for long sci-fi building instructions.\n\nStyle: minimal futuristic electronic.\n\nMood: tactical, organized, focused, technical and controlled.\n\nUse clean repeating synth patterns, muted electronic percussion, low bass pulses, subtle digital textures and dark ambient pads.\n\nAround 98 BPM.\n\nKeep the groove predictable and consistent, suggesting a sophisticated tactical computer system without sounding like video game music.\n\nAvoid dramatic drops, fast action sequences, bright melodies and recognizable franchise themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "19 – Eclipse Fleet\n\nCreate a deep dark instrumental background track for long spacecraft building instructions.\n\nStyle: cinematic dark ambient with minimal electronic elements.\n\nMood: vast, ominous, elegant, quiet and mysterious.\n\nUse very wide atmospheric pads, deep drones, occasional soft electronic pulses, distant metallic tones and minimal bass movement.\n\nAround 72 BPM.\n\nCreate an atmosphere of enormous spacecraft slowly emerging from darkness.\n\nKeep the track calm and consistent enough for prolonged instructional use.\n\nAvoid horror effects, sudden impacts, dramatic orchestral moments and recognizable movie themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "20 – Imperial Horizon\n\nCreate a dark cinematic electronic instrumental background track for long step-by-step sci-fi building instructions.\n\nStyle: melodic cinematic electronic with ambient space textures.\n\nMood: powerful, mysterious, sophisticated, futuristic and restrained.\n\nUse deep atmospheric pads, subtle repeating synth arpeggios, warm low bass, light electronic percussion and a simple original minor-key melodic phrase.\n\nAround 86 BPM.\n\nMaintain steady low-intensity momentum with gradual subtle variations so the track remains interesting across long instructional videos without becoming distracting.\n\nAvoid heroic themes, recognizable soundtrack melodies, orchestral climaxes, drops and aggressive percussion.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  }
+]
 };
-const SEED_KEY="ytMusicLibrary.seed.seasonalChristmas.v1";
+const SEED_KEY="ytMusicLibrary.seed.catalog.v2";
 const KEY="ytMusicLibrary.v2",OLD="ytMusicLibrary.v1";
 let data=load();
 function load(){try{let x=localStorage.getItem(KEY)||localStorage.getItem(OLD);let d=x?JSON.parse(x):{},prompts=d.prompts||{};if(localStorage.getItem(SEED_KEY)!=="1"){for(const [k,items] of Object.entries(seededPrompts)){let arr=prompts[k]??=[];let seen=new Set(arr.map(x=>x.text));for(const item of items)if(!seen.has(item.text))arr.push({...item});prompts[k]=arr}localStorage.setItem(SEED_KEY,"1");localStorage.setItem(KEY,JSON.stringify({prompts,audio:d.audio||{}}))}return {prompts,audio:d.audio||{}}}catch(e){let prompts={};for(const [k,items] of Object.entries(seededPrompts))prompts[k]=items.map(x=>({...x}));localStorage.setItem(SEED_KEY,"1");return {prompts,audio:{}}}}
