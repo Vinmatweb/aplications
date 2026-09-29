@@ -1,8 +1,7 @@
 const catalog=[
 {name:"City",subs:["Trains","Police","Fire","Construction","Vehicles","Space","Airport","Harbor","Food","Jungle / Exploration"]},
 {name:"Technic",subs:["Cars","Motorcycles","Construction","Racing","Space","Aircraft"]},
-{name:"Icons",subs:["Vehicles","Landmarks","Botanical Collection","Modular Buildings","Entertainment","Seasonal"]},
-{name:"Ideas",subs:["Space","Nature","Movies & TV","Games","Music","Objects & Display"]},
+{name:"Icons / Ideas",subs:["Cozy Buildings & Interiors","Elegant / Historic","Playful / Quirky","Retro / Nostalgia","Vehicles / Engineering","Nature / Decorative","Cinematic / Pop Culture","Medieval / Castle / Fantasy"]},
 {name:"Creator 3in1",subs:["Animals","Vehicles","Buildings","Space"]},{name:"Speed Champions",subs:["Supercars","Racing","Formula 1"]},
 {name:"Friends",subs:["Adventure","Animals","City Life","Food","Travel"]},{name:"NINJAGO",subs:["Dragons","Mechs","Vehicles","Temples"]},
 {name:"Star Wars",subs:["Imperial / Dark Space","Jedi / Force / Mystical","Space Battle / Action","Rebel / Adventure","Mandalorian / Bounty Hunters","Droids / Light & Playful","Display / Collectors"]},{name:"Pokémon",subs:["Trainer Journey / Classic Adventure","Pokémon Creatures / Character Display","Battle / Action"]},{name:"Minecraft",subs:["Biomes","Mobs","Buildings","Adventure"]},
@@ -466,9 +465,165 @@ const seededPrompts={
     "generated": false,
     "approved": false
   }
+],
+  "icons-ideas__cozy-buildings-interiors": [
+  {
+    "text": "01 – 11379 Bookstore: Book Nook – Quiet Bookshop\n\nCreate a warm instrumental background track for long step-by-step building instructions featuring a cozy bookstore interior and detailed book nook display.\n\nStyle: acoustic-electronic chill with soft cinematic warmth.\nMood: cozy, intimate, thoughtful, welcoming and calm.\nUse soft piano, fingerpicked acoustic guitar, warm electric piano, gentle pads, subtle percussion and smooth bass.\nAround 88 BPM.\n\nKeep the arrangement steady, repetitive and unobtrusive while instruction pages change every five seconds. Suggest the peaceful atmosphere of browsing books in a small independent bookstore.\n\nAvoid dramatic transitions, strong hooks, busy percussion and recognizable licensed melodies.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "02 – Rainy Café Window\n\nCreate a cozy instrumental background track for step-by-step building instructions featuring a small café, warm interior lighting and a rainy city window.\n\nStyle: lo-fi inspired acoustic chill with clean modern production.\nMood: warm, relaxed, peaceful, comforting and softly urban.\nUse electric piano, muted guitar, soft brushed percussion, subtle bass and light ambient textures.\nAround 84 BPM.\n\nMaintain consistent low-key energy and a simple repeating groove suitable for long instructional videos.\n\nAvoid vinyl crackle that is too prominent, dramatic chord changes, vocals and recognizable melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "03 – Reading Corner\n\nCreate a calm instrumental background track for long building instructions featuring a cozy reading room, shelves, lamps and detailed interior décor.\n\nStyle: ambient acoustic-electronic chill.\nMood: quiet, warm, thoughtful, elegant and comforting.\nUse soft piano, gentle guitar harmonics, warm pads, delicate percussion and smooth bass.\nAround 82 BPM.\n\nKeep the music minimal and slowly evolving, with very consistent volume for instruction pages changing every five seconds.\n\nAvoid strong melodic hooks, cinematic drama and busy rhythmic changes.\n\nInstrumental only. No vocals or spoken words. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "04 – City Apartment Evening\n\nCreate a relaxed instrumental background track for step-by-step building instructions featuring a detailed urban apartment interior.\n\nStyle: modern chill house with acoustic touches.\nMood: comfortable, polished, warm, calm and contemporary.\nUse warm electric piano, subtle synth plucks, soft electronic drums, smooth bass and light guitar.\nAround 96 BPM.\n\nMaintain a steady gentle pulse with consistent energy. The music should feel modern and homely without becoming dance-oriented.\n\nAvoid drops, club energy, dramatic buildups and dominant lead melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "05 – Little Corner Shop\n\nCreate a cheerful but calm instrumental background track for long building instructions featuring a small neighborhood shop or cozy storefront.\n\nStyle: light melodic acoustic-electronic.\nMood: friendly, charming, sunny, welcoming and relaxed.\nUse acoustic guitar, warm piano, soft plucks, gentle bass and subtle percussion.\nAround 94 BPM.\n\nKeep the rhythm simple and predictable, with small melodic variations suitable for long tutorials.\n\nAvoid overly playful cartoon sounds, strong pop hooks and dramatic transitions.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "06 – Warm Interior Details\n\nCreate a soft polished instrumental background track for detailed building instructions focused on furniture, shelves, lamps and decorative interior elements.\n\nStyle: ambient lounge chill.\nMood: tasteful, warm, clean, relaxed and refined.\nUse electric piano, airy pads, soft bass, subtle percussion and sparse guitar accents.\nAround 86 BPM.\n\nKeep the arrangement understated and repetitive so it never distracts from the build.\n\nAvoid dramatic moments, vocals, heavy bass and prominent lead instruments.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "07 – Bookshop After Hours\n\nCreate a quiet atmospheric instrumental background track for long building instructions featuring a bookstore after closing time.\n\nStyle: cinematic chill with acoustic and ambient textures.\nMood: peaceful, intimate, nostalgic, elegant and softly mysterious.\nUse warm piano, fingerpicked guitar, subtle strings, soft pads and minimal percussion.\nAround 80 BPM.\n\nMaintain a slow steady flow with gradual texture changes and consistent dynamics.\n\nAvoid sadness, dramatic scoring, recognizable themes and strong rhythmic accents.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "08 – Sunday Brunch Interior\n\nCreate a light warm instrumental background track for step-by-step building instructions featuring a cozy café or restaurant interior.\n\nStyle: acoustic chill with subtle jazz-lounge touches.\nMood: easygoing, bright, relaxed, friendly and refined.\nUse soft electric piano, muted guitar, gentle brushed percussion, warm bass and subtle melodic plucks.\nAround 92 BPM.\n\nKeep the groove steady and background-friendly with no dramatic musical events.\n\nAvoid swing-heavy jazz, vocals, strong solos and catchy commercial hooks.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "09 – Tiny House Calm\n\nCreate a gentle instrumental background track for long building instructions featuring a compact cozy house with detailed rooms and furnishings.\n\nStyle: acoustic ambient chill.\nMood: peaceful, homely, simple, warm and optimistic.\nUse fingerpicked guitar, soft piano, gentle pads, light percussion and smooth bass.\nAround 84 BPM.\n\nKeep the track repetitive, soft and consistent for long-form instructional use.\n\nAvoid dramatic transitions, sentimental crescendos and prominent lead melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "10 – Cozy Architecture Studio\n\nCreate a clean relaxing instrumental background track for step-by-step building instructions featuring a detailed cozy building or interior display.\n\nStyle: modern ambient chill with acoustic-electronic balance.\nMood: polished, calm, creative, warm and architectural.\nUse soft synth pads, warm piano, light guitar, smooth bass and restrained electronic percussion.\nAround 90 BPM.\n\nMaintain a consistent understated groove with subtle variation while instruction pages change every five seconds.\n\nAvoid club-style rhythms, dramatic soundtrack elements and recognizable melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  }
+],
+  "icons-ideas__elegant-historic": [
+  {
+    "text": "01 – 21373 Downton Abbey – Grand Estate\n\nCreate an elegant instrumental background track for long step-by-step building instructions featuring a grand historic country estate and refined period architecture.\n\nStyle: cinematic chamber chill with restrained classical influence.\nMood: dignified, graceful, warm, historic and sophisticated.\nUse soft piano, gentle strings, subtle woodwinds, light chamber percussion and warm ambient pads.\nAround 76 BPM.\n\nKeep the arrangement smooth and understated with consistent dynamics, suitable for long instructional videos.\n\nDo not imitate any existing television score, period-drama soundtrack or recognizable licensed melody. Avoid dramatic orchestral climaxes and strong themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "02 – Heritage Hall\n\nCreate a calm refined instrumental background track for building instructions featuring an elegant historic mansion interior.\n\nStyle: chamber ambient with modern cinematic production.\nMood: stately, polished, peaceful, timeless and warm.\nUse piano, soft strings, subtle harp-like plucks, gentle ambient pads and minimal percussion.\nAround 74 BPM.\n\nMaintain a slow graceful flow with subtle variation and no sudden changes.\n\nAvoid melodrama, sweeping romantic themes, recognizable soundtrack material and heavy percussion.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "03 – Old Library Estate\n\nCreate a sophisticated instrumental background track for long building instructions featuring a historic library, manor or classical interior.\n\nStyle: neoclassical chill with soft ambient textures.\nMood: intellectual, elegant, calm, historic and intimate.\nUse felt piano, soft strings, subtle cello, light ambient pads and restrained percussion.\nAround 72 BPM.\n\nKeep the music minimal and consistent, with gentle harmonic movement suitable for a long tutorial.\n\nAvoid emotional crescendos, virtuoso classical passages and recognizable melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "04 – Stone Manor Morning\n\nCreate a warm atmospheric instrumental background track for step-by-step building instructions featuring a historic stone manor or stately home.\n\nStyle: cinematic acoustic ambient.\nMood: dignified, peaceful, refined, bright and timeless.\nUse soft piano, acoustic guitar, gentle strings, subtle woodwinds and light percussion.\nAround 78 BPM.\n\nMaintain steady low-intensity energy and gradual variation throughout.\n\nAvoid epic orchestration, dramatic tension and recognizable licensed music.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "05 – Classical Façade\n\nCreate an elegant background track for detailed building instructions featuring classical architecture and ornate historic façades.\n\nStyle: minimal neoclassical ambient.\nMood: balanced, graceful, architectural, calm and sophisticated.\nUse piano, restrained strings, soft plucked textures, warm pads and sparse percussion.\nAround 70 BPM.\n\nKeep the structure clean and repetitive so the music supports precise visual instructions without distraction.\n\nAvoid dramatic symphonic writing, strong leitmotifs and heavy low end.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "06 – Historic Drawing Room\n\nCreate a calm refined instrumental background track for long building instructions featuring an elegant drawing room with period furniture and decorative details.\n\nStyle: chamber lounge ambient.\nMood: intimate, polished, warm, graceful and quiet.\nUse soft piano, muted strings, subtle harp, gentle bass and very light brushed percussion.\nAround 76 BPM.\n\nKeep a steady background-friendly flow with small variations and consistent dynamics.\n\nAvoid waltz clichés, dramatic romance, vocals and recognizable soundtrack themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "07 – Estate Gardens at Dusk\n\nCreate a soft cinematic instrumental background track for long building instructions featuring a historic estate and formal gardens.\n\nStyle: atmospheric chamber chill.\nMood: serene, elegant, nostalgic, spacious and refined.\nUse soft strings, piano, gentle woodwinds, airy pads and minimal percussion.\nAround 74 BPM.\n\nMaintain gradual evolution and a calm consistent intensity.\n\nAvoid sentimental melodrama, sweeping orchestral climaxes and recognizable film or television melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "08 – Heritage Architecture\n\nCreate a polished instrumental background track for step-by-step building instructions featuring historic architecture, columns, stonework and classic design.\n\nStyle: cinematic ambient with subtle classical elements.\nMood: prestigious, thoughtful, calm, timeless and precise.\nUse warm piano, restrained strings, soft ambient pads, gentle low bass and sparse percussion.\nAround 78 BPM.\n\nKeep the music understated and steady for long instructional use.\n\nAvoid epic grandeur, ceremonial fanfares and recognizable motifs.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "09 – Evening at the Manor\n\nCreate a warm elegant instrumental background track for long building instructions featuring a historic manor illuminated in the evening.\n\nStyle: neoclassical cinematic chill.\nMood: cozy, dignified, peaceful, nostalgic and sophisticated.\nUse felt piano, soft strings, subtle cello, warm pads and gentle percussion.\nAround 72 BPM.\n\nMaintain smooth consistent dynamics with a restrained original melodic idea.\n\nAvoid melodramatic swells, sadness and imitation of existing period-drama music.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "10 – Timeless Residence\n\nCreate a refined instrumental background track for detailed building instructions featuring a prestigious historic residence or landmark.\n\nStyle: premium cinematic chamber ambient.\nMood: timeless, elegant, calm, architectural and quietly impressive.\nUse piano, soft strings, subtle woodwinds, low warm pads and minimal percussion.\nAround 75 BPM.\n\nKeep the arrangement steady, restrained and suitable for very long tutorials.\n\nAvoid recognizable soundtrack themes, dramatic crescendos, strong percussion and dominant melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  }
+],
+  "icons-ideas__playful-quirky": [
+  {
+    "text": "01 – 21371 Wallace & Gromit – Inventor’s Workshop\n\nCreate a playful instrumental background track for long step-by-step building instructions featuring an eccentric inventor’s workshop and quirky animated characters.\n\nStyle: light whimsical acoustic-electronic with gentle cinematic touches.\nMood: cheerful, clever, quirky, friendly and inventive.\nUse pizzicato strings, soft clarinet-like tones, muted guitar, light percussion, warm bass and subtle synth accents.\nAround 102 BPM.\n\nKeep the humor subtle and the rhythm steady so the music remains suitable as background for instruction pages changing every five seconds.\n\nDo not imitate any existing film or television score, character theme or recognizable melody. Avoid slapstick sound effects and overly busy orchestration.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "02 – Quirky Contraption\n\nCreate a cheerful instrumental background track for building instructions featuring a humorous mechanical invention or unusual display model.\n\nStyle: playful chamber-electronic chill.\nMood: inventive, curious, lighthearted, clever and relaxed.\nUse pizzicato strings, marimba-like plucks, warm bass, light electronic drums and subtle woodwind textures.\nAround 104 BPM.\n\nMaintain consistent energy and a simple repeating groove. Keep the quirky character gentle rather than comedic or chaotic.\n\nAvoid cartoon sound effects, dramatic changes and recognizable licensed themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "03 – Stop-Motion Workshop\n\nCreate a warm playful instrumental background track for long building instructions featuring handcrafted animated characters and a detailed workshop setting.\n\nStyle: acoustic whimsical chill.\nMood: charming, tactile, cozy, inventive and family-friendly.\nUse acoustic guitar, soft piano, light pizzicato strings, subtle percussion and gentle bass.\nAround 96 BPM.\n\nKeep the arrangement steady and unobtrusive with small playful variations.\n\nAvoid imitation of any existing stop-motion soundtrack, strong comedic cues and catchy licensed-style melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "04 – Odd Little Machine\n\nCreate a light quirky instrumental background track for step-by-step building instructions featuring a strange but charming mechanical model.\n\nStyle: minimalist playful electronic-acoustic.\nMood: curious, clever, whimsical, upbeat and calm.\nUse soft plucked synths, muted guitar, small percussion, warm bass and occasional bell-like accents.\nAround 100 BPM.\n\nKeep the groove repetitive and clean so it works well through long instruction sequences.\n\nAvoid novelty sound effects, dramatic drops, chaotic rhythms and recognizable media themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "05 – Cheerful Character Shelf\n\nCreate a bright but gentle instrumental background track for long building instructions featuring colorful pop-culture character display models.\n\nStyle: melodic chill pop with whimsical acoustic details.\nMood: playful, friendly, polished, cheerful and relaxed.\nUse piano, soft synth plucks, light guitar, gentle bass and subtle electronic drums.\nAround 106 BPM.\n\nMaintain steady medium-light energy with simple original melodic ideas.\n\nAvoid imitation of existing character songs, soundtrack themes, vocals and heavy pop production.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "06 – Eccentric Living Room\n\nCreate a playful cozy instrumental background track for step-by-step building instructions featuring an unusual character-filled interior.\n\nStyle: quirky lounge chill.\nMood: warm, humorous, charming, relaxed and slightly eccentric.\nUse electric piano, muted guitar, subtle pizzicato strings, smooth bass and light percussion.\nAround 94 BPM.\n\nKeep the music background-friendly and consistent, with gentle quirks rather than obvious comedy.\n\nAvoid slapstick cues, dramatic scene changes and recognizable licensed melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "07 – Handmade Adventure\n\nCreate a cheerful instrumental background track for long building instructions featuring a handcrafted, imaginative and playful display model.\n\nStyle: acoustic-electronic adventure chill.\nMood: creative, charming, optimistic, curious and family-friendly.\nUse acoustic guitar, piano, light strings, soft synth plucks and gentle percussion.\nAround 101 BPM.\n\nMaintain a smooth repeating flow with small variations and consistent dynamics.\n\nAvoid heroic scoring, loud comedy effects and imitation of existing franchise music.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "08 – Tea, Tools & Trouble\n\nCreate a light playful instrumental background track for long step-by-step building instructions featuring eccentric characters, gadgets and domestic comedy.\n\nStyle: whimsical chamber chill with subtle electronic support.\nMood: clever, cozy, quirky, playful and relaxed.\nUse pizzicato strings, gentle piano, soft woodwind-like tones, warm bass and restrained percussion.\nAround 98 BPM.\n\nKeep the humor understated and the structure predictable for long-form instructional use.\n\nAvoid direct references to any existing comedy soundtrack, slapstick effects and recognizable melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "09 – Curious Display Piece\n\nCreate a polished playful instrumental background track for building instructions featuring an unusual or humorous collector display model.\n\nStyle: modern whimsical chill.\nMood: clean, curious, playful, tasteful and light.\nUse soft synth plucks, piano, muted guitar, subtle percussion and smooth bass.\nAround 100 BPM.\n\nMaintain consistent low-to-medium energy and avoid large musical changes.\n\nAvoid novelty music, strong hooks and recognizable pop-culture themes.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  },
+  {
+    "text": "10 – Quirky Collector Evening\n\nCreate a relaxed instrumental background track for long building instructions featuring a charming eccentric pop-culture display set.\n\nStyle: cinematic chill with whimsical acoustic accents.\nMood: cozy, playful, polished, nostalgic and gently humorous.\nUse warm piano, soft strings, muted guitar, subtle bells and light percussion.\nAround 92 BPM.\n\nKeep the track calm and repetitive with gentle variation, suitable for very long tutorials.\n\nAvoid imitation of existing film or television scores, dramatic storytelling and dominant lead melodies.\n\nInstrumental only. Original composition only.",
+    "generated": false,
+    "approved": false
+  }
 ]
 };
-const SEED_KEY="ytMusicLibrary.seed.catalog.v5";
+const SEED_KEY="ytMusicLibrary.seed.catalog.v6";
 const subDescriptions={
  "star-wars__imperial-dark-space":"Star Destroyery, Executor, Death Star, Imperial ships",
  "star-wars__jedi-force-mystical":"Jedi Temple, Yoda, Luke, Force-related sety, lightsaber display",
@@ -476,7 +631,12 @@ const subDescriptions={
  "star-wars__rebel-adventure":"Rebel Alliance, Resistance, dobrodružné lodě a základny",
  "star-wars__mandalorian-bounty-hunters":"Mandalorian, Boba Fett, bounty hunters, Razor Crest",
  "star-wars__droids-light-playful":"R2-D2, C-3PO, BB-8, drobné a hravé sety",
- "star-wars__display-collectors":"Helmy, lightsabery, loga, dioramata, UCS display modely"
+ "star-wars__display-collectors":"Helmy, lightsabery, loga, dioramata, UCS display modely",
+ "icons-ideas__retro-nostalgia":"Staré přístroje, retro předměty a nostalgické licence. Hudba: warm retro chill, jemný analogový charakter, nostalgie bez kopírování známých skladeb.",
+ "icons-ideas__vehicles-engineering":"Auta, vlaky a technicky zaměřené modely. Hudba: moderní, přesná, lehce rytmická, electronic / melodic chill.",
+ "icons-ideas__nature-decorative":"Příroda, dekorace a estetické display modely. Hudba: organická, klidná, ambientní, jemně akustická.",
+ "icons-ideas__cinematic-pop-culture":"Filmy, seriály a výrazné licence. Hudba: cinematic chill podle konkrétního setu, vždy bez napodobování existujícího soundtracku.",
+ "icons-ideas__medieval-castle-fantasy":"Hrady, středověk a fantasy modely. Hudba: jemná cinematic / folk ambient atmosféra se středověkými prvky, vhodná pro dlouhé návody."
 };
 const KEY="ytMusicLibrary.v2",OLD="ytMusicLibrary.v1";
 let data=load();
