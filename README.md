@@ -10,3 +10,10 @@ Public URL: https://vinmat.eu/aplications/bgmusic/
 Development files: `bgmusic/`
 
 Progress is stored in browser localStorage and can be backed up/restored using JSON export/import.
+
+## driving-children-statistics — Family transport statistics
+Mobile-first weekly tracker for school and kindergarten trips, pickups, clubs and weekend activities.
+
+Development files: `driving-children-statistics/`
+
+Family entries stay in the browser's localStorage and are never committed to GitHub.

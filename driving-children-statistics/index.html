@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#173f35" />
+    <meta name="description" content="Jednoduchý rodinný přehled odvozů, vyzvedávání, kroužků a víkendové péče." />
+    <title>Kdo veze děti?</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">RODINNÁ STATISTIKA</p>
+          <h1>Kdo veze děti?</h1>
+        </div>
+        <span class="save-state" id="save-state" aria-live="polite">Uloženo v telefonu</span>
+      </header>
+
+      <main>
+        <section id="week-view" aria-labelledby="week-title">
+          <div class="week-toolbar">
+            <button class="icon-button" id="previous-week" type="button" aria-label="Předchozí týden">‹</button>
+            <div>
+              <span>TÝDEN</span>
+              <h2 id="week-title"></h2>
+            </div>
+            <button class="icon-button" id="next-week" type="button" aria-label="Následující týden">›</button>
+          </div>
+          <button class="today-button" id="today" type="button">Přejít na tento týden</button>
+          <div id="days" class="days"></div>
+        </section>
+
+        <section id="stats-view" class="hidden" aria-labelledby="stats-title">
+          <div class="stats-heading">
+            <div>
+              <p class="eyebrow">PŘEHLED</p>
+              <h2 id="stats-title">Kdo se zapojil</h2>
+            </div>
+            <div class="period-switch" role="group" aria-label="Období statistiky">
+              <button type="button" data-period="week" aria-pressed="true">Týden</button>
+              <button type="button" data-period="all" aria-pressed="false">Celkem</button>
+            </div>
+          </div>
+          <p class="stats-period" id="stats-period"></p>
+          <div class="overall" id="overall"></div>
+          <div class="stats-list" id="stats-list"></div>
+          <div class="weekend-history" id="weekend-history"></div>
+          <p class="privacy-note"><strong>Soukromí:</strong> zadané údaje zůstávají pouze v tomto prohlížeči. Na GitHub se neodesílají.</p>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Hlavní navigace">
+        <button type="button" class="active" data-view="week" aria-current="page"><span>▦</span>Týden</button>
+        <button type="button" data-view="stats"><span>◔</span>Statistika</button>
+      </nav>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
