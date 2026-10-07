@@ -37,6 +37,10 @@ test('weekday statistics distinguish trips, pickups and enabled clubs', () => {
   assert.deepEqual(result.categories.find(item => item.id === 'to'), { id: 'to', label: 'Do školy / školky', dad: 2, mom: 1, total: 3 });
   assert.deepEqual(result.categories.find(item => item.id === 'from'), { id: 'from', label: 'Ze školy / školky', dad: 1, mom: 2, total: 3 });
   assert.deepEqual(result.categories.find(item => item.id === 'activityDriver'), { id: 'activityDriver', label: 'Na kroužek', dad: 1, mom: 1, total: 2 });
+  assert.deepEqual(result.categories.find(item => item.id === 'schoolTotal'), { id: 'schoolTotal', label: 'Do / ze školy / školky', dad: 3, mom: 3, total: 6, derived: true });
+  assert.deepEqual(result.categories.find(item => item.id === 'weekdayTotal'), { id: 'weekdayTotal', label: 'Škola / školka + kroužek', dad: 4, mom: 4, total: 8, derived: true });
+  assert.deepEqual(result.categories.map(item => item.id), ['to', 'from', 'schoolTotal', 'activityDriver', 'weekdayTotal', 'morningParent', 'afternoonParent']);
+  assert.deepEqual(result.overall, { dad: 4, mom: 4, total: 8 });
 });
 
 test('both parents can receive credit for the same task', () => {

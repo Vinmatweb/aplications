@@ -169,8 +169,8 @@ function renderWeek() {
 
 function bar(category) {
   const dadPercent = category.total ? Math.round(category.dad / category.total * 100) : 50;
-  return `<article class="stat-card">
-    <div class="stat-title"><h3>${category.label}</h3><span>${category.total}×</span></div>
+  return `<article class="stat-card ${category.derived ? 'summary' : ''}">
+    <div class="stat-title"><h3>${category.label}</h3><span>${category.derived ? 'Součet · ' : ''}${category.total}×</span></div>
     <div class="split-bar ${category.total ? '' : 'empty'}" aria-label="Táta ${category.dad}, Máma ${category.mom}"><i style="width:${dadPercent}%"></i></div>
     <div class="stat-values"><span class="dad"><b>${category.dad}</b> Táta</span><span class="mom"><b>${category.mom}</b> Máma</span></div>
   </article>`;

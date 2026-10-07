@@ -11,7 +11,7 @@ Mobile-first family tracker for school and kindergarten trips, pickups, clubs an
 - Friday: Olaf OCR for Vincent
 - Saturday and Sunday: free-form morning and afternoon activity with Táta/Máma assignment
 
-Every weekday club can be enabled or disabled for a specific date. Both parents can be selected for any task. Statistics can be filtered by week, month, year or all saved records.
+Every weekday club can be enabled or disabled for a specific date. Both parents can be selected for any task. Statistics can be filtered by week, month, year or all saved records and include separate totals for school/kindergarten trips and all weekday transport including clubs.
 
 All entries are saved automatically to the current browser's `localStorage`. No family records are committed to GitHub or sent to a server.
 

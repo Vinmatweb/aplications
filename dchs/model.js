@@ -161,8 +161,35 @@ export function calculateStats(records, selectedKeys = null) {
     }
   }
 
-  const categories = CATEGORIES.map(category => ({ ...category, ...counts[category.id], total: counts[category.id].dad + counts[category.id].mom }));
-  const overall = categories.reduce((result, category) => {
+  const baseCategories = CATEGORIES.map(category => ({ ...category, ...counts[category.id], total: counts[category.id].dad + counts[category.id].mom }));
+  const byId = Object.fromEntries(baseCategories.map(category => [category.id, category]));
+  const schoolTotal = {
+    id: 'schoolTotal',
+    label: 'Do / ze školy / školky',
+    dad: byId.to.dad + byId.from.dad,
+    mom: byId.to.mom + byId.from.mom,
+    derived: true,
+  };
+  schoolTotal.total = schoolTotal.dad + schoolTotal.mom;
+  const weekdayTotal = {
+    id: 'weekdayTotal',
+    label: 'Škola / školka + kroužek',
+    dad: schoolTotal.dad + byId.activityDriver.dad,
+    mom: schoolTotal.mom + byId.activityDriver.mom,
+    derived: true,
+  };
+  weekdayTotal.total = weekdayTotal.dad + weekdayTotal.mom;
+
+  const categories = [
+    byId.to,
+    byId.from,
+    schoolTotal,
+    byId.activityDriver,
+    weekdayTotal,
+    byId.morningParent,
+    byId.afternoonParent,
+  ];
+  const overall = baseCategories.reduce((result, category) => {
     result.dad += category.dad;
     result.mom += category.mom;
     return result;

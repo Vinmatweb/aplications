@@ -105,6 +105,9 @@ main { padding: 18px 14px 24px; }
 .overall .dad b { color: #7dc8f1; }.overall .mom b { color: #ffac96; }
 .stats-list { display: flex; flex-direction: column; gap: 11px; margin-top: 14px; }
 .stat-card { padding: 15px; border: 1px solid var(--line); border-radius: 15px; background: white; }
+.stat-card.summary { border-color: #9ebdaf; background: #f1f8f4; box-shadow: inset 3px 0 0 #5b907b; }
+.stat-card.summary .stat-title h3 { color: #245b49; }
+.stat-card.summary .stat-title span { color: #477565; font-weight: 750; }
 .stat-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .stat-title h3 { margin: 0; font-size: .88rem; }.stat-title span { color: var(--muted); font-size: .78rem; }
 .split-bar { position: relative; overflow: hidden; height: 9px; margin: 13px 0 10px; border-radius: 999px; background: var(--mom); }
