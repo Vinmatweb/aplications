@@ -18,7 +18,7 @@ import {
   normalizeState,
   weekKeys,
   yearKeys,
-} from './model.js';
+} from './model.js?v=20261007-3';
 
 const now = new Date();
 let state = loadState();
