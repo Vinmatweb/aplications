@@ -38,10 +38,16 @@
               <p class="eyebrow">PŘEHLED</p>
               <h2 id="stats-title">Kdo se zapojil</h2>
             </div>
-            <div class="period-switch" role="group" aria-label="Období statistiky">
-              <button type="button" data-period="week" aria-pressed="true">Týden</button>
-              <button type="button" data-period="all" aria-pressed="false">Celkem</button>
-            </div>
+          </div>
+          <div class="period-switch" role="group" aria-label="Období statistiky">
+            <button type="button" data-period="week" aria-pressed="true">Týden</button>
+            <button type="button" data-period="month" aria-pressed="false">Měsíc</button>
+            <button type="button" data-period="year" aria-pressed="false">Rok</button>
+            <button type="button" data-period="all" aria-pressed="false">Celkem</button>
+          </div>
+          <div class="stats-filters hidden" id="stats-filters">
+            <label id="month-filter">Měsíc<select id="stats-month" aria-label="Měsíc statistiky"></select></label>
+            <label id="year-filter">Rok<select id="stats-year" aria-label="Rok statistiky"></select></label>
           </div>
           <p class="stats-period" id="stats-period"></p>
           <div class="overall" id="overall"></div>

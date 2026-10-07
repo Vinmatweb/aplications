@@ -5,12 +5,17 @@ export const PARENTS = {
   mom: 'Máma',
 };
 
+export const CHILDREN = {
+  matilda: 'Maty',
+  vincent: 'Vincent',
+};
+
 export const DAY_META = [
-  { short: 'Po', long: 'Pondělí', type: 'weekday', activity: 'Volno', matildaKindergarten: true },
-  { short: 'Út', long: 'Úterý', type: 'weekday', activity: 'Atletika', matildaKindergarten: true },
-  { short: 'St', long: 'Středa', type: 'weekday', activity: 'Plavání', matildaKindergarten: true },
-  { short: 'Čt', long: 'Čtvrtek', type: 'weekday', activity: 'Judo', matildaKindergarten: false },
-  { short: 'Pá', long: 'Pátek', type: 'weekday', activity: 'Olaf OCR', matildaKindergarten: true },
+  { short: 'Po', long: 'Pondělí', type: 'weekday', activity: 'Judo', activityEnabled: false, defaultChildren: ['matilda', 'vincent'], matildaKindergarten: true },
+  { short: 'Út', long: 'Úterý', type: 'weekday', activity: 'Atletika', activityEnabled: true, defaultChildren: ['matilda', 'vincent'], matildaKindergarten: true },
+  { short: 'St', long: 'Středa', type: 'weekday', activity: 'Plavání', activityEnabled: true, defaultChildren: ['matilda', 'vincent'], matildaKindergarten: true },
+  { short: 'Čt', long: 'Čtvrtek', type: 'weekday', activity: 'Judo', activityEnabled: true, defaultChildren: ['matilda', 'vincent'], matildaKindergarten: false },
+  { short: 'Pá', long: 'Pátek', type: 'weekday', activity: 'Olaf OCR', activityEnabled: true, defaultChildren: ['vincent'], matildaKindergarten: true },
   { short: 'So', long: 'Sobota', type: 'weekend' },
   { short: 'Ne', long: 'Neděle', type: 'weekend' },
 ];
@@ -44,6 +49,15 @@ export function weekKeys(monday) {
   return DAY_META.map((_, index) => dateKey(addDays(monday, index)));
 }
 
+export function monthKeys(year, monthIndex) {
+  const days = new Date(year, monthIndex + 1, 0).getDate();
+  return Array.from({ length: days }, (_, index) => dateKey(new Date(year, monthIndex, index + 1, 12)));
+}
+
+export function yearKeys(year) {
+  return Array.from({ length: 12 }, (_, monthIndex) => monthKeys(year, monthIndex)).flat();
+}
+
 export function formatDay(key) {
   return new Intl.DateTimeFormat('cs-CZ', { day: 'numeric', month: 'numeric' }).format(dateFromKey(key));
 }
@@ -58,31 +72,58 @@ export function formatWeek(keys) {
 
 export function emptyRecord() {
   return {
-    to: '',
-    from: '',
-    activityDriver: '',
+    to: [],
+    from: [],
+    activityDriver: [],
+    activityEnabled: null,
+    activityName: '',
+    activityChildren: null,
+    matildaKindergarten: null,
     morningActivity: '',
-    morningParent: '',
+    morningParent: [],
     afternoonActivity: '',
-    afternoonParent: '',
+    afternoonParent: [],
   };
 }
 
+function normalizeChoices(raw, allowed) {
+  const values = Array.isArray(raw) ? raw : typeof raw === 'string' ? [raw] : [];
+  return [...new Set(values.filter(value => allowed.includes(value)))];
+}
+
 export function normalizeState(value) {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return { version: 1, records: {} };
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return { version: 2, records: {} };
   const records = value.records && typeof value.records === 'object' && !Array.isArray(value.records) ? value.records : {};
   const clean = {};
   for (const [key, candidate] of Object.entries(records)) {
     if (!/^20\d{2}-\d{2}-\d{2}$/.test(key) || !candidate || typeof candidate !== 'object' || Array.isArray(candidate)) continue;
     const record = emptyRecord();
-    for (const field of Object.keys(record)) {
-      const raw = candidate[field];
-      if (field.endsWith('Parent') || ['to', 'from', 'activityDriver'].includes(field)) record[field] = raw === 'dad' || raw === 'mom' ? raw : '';
-      else record[field] = typeof raw === 'string' ? raw.slice(0, 80) : '';
+    for (const field of ['to', 'from', 'activityDriver', 'morningParent', 'afternoonParent']) {
+      record[field] = normalizeChoices(candidate[field], Object.keys(PARENTS));
+    }
+    record.activityChildren = candidate.activityChildren === null || candidate.activityChildren === undefined
+      ? null
+      : normalizeChoices(candidate.activityChildren, Object.keys(CHILDREN));
+    record.activityEnabled = typeof candidate.activityEnabled === 'boolean' ? candidate.activityEnabled : null;
+    record.matildaKindergarten = typeof candidate.matildaKindergarten === 'boolean' ? candidate.matildaKindergarten : null;
+    for (const field of ['activityName', 'morningActivity', 'afternoonActivity']) {
+      record[field] = typeof candidate[field] === 'string' ? candidate[field].slice(0, 80) : '';
     }
     clean[key] = record;
   }
-  return { version: 1, records: clean };
+  return { version: 2, records: clean };
+}
+
+export function activityEnabled(meta, record) {
+  return typeof record.activityEnabled === 'boolean' ? record.activityEnabled : Boolean(meta.activityEnabled);
+}
+
+export function activityChildren(meta, record) {
+  return record.activityChildren === null ? [...(meta.defaultChildren || [])] : [...record.activityChildren];
+}
+
+export function matildaGoesToKindergarten(meta, record) {
+  return typeof record.matildaKindergarten === 'boolean' ? record.matildaKindergarten : Boolean(meta.matildaKindergarten);
 }
 
 const CATEGORIES = [
@@ -105,14 +146,18 @@ export function calculateStats(records, selectedKeys = null) {
     if (!meta) continue;
 
     if (meta.type === 'weekday') {
-      if (record.to === 'dad' || record.to === 'mom') counts.to[record.to]++;
-      if (record.from === 'dad' || record.from === 'mom') counts.from[record.from]++;
-      if (meta.activity !== 'Volno' && (record.activityDriver === 'dad' || record.activityDriver === 'mom')) counts.activityDriver[record.activityDriver]++;
+      for (const parent of normalizeChoices(record.to, Object.keys(PARENTS))) counts.to[parent]++;
+      for (const parent of normalizeChoices(record.from, Object.keys(PARENTS))) counts.from[parent]++;
+      if (activityEnabled(meta, record)) {
+        for (const parent of normalizeChoices(record.activityDriver, Object.keys(PARENTS))) counts.activityDriver[parent]++;
+      }
     } else {
-      if (record.morningParent === 'dad' || record.morningParent === 'mom') counts.morningParent[record.morningParent]++;
-      if (record.afternoonParent === 'dad' || record.afternoonParent === 'mom') counts.afternoonParent[record.afternoonParent]++;
-      if (record.morningActivity.trim()) weekendActivities.push({ key, part: 'Dopoledne', activity: record.morningActivity.trim(), parent: record.morningParent });
-      if (record.afternoonActivity.trim()) weekendActivities.push({ key, part: 'Odpoledne', activity: record.afternoonActivity.trim(), parent: record.afternoonParent });
+      const morningParents = normalizeChoices(record.morningParent, Object.keys(PARENTS));
+      const afternoonParents = normalizeChoices(record.afternoonParent, Object.keys(PARENTS));
+      for (const parent of morningParents) counts.morningParent[parent]++;
+      for (const parent of afternoonParents) counts.afternoonParent[parent]++;
+      if (record.morningActivity.trim()) weekendActivities.push({ key, part: 'Dopoledne', activity: record.morningActivity.trim(), parents: morningParents });
+      if (record.afternoonActivity.trim()) weekendActivities.push({ key, part: 'Odpoledne', activity: record.afternoonActivity.trim(), parents: afternoonParents });
     }
   }
 
