@@ -1,5 +1,5 @@
 // OAuth Client ID is public application configuration, not a client secret.
-// Add the Google Cloud Web Client ID after authorizing this site's origin.
+// Google Cloud Web Client ID for the VinMat Ideas & Priorities app.
 window.VINMAT_SYNC_CONFIG = {
-  googleClientId: ""
+  googleClientId: "336778193875-nsrmb3fi6u7tousijk10p8jv8q9repub.apps.googleusercontent.com"
 };
