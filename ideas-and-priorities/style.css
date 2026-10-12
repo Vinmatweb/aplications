@@ -121,6 +121,8 @@ h1 {
 }
 
 .summary-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #5d9a79; box-shadow: 0 0 0 3px var(--green-soft); }
+.summary-dot.is-offline { background: var(--faint); box-shadow: none; }
+.summary-dot.is-connected { background: #5d9a79; box-shadow: 0 0 0 3px var(--green-soft); }
 .summary-divider { width: 1px; height: 14px; margin: 0 1px; background: var(--line); }
 .save-status { color: var(--faint); }
 
@@ -285,6 +287,7 @@ h2 {
 .toast.is-visible { opacity: 1; transform: translateY(0); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
 button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid color-mix(in srgb, var(--green) 34%, transparent); outline-offset: 2px; }
+button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity: .58; }
 
 /* Night mode applies to each of the three visual styles. */
 body[data-mode="night"] {
