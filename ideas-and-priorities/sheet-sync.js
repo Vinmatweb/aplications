@@ -3,9 +3,12 @@
 
   const SHEET_ID = "1QvOa1dYkQKgU7Ejf482OGdSHib7C0KW6J6KIBDv5GTs";
   const SHEET_NAME = "Nápady a priority";
-  const SHEET_SCOPE = "https://www.googleapis.com/auth/spreadsheets";
+  const SHEET_SCOPE = "https://www.googleapis.com/auth/drive.file";
   const SHEETS_API = "https://sheets.googleapis.com/v4/spreadsheets/";
   const clientId = window.VINMAT_SYNC_CONFIG?.googleClientId?.trim() || "";
+  const pickerApiKey = window.VINMAT_SYNC_CONFIG?.googlePickerApiKey?.trim() || "";
+  const googleProjectNumber = window.VINMAT_SYNC_CONFIG?.googleProjectNumber?.trim() || "";
+  const fileGrantStorageKey = "vinmat-ideas-priorities-sheet-access-v1";
   const typeByList = { priorities: "Priorita", ideas: "Nápad" };
   const listByType = { Priorita: "priorities", Nápad: "ideas" };
   const importanceToSheet = { high: "Vysoká", medium: "Střední", low: "Nízká" };
@@ -13,6 +16,7 @@
   const fields = ["list", "text", "importance", "project", "source"];
   let accessToken = "";
   let baseline = null;
+  let pickerApiPromise = null;
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
@@ -54,14 +58,152 @@
       if (response.status === 403) {
         throw new Error("Přihlášený Google účet nemá oprávnění upravovat společný Sheet. " + message);
       }
-      throw new Error(message);
+      const error = new Error(message);
+      error.status = response.status;
+      error.googleStatus = payload?.error?.status || "";
+      throw error;
     }
     return payload || {};
+  }
+
+  function hasTargetSheetAccessGrant() {
+    try {
+      return window.localStorage.getItem(fileGrantStorageKey) === SHEET_ID;
+    } catch {
+      return false;
+    }
+  }
+
+  function rememberTargetSheetAccessGrant() {
+    try {
+      window.localStorage.setItem(fileGrantStorageKey, SHEET_ID);
+    } catch {
+      // The file remains authorized for this Google account; without local storage,
+      // the picker may be shown again on the next visit.
+    }
+  }
+
+  function forgetTargetSheetAccessGrant() {
+    try {
+      window.localStorage.removeItem(fileGrantStorageKey);
+    } catch {
+      // The next connection will show the file picker again.
+    }
+  }
+
+  function loadPickerApi() {
+    if (window.google?.picker?.PickerBuilder) return Promise.resolve();
+    if (pickerApiPromise) return pickerApiPromise;
+
+    pickerApiPromise = new Promise((resolve, reject) => {
+      const finishLoading = () => {
+        if (!window.gapi?.load) {
+          reject(new Error("Knihovnu Google Picker se nepodařilo načíst."));
+          return;
+        }
+        window.gapi.load("picker", {
+          callback: resolve,
+          onerror: () => reject(new Error("Google Picker se nepodařilo načíst.")),
+          timeout: 10000,
+          ontimeout: () => reject(new Error("Načítání Google Pickeru trvalo příliš dlouho."))
+        });
+      };
+
+      let script = document.querySelector("script[data-vinmat-picker-api]");
+      if (window.gapi?.load) {
+        finishLoading();
+        return;
+      }
+      if (script) {
+        script.addEventListener("load", finishLoading, { once: true });
+        script.addEventListener("error", () => reject(new Error("Google Picker se nepodařilo načíst.")), { once: true });
+        return;
+      }
+
+      script = document.createElement("script");
+      script.src = "https://apis.google.com/js/api.js";
+      script.async = true;
+      script.dataset.vinmatPickerApi = "true";
+      script.onload = finishLoading;
+      script.onerror = () => reject(new Error("Google Picker se nepodařilo načíst."));
+      document.head.appendChild(script);
+    }).catch(error => {
+      pickerApiPromise = null;
+      throw error;
+    });
+
+    return pickerApiPromise;
+  }
+
+  async function pickTargetSheet() {
+    if (!pickerApiKey || !googleProjectNumber) {
+      throw new Error("Pro bezpečné připojení jedné tabulky doplň v config.js API klíč Google Pickeru a číslo projektu.");
+    }
+
+    await loadPickerApi();
+    const pickerApi = window.google?.picker;
+    if (!pickerApi?.PickerBuilder || !pickerApi?.DocsView) {
+      throw new Error("Google Picker není dostupný. Zkontroluj, že je API v Google Cloud zapnuté.");
+    }
+
+    const view = new pickerApi.DocsView(pickerApi.ViewId.SPREADSHEETS)
+      .setFileIds([SHEET_ID])
+      .setMimeTypes("application/vnd.google-apps.spreadsheet")
+      .setIncludeFolders(false)
+      .setMode(pickerApi.DocsViewMode.LIST);
+
+    return new Promise((resolve, reject) => {
+      let settled = false;
+      const finish = (callback, value) => {
+        if (settled) return;
+        settled = true;
+        callback(value);
+      };
+
+      const picker = new pickerApi.PickerBuilder()
+        .addView(view)
+        .setMaxItems(1)
+        .setOAuthToken(accessToken)
+        .setDeveloperKey(pickerApiKey)
+        .setAppId(googleProjectNumber)
+        .setLocale("cs")
+        .setTitle("Vyber tabulku VinMatův svět")
+        .setCallback(data => {
+          const action = data?.[pickerApi.Response.ACTION];
+          if (action === pickerApi.Action.CANCEL) {
+            finish(reject, new Error("Výběr tabulky byl zrušen."));
+            return;
+          }
+          if (action !== pickerApi.Action.PICKED) return;
+
+          const document = data?.[pickerApi.Response.DOCUMENTS]?.[0];
+          const selectedId = document?.[pickerApi.Document.ID] || document?.id || "";
+          if (selectedId !== SHEET_ID) {
+            finish(reject, new Error("Aplikace může použít pouze nastavenou tabulku VinMatův svět."));
+            return;
+          }
+          finish(resolve, selectedId);
+        })
+        .build();
+
+      picker.setVisible(true);
+    });
+  }
+
+  async function grantTargetSheetAccess() {
+    const selectedId = await pickTargetSheet();
+    if (selectedId !== SHEET_ID) {
+      throw new Error("Nebyla vybrána očekávaná tabulka VinMatův svět.");
+    }
+    rememberTargetSheetAccessGrant();
   }
 
   function requestAccessToken() {
     if (!clientId) {
       return Promise.reject(new Error("Chybí Google OAuth Client ID v souboru config.js."));
+    }
+    if (!pickerApiKey || !googleProjectNumber) {
+      return Promise.reject(new Error("Pro přístup pouze k jedné tabulce nejdřív nastav Google Picker API key a číslo projektu v config.js."));
     }
     const oauth = window.google?.accounts?.oauth2;
     if (!oauth) {
@@ -71,7 +213,7 @@
       const tokenClient = oauth.initTokenClient({
         client_id: clientId,
         scope: SHEET_SCOPE,
-        include_granted_scopes: true,
+        include_granted_scopes: false,
         callback: response => {
           if (response.error || !response.access_token) {
             reject(new Error(response.error_description || response.error || "Google přihlášení se nezdařilo."));
@@ -472,7 +614,22 @@
   async function connect() {
     accessToken = await requestAccessToken();
     try {
-      const remote = await readBoardAndFillIds();
+      let pickedThisTime = false;
+      if (!hasTargetSheetAccessGrant()) {
+        await grantTargetSheetAccess();
+        pickedThisTime = true;
+      }
+
+      let remote;
+      try {
+        remote = await readBoardAndFillIds();
+      } catch (error) {
+        if (pickedThisTime || ![403, 404].includes(error.status)) throw error;
+        forgetTargetSheetAccessGrant();
+        await grantTargetSheetAccess();
+        remote = await readBoardAndFillIds();
+      }
+
       baseline = clone(remote.board);
       return clone(remote.board);
     } catch (error) {
@@ -519,8 +676,9 @@
   }
 
   function isConfigured() {
-    return Boolean(clientId);
+    return Boolean(clientId && pickerApiKey && googleProjectNumber);
   }
 
   window.VinmatSheetSync = { connect, disconnect, refresh, save, isConnected, isConfigured };
 })();
+
