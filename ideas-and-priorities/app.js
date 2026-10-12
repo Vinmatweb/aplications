@@ -16,6 +16,295 @@
     ideas: []
   };
 
+  const importedCatalog = {
+  "priorities": [
+    {
+      "id": "catalog-180qa7z",
+      "text": "W4K: Dokončit Halloween 50 omalovánek a 50 barevných vzorů",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-1g64p8f",
+      "text": "W4K: Zkontrolovat branding Halloween obrázků a párování COLORING/SAMPLE",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-1m45i27",
+      "text": "Etsy: Sestavit a publikovat Halloween PDF balíčky",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-kmh13l",
+      "text": "W4K: Dokončit Halloween tracing LV1–LV4 a kontrolu shody s omalovánkami",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-rm09fb",
+      "text": "W4K: Coloring Stories – založit scénářový a produkční Work",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-1njb16c",
+      "text": "W4K: Halloween příběh o duchovi, který se bojí tmy (LV2)",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-1nu45ge",
+      "text": "W4K: Cut & Paste MASTER – sladit úrovně LV1–LV5 s Level Guide",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-ertl2m",
+      "text": "W4K: Halloween vystřihovánky – převlékání postav a zdobení domečku",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-mbeler",
+      "text": "Etsy: Připravit vánoční kolekci Christmas Pack",
+      "importance": "high"
+    },
+    {
+      "id": "catalog-1xm1fri",
+      "text": "Etsy: Připravit Winter Pack a menší St. Nicholas Pack",
+      "importance": "medium"
+    },
+    {
+      "id": "catalog-1i42qdb",
+      "text": "W4K: Vyčkat na rozhodnutí AdSense před nasazením nových sekcí",
+      "importance": "medium"
+    },
+    {
+      "id": "catalog-oe4vw0",
+      "text": "W4K: Zpracovat světové dny zvířat – sněžný leopard pilot",
+      "importance": "medium"
+    },
+    {
+      "id": "catalog-vutv51",
+      "text": "W4K: Publikovat týdenní omalovánky k významným dnům zvířat",
+      "importance": "medium"
+    },
+    {
+      "id": "catalog-c4m9jq",
+      "text": "VinMat: Ověřit funkčnost a synchronizaci aplikace Nápady a priority",
+      "importance": "medium"
+    }
+  ],
+  "ideas": [
+    {
+      "id": "catalog-11z9pv",
+      "text": "W4K: Coloring Stories – dinosauří dobrodružství LV3 (15 scén)"
+    },
+    {
+      "id": "catalog-9eaemd",
+      "text": "W4K: Coloring Stories – malý bagr staví most LV1 (5 scén)"
+    },
+    {
+      "id": "catalog-q1wm79",
+      "text": "W4K: Coloring Stories – dráček, který neuměl létat LV3–LV4"
+    },
+    {
+      "id": "catalog-1sbhlwp",
+      "text": "W4K: Coloring Stories – kapitoly zdarma jednotlivě PNG/PDF, Etsy kompletní kniha"
+    },
+    {
+      "id": "catalog-19ggcan",
+      "text": "W4K: Coloring Stories – namluvené příběhy a video verze na YouTube"
+    },
+    {
+      "id": "catalog-99a11p",
+      "text": "W4K: Cut & Paste – princezna, rodina a převlékací šaty a doplňky"
+    },
+    {
+      "id": "catalog-1flujpo",
+      "text": "W4K: Cut & Paste – sestav dinosauří postavu, draka nebo robota"
+    },
+    {
+      "id": "catalog-1484nfn",
+      "text": "W4K: Cut & Paste – domečky, hrady, garáže a 3D modely"
+    },
+    {
+      "id": "catalog-18nllf7",
+      "text": "W4K: Cut & Paste – Halloween duchové, netopýři, dýně, pavučiny a dekorace"
+    },
+    {
+      "id": "catalog-1qv33yi",
+      "text": "W4K: Cut & Paste – vlastní webová sekce po výsledku AdSense"
+    },
+    {
+      "id": "catalog-qcfzkp",
+      "text": "W4K: Coloring Stories – vlastní webová sekce po výsledku AdSense"
+    },
+    {
+      "id": "catalog-1rhh772",
+      "text": "W4K: Světové dny zvířat – informační karty LV2–LV4"
+    },
+    {
+      "id": "catalog-10g5b0h",
+      "text": "W4K: Světové dny zvířat – okapi, gorila, slon, panda a koala"
+    },
+    {
+      "id": "catalog-1i99tn2",
+      "text": "W4K: Měsíční a roční Etsy balíčky světových dnů zvířat"
+    },
+    {
+      "id": "catalog-1qhzh82",
+      "text": "W4K: Omalovánky Sluneční soustava – CZ/EN/DE/ES"
+    },
+    {
+      "id": "catalog-148nwa8",
+      "text": "W4K: Zefektivnit generování bludišť a omezit opakované opravy"
+    },
+    {
+      "id": "catalog-ewm88r",
+      "text": "W4K: Automatizovat sestavení A4 PDF, náhledů, QR a brandingu"
+    },
+    {
+      "id": "catalog-zg8023",
+      "text": "W4K: Keyword Research – porovnat motivy s hledaností a prioritizovat TOP"
+    },
+    {
+      "id": "catalog-1s3bz3f",
+      "text": "Etsy: Podzimní Autumn/Fall Pack"
+    },
+    {
+      "id": "catalog-n9p7bw",
+      "text": "Etsy: Valentýnská kolekce"
+    },
+    {
+      "id": "catalog-1qff8jo",
+      "text": "Etsy: Jarní a velikonoční kolekce"
+    },
+    {
+      "id": "catalog-1cfvte0",
+      "text": "Etsy: Letní kolekce"
+    },
+    {
+      "id": "catalog-r3a8j8",
+      "text": "Etsy: Pinterest a Instagram pro přivádění návštěvníků na W4K"
+    },
+    {
+      "id": "catalog-8d4lll",
+      "text": "Etsy: Otestovat cenové varianty malých a velkých balíčků"
+    },
+    {
+      "id": "catalog-lna4pk",
+      "text": "AIFA: Dokončit bestiář a karty A6 s QR, PNG/PDF a barevnou/ČB variantou"
+    },
+    {
+      "id": "catalog-1yi13y5",
+      "text": "AIFA: Dokončit omalovánky vybavení a magie LV1–LV5"
+    },
+    {
+      "id": "catalog-17jt7dd",
+      "text": "AIFA: Opravit od 16121 detailnost LV4 a zachovat scénická pozadí"
+    },
+    {
+      "id": "catalog-e3q9ou",
+      "text": "AIFA: Udržovat master tabulku ID, stavu, QA a web publikace"
+    },
+    {
+      "id": "catalog-l7qlar",
+      "text": "AIFA: Ověřit SEO canonical, hreflang a EN/CZ interní odkazy"
+    },
+    {
+      "id": "catalog-1f4af1d",
+      "text": "EduGames: VM Fantasy Battle – doplnit deset armád a jejich patrony"
+    },
+    {
+      "id": "catalog-1i47spi",
+      "text": "EduGames: VM Fantasy Battle – režimy Bitva a Souboj, akční karty a Battle Logy"
+    },
+    {
+      "id": "catalog-g4exwd",
+      "text": "EduGames: VM Racing Challenge – 20 aut, RACE DECK, STARTING GRID a RACE LOG"
+    },
+    {
+      "id": "catalog-1e52dyq",
+      "text": "EduGames: Doladit tisk rubů a zarovnání závodních karet"
+    },
+    {
+      "id": "catalog-256tat",
+      "text": "EduGames: Připravit 16:9 náhledy a stahovací sekce"
+    },
+    {
+      "id": "catalog-10w8udb",
+      "text": "VinMat: Driving Children Statistics – Google Sheets nebo jiná databáze"
+    },
+    {
+      "id": "catalog-1wlvx1l",
+      "text": "VinMat: Driving Children Statistics – měsíční/roční statistiky rodičů a kroužků"
+    },
+    {
+      "id": "catalog-ttp0nh",
+      "text": "VinMat: AI Music Library – tematické hudební knihovny"
+    },
+    {
+      "id": "catalog-1agvezj",
+      "text": "VinMat: PDF-to-Video – lokální automatizace videí s hudbou"
+    },
+    {
+      "id": "catalog-1war44y",
+      "text": "VinMat: Master Tasks – centrální evidence projektů a úkolů"
+    },
+    {
+      "id": "catalog-ztjpxr",
+      "text": "VinMat: Nápady a priority – synchronizace mezi zařízeními místo localStorage"
+    },
+    {
+      "id": "catalog-gjoaqa",
+      "text": "VinMat: Nápady a priority – import/export JSON a hlasový vstup"
+    },
+    {
+      "id": "catalog-pv9uh9",
+      "text": "YouTube: VinMat’s Games – Royal Match/Fishdom, kompilace a Shorts"
+    },
+    {
+      "id": "catalog-12zvcip",
+      "text": "YouTube: Dosáhnout 1000 odběratelů VinMat’s Games"
+    },
+    {
+      "id": "catalog-xy7dg2",
+      "text": "YouTube: LEGO Instructions, Speed Build a Realtime obsah"
+    },
+    {
+      "id": "catalog-1n34je",
+      "text": "LEGO: Sledovat BrickLink Designer Program, Insiders a Black Friday"
+    },
+    {
+      "id": "catalog-186yptz",
+      "text": "LEGO: Sledovat výrazné slevy v Albertu a dalších obchodech"
+    },
+    {
+      "id": "catalog-1613c0g",
+      "text": "Podnikání: Nabídka technické dokumentace a CAD služeb"
+    },
+    {
+      "id": "catalog-1163v6t",
+      "text": "Technika: Mezipřírubové síto DN50 – oslovit evropské výrobce strainer gasket"
+    },
+    {
+      "id": "catalog-1e6juil",
+      "text": "Technika: Síto 0,1×0,1 mm – posoudit průtočnost a materiál"
+    },
+    {
+      "id": "catalog-12rrlah",
+      "text": "Technika: Síto – vyžádat dokumentaci a posouzení shody dle 358/2016 Sb."
+    },
+    {
+      "id": "catalog-1s2tsg",
+      "text": "Auto: Škoda Octavia IV – aktivace SmartLink do 4000 Kč"
+    },
+    {
+      "id": "catalog-ay1l1o",
+      "text": "Auto: Navrhnout 3D držák telefonu nad displej"
+    },
+    {
+      "id": "catalog-ok12zy",
+      "text": "Auto: Porovnat střešní box, nosiče kol a střešní stan"
+    }
+  ]
+};
+
   const elements = {
     board: document.querySelector(".app-shell"),
     priorityList: document.getElementById("priority-list"),
@@ -57,8 +346,19 @@
   function loadBoard() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return structuredClone(seededBoard);
-      return normalizeBoard(JSON.parse(saved));
+      const board = saved ? normalizeBoard(JSON.parse(saved)) : structuredClone(seededBoard);
+      const known = new Set([...board.priorities, ...board.ideas].map(item => item.text.toLocaleLowerCase("cs")));
+      const dismissed = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY + "-dismissed") || "[]"));
+      for (const section of ["priorities", "ideas"]) {
+        for (const item of importedCatalog[section]) {
+          if (!known.has(item.text.toLocaleLowerCase("cs")) && !dismissed.has(item.id)) {
+            board[section].push({ ...item });
+            known.add(item.text.toLocaleLowerCase("cs"));
+          }
+        }
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(board));
+      return board;
     } catch {
       return structuredClone(seededBoard);
     }
@@ -246,6 +546,11 @@
         break;
       case "delete":
         list.splice(index, 1);
+        if (id.startsWith("catalog-")) {
+          const dismissed = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY + "-dismissed") || "[]"));
+          dismissed.add(id);
+          localStorage.setItem(STORAGE_KEY + "-dismissed", JSON.stringify([...dismissed]));
+        }
         editingItem = null;
         saveBoard();
         render();
