@@ -24,7 +24,7 @@ V souboru config.js doplň OAuth Client ID typu Web application. Client ID není
 1. V Google Cloud vytvoř nebo vyber projekt a zapni Google Sheets API.
 2. Nastav obrazovku souhlasu OAuth a přidej účet, který bude aplikaci používat. Pokud je aplikace v testovacím režimu, přidej tento účet mezi testovací uživatele.
 3. Vytvoř OAuth Client ID pro Web application.
-4. Do Authorized JavaScript origins přidej přesný původ nasazeného webu (jen doménu, bez cesty), například https://vinmatweb.github.io nebo vlastní doménu, a případně http://localhost:8000 pro místní testování.
+4. Do Authorized JavaScript origins přidej přesný původ nasazeného webu https://vinmat.eu (jen doménu, bez cesty) a případně http://localhost:8000 pro místní testování.
 5. Zkopíruj Client ID do hodnoty googleClientId v config.js.
 
 Přihlášený účet musí mít v Google Drive oprávnění upravovat tabulku VinMatův svět – nápady a priority:
