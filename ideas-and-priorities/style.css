@@ -83,7 +83,7 @@ h1 {
 
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 
-.theme-picker select, .utility-button {
+.theme-picker select, .utility-button, .mode-toggle {
   display: inline-flex;
   min-height: 39px;
   align-items: center;
@@ -101,7 +101,9 @@ h1 {
 }
 
 .theme-picker select { padding-right: 26px; }
-.utility-button:hover, .theme-picker select:hover { border-color: var(--green); background: var(--surface); transform: translateY(-1px); }
+.mode-toggle { padding: 0 11px; }
+.mode-icon { font-size: 16px; line-height: 1; }
+.utility-button:hover, .theme-picker select:hover, .mode-toggle:hover { border-color: var(--green); background: var(--surface); transform: translateY(-1px); }
 .utility-button svg, .dictate-button svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
 
 .board-summary {
@@ -284,9 +286,89 @@ h2 {
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
 button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid color-mix(in srgb, var(--green) 34%, transparent); outline-offset: 2px; }
 
-/* Version 1: near-black, high-contrast graffiti accents and stencil lettering. */
-body[data-theme="graffiti"] {
+/* Night mode applies to each of the three visual styles. */
+body[data-mode="night"] {
   color-scheme: dark;
+  --page: #111417;
+  --page-glow: rgba(99, 158, 128, .14);
+  --surface: #191d20;
+  --surface-soft: #202529;
+  --card: #1b2022;
+  --card-alt: #1d2223;
+  --field: #171b1d;
+  --ink: #eef2ed;
+  --title-ink: #e9eee9;
+  --muted: #a1aaa5;
+  --faint: #818b85;
+  --line: #333b38;
+  --line-strong: #414a46;
+  --green: #7ac8a2;
+  --green-dark: #a0e4bf;
+  --green-soft: #20372d;
+  --gold: #edb86d;
+  --gold-soft: #3b3023;
+  --red: #ee9188;
+  --red-soft: #402927;
+  --shadow: 0 18px 48px rgba(0, 0, 0, .32), 0 2px 8px rgba(0, 0, 0, .2);
+  --control-bg: rgba(25, 30, 31, .88);
+  --control-ink: #d8e0db;
+  --subtle-bg: #232a27;
+  --drop: #84ddb1;
+  background: radial-gradient(ellipse at 86% 0, var(--page-glow), transparent 32rem), var(--page);
+}
+
+body[data-mode="night"] .importance-high { color: #ffb1a9; background-color: #432724; }
+body[data-mode="night"] .importance-medium { color: #f4cf8d; background-color: #40331e; }
+body[data-mode="night"] .importance-low { color: #a9dfba; background-color: #23372a; }
+body[data-mode="night"] .summary-dot { background: var(--green); box-shadow: 0 0 0 3px var(--green-soft); }
+
+/* Version 1: concrete or ink-black surfaces, neon graffiti accents and stencil lettering. */
+body[data-theme="graffiti"][data-mode="day"] {
+  color-scheme: light;
+  --page: #d6d9d7;
+  --page-glow: rgba(182, 222, 77, .29);
+  --surface: #f4f5f0;
+  --surface-soft: #eaede9;
+  --card: #fafbf7;
+  --card-alt: #f0f2ed;
+  --field: #f5f6f2;
+  --ink: #141715;
+  --title-ink: #1a211c;
+  --muted: #555f58;
+  --faint: #737d75;
+  --line: #bfc5c0;
+  --line-strong: #aeb7b0;
+  --green: #83ad22;
+  --green-dark: #4c6810;
+  --green-soft: #e3edc9;
+  --gold: #d35331;
+  --gold-soft: #f7e2d8;
+  --red: #b9443e;
+  --red-soft: #f5dfdc;
+  --shadow: 0 18px 48px rgba(32, 39, 35, .14), 5px 5px 0 rgba(62, 79, 42, .12);
+  --control-bg: rgba(250, 251, 247, .9);
+  --control-ink: #28312b;
+  --subtle-bg: #e5e9e4;
+  --drop: #628c12;
+  background:
+    radial-gradient(circle at 9% 12%, rgba(197, 244, 73, .23), transparent 14rem),
+    radial-gradient(circle at 93% 36%, rgba(255, 112, 76, .12), transparent 20rem),
+    repeating-linear-gradient(153deg, transparent 0 45px, rgba(39, 48, 42, .035) 46px 48px, transparent 49px 89px),
+    var(--page);
+}
+
+body[data-theme="graffiti"] .app-shell::before { position: absolute; z-index: -1; top: 110px; right: -50px; width: 240px; height: 135px; border: 14px solid rgba(197, 244, 73, .09); border-right-color: transparent; border-left-color: transparent; content: ""; transform: rotate(-15deg); pointer-events: none; }
+body[data-theme="graffiti"] h1, body[data-theme="graffiti"] h2 { font-family: Impact, "Arial Black", sans-serif; text-transform: uppercase; }
+body[data-theme="graffiti"] h1 { letter-spacing: -.035em; text-shadow: 2px 2px 0 rgba(255, 112, 76, .55); }
+body[data-theme="graffiti"] .board-section { border-radius: 9px; box-shadow: 5px 5px 0 rgba(197, 244, 73, .12), var(--shadow); }
+body[data-theme="graffiti"] .section-icon { border: 1px solid color-mix(in srgb, var(--green) 40%, transparent); border-radius: 8px; transform: rotate(-4deg); }
+body[data-theme="graffiti"] .priority-card { border-left-width: 4px; }
+body[data-theme="graffiti"] .task-card { border-radius: 7px; }
+body[data-theme="graffiti"] .task-rank { border-radius: 5px; }
+body[data-theme="graffiti"] .add-button { color: #10120e; border-radius: 7px; text-transform: uppercase; }
+body[data-theme="graffiti"] .idea-add-button { color: #1b100c; }
+body[data-theme="graffiti"] .theme-picker select, body[data-theme="graffiti"] .utility-button, body[data-theme="graffiti"] .mode-toggle { border-radius: 7px; }
+body[data-theme="graffiti"][data-mode="night"] {
   --page: #0b0d0e;
   --page-glow: rgba(191, 240, 44, .13);
   --surface: #151819;
@@ -318,18 +400,10 @@ body[data-theme="graffiti"] {
     repeating-linear-gradient(153deg, transparent 0 45px, rgba(255, 255, 255, .018) 46px 48px, transparent 49px 89px),
     var(--page);
 }
-
-body[data-theme="graffiti"] .app-shell::before { position: absolute; z-index: -1; top: 110px; right: -50px; width: 240px; height: 135px; border: 14px solid rgba(197, 244, 73, .09); border-right-color: transparent; border-left-color: transparent; content: ""; transform: rotate(-15deg); pointer-events: none; }
-body[data-theme="graffiti"] h1, body[data-theme="graffiti"] h2 { font-family: Impact, "Arial Black", sans-serif; text-transform: uppercase; }
-body[data-theme="graffiti"] h1 { letter-spacing: -.035em; text-shadow: 2px 2px 0 rgba(255, 112, 76, .55); }
-body[data-theme="graffiti"] .board-section { border-radius: 9px; box-shadow: 5px 5px 0 rgba(197, 244, 73, .12), var(--shadow); }
-body[data-theme="graffiti"] .section-icon { border: 1px solid color-mix(in srgb, var(--green) 40%, transparent); border-radius: 8px; transform: rotate(-4deg); }
-body[data-theme="graffiti"] .priority-card { border-left-width: 4px; }
-body[data-theme="graffiti"] .task-card { border-radius: 7px; }
-body[data-theme="graffiti"] .task-rank { border-radius: 5px; }
-body[data-theme="graffiti"] .add-button { color: #10120e; border-radius: 7px; text-transform: uppercase; }
-body[data-theme="graffiti"] .idea-add-button { color: #1b100c; }
-body[data-theme="graffiti"] .theme-picker select, body[data-theme="graffiti"] .utility-button { border-radius: 7px; }
+body[data-theme="graffiti"][data-mode="night"] .app-shell::before { border-color: rgba(197, 244, 73, .09); border-right-color: transparent; border-left-color: transparent; }
+body[data-theme="graffiti"][data-mode="night"] .importance-high { color: #ffb1a9; background-color: #432724; }
+body[data-theme="graffiti"][data-mode="night"] .importance-medium { color: #f4cf8d; background-color: #40331e; }
+body[data-theme="graffiti"][data-mode="night"] .importance-low { color: #a9dfba; background-color: #23372a; }
 
 /* Version 3: warm paper surfaces, slate details and muted teal accents. */
 body[data-theme="hybrid"] {
@@ -364,6 +438,36 @@ body[data-theme="hybrid"] .board-section { border-radius: 14px; }
 body[data-theme="hybrid"] .task-card { border-radius: 10px; }
 body[data-theme="hybrid"] .hero-copy { padding-left: 12px; border-left: 3px solid var(--green); }
 body[data-theme="hybrid"] h1 { letter-spacing: -.055em; }
+body[data-theme="hybrid"][data-mode="night"] {
+  --page: #13191a;
+  --page-glow: rgba(71, 127, 116, .2);
+  --surface: #202728;
+  --surface-soft: #272f2e;
+  --card: #232b2b;
+  --card-alt: #282e2c;
+  --field: #1b2222;
+  --ink: #ecefe8;
+  --title-ink: #e8eee8;
+  --muted: #a3aca5;
+  --faint: #838e87;
+  --line: #3a4541;
+  --line-strong: #48534e;
+  --green: #69b4a5;
+  --green-dark: #90d3c2;
+  --green-soft: #203b36;
+  --gold: #dfaa70;
+  --gold-soft: #3d3025;
+  --red: #df8a7a;
+  --red-soft: #402a27;
+  --shadow: 0 18px 42px rgba(0, 0, 0, .28), 0 2px 5px rgba(0, 0, 0, .18);
+  --control-bg: rgba(32, 39, 39, .88);
+  --control-ink: #dbe3dc;
+  --subtle-bg: #2a3431;
+  --drop: #80cabb;
+}
+body[data-theme="hybrid"][data-mode="night"] .importance-high { color: #ffb1a9; background-color: #432724; }
+body[data-theme="hybrid"][data-mode="night"] .importance-medium { color: #f4cf8d; background-color: #40331e; }
+body[data-theme="hybrid"][data-mode="night"] .importance-low { color: #a9dfba; background-color: #23372a; }
 
 @media (max-width: 680px) {
   .app-shell { width: min(100% - 28px, 540px); padding-top: 30px; }
@@ -405,7 +509,7 @@ body[data-theme="hybrid"] h1 { letter-spacing: -.055em; }
   .task-actions .icon-button { width: 22px; height: 26px; }
   .task-title { font-size: 11px; }
   .importance-select { max-width: 74px; font-size: 8px; }
-  .utility-button, .theme-picker select { padding-right: 8px; padding-left: 8px; font-size: 11px; }
+  .utility-button, .theme-picker select, .mode-toggle { padding-right: 8px; padding-left: 8px; font-size: 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

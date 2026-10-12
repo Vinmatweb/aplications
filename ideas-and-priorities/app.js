@@ -3,8 +3,10 @@
 
   const STORAGE_KEY = "vinmat-ideas-and-priorities-v1";
   const THEME_KEY = "vinmat-ideas-and-priorities-theme-v1";
+  const MODE_KEY = "vinmat-ideas-and-priorities-mode-v1";
   const DATA_VERSION = 1;
   const THEMES = ["graffiti", "classic", "hybrid"];
+  const MODES = ["day", "night"];
   const seededBoard = {
     version: DATA_VERSION,
     priorities: [
@@ -32,7 +34,10 @@
     exportButton: document.getElementById("export-button"),
     importButton: document.getElementById("import-button"),
     importFile: document.getElementById("import-file"),
-    themeSelect: document.getElementById("theme-select")
+    themeSelect: document.getElementById("theme-select"),
+    modeToggle: document.getElementById("mode-toggle"),
+    modeIcon: document.getElementById("mode-icon"),
+    modeLabel: document.getElementById("mode-label")
   };
 
   let state = loadBoard();
@@ -41,7 +46,7 @@
   let toastTimer = null;
   let activeRecognition = null;
 
-  applySavedTheme();
+  applySavedAppearance();
   render();
   setupVoiceInput();
 
@@ -68,10 +73,37 @@
     }
   }
 
-  function applySavedTheme() {
+  function loadMode() {
+    try {
+      const saved = localStorage.getItem(MODE_KEY);
+      return MODES.includes(saved) ? saved : "day";
+    } catch {
+      return "day";
+    }
+  }
+
+  function applySavedAppearance() {
     const theme = loadTheme();
+    const mode = loadMode();
     document.body.dataset.theme = theme;
+    document.body.dataset.mode = mode;
     elements.themeSelect.value = theme;
+    updateModeToggle();
+  }
+
+  function updateModeToggle() {
+    const isNight = document.body.dataset.mode === "night";
+    elements.modeIcon.textContent = isNight ? "☾" : "☀";
+    elements.modeLabel.textContent = isNight ? "Noc" : "Den";
+    elements.modeToggle.setAttribute("aria-pressed", String(isNight));
+    elements.modeToggle.setAttribute("aria-label", isNight ? "Přepnout na denní režim" : "Přepnout na noční režim");
+    const colors = {
+      classic: { day: "#f6f5f0", night: "#111417" },
+      graffiti: { day: "#d6d9d7", night: "#0b0d0e" },
+      hybrid: { day: "#e8e9e4", night: "#13191a" }
+    };
+    const themeColor = document.querySelector('meta[name="theme-color"]');
+    themeColor?.setAttribute("content", colors[document.body.dataset.theme][isNight ? "night" : "day"]);
   }
 
   function normalizeBoard(value) {
@@ -359,7 +391,15 @@
   elements.themeSelect.addEventListener("change", () => {
     const theme = THEMES.includes(elements.themeSelect.value) ? elements.themeSelect.value : "classic";
     document.body.dataset.theme = theme;
+    updateModeToggle();
     try { localStorage.setItem(THEME_KEY, theme); } catch { /* The selection still applies for this page view. */ }
+  });
+
+  elements.modeToggle.addEventListener("click", () => {
+    const mode = document.body.dataset.mode === "night" ? "day" : "night";
+    document.body.dataset.mode = mode;
+    updateModeToggle();
+    try { localStorage.setItem(MODE_KEY, mode); } catch { /* The selection still applies for this page view. */ }
   });
 
   elements.board.addEventListener("dragstart", event => {

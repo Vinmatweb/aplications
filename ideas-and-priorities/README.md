@@ -10,7 +10,7 @@ Jednoduchá tabule pro oddělení aktuálních priorit od nápadů, které počk
 - Důležitost priority lze nastavit na vysokou, střední nebo nízkou.
 - Hlasové zadávání v češtině, pokud ho prohlížeč podporuje.
 - Automatické ukládání v aktuálním prohlížeči a záloha či obnovení přes JSON.
-- Tři přepínatelné vzhledy: černé graffiti, původní světlý a mezivarianta.
+- Tři přepínatelné vzhledy: graffiti, původní a mezivarianta; každý lze přepnout mezi denním a nočním režimem.
 
 Tabule se ukládá v `localStorage` prohlížeče a nesynchronizuje se mezi zařízeními. Před přechodem na jiný prohlížeč nebo zařízení si stáhni zálohu.
 
