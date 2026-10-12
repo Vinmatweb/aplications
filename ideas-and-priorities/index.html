@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="cs">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f6f5f0">
-    <meta name="description" content="A simple place to sort VinMat's World priorities and ideas.">
-    <title>VinMat’s World: Ideas &amp; Priorities</title>
+    <meta name="description" content="Prostor pro třídění nápadů a priorit projektu VinMat.">
+    <title>VinMatův svět: Nápady a priority</title>
     <link rel="stylesheet" href="style.css">
     <script src="app.js" defer></script>
   </head>
@@ -13,18 +13,25 @@
     <main class="app-shell">
       <header class="hero">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="brand-mark">V</span> PROJECT WORKSPACE</p>
-          <h1><span>VinMat’s World:</span> Ideas &amp; Priorities</h1>
-          <p class="intro">A calm place to decide what comes next and keep the other good ideas close.</p>
+          <h1>VinMatův svět: Nápady a priority</h1>
+          <p class="intro">Rozhodni, do čeho se pustit jako dalšího, a odlož si ostatní nápady na později.</p>
         </div>
-        <div class="hero-actions" aria-label="Board backup actions">
-          <button class="utility-button" id="export-button" type="button" title="Download a backup of this board">
+        <div class="hero-actions" aria-label="Nástroje tabule">
+          <label class="theme-picker">
+            <span class="sr-only">Vzhled aplikace</span>
+            <select id="theme-select" aria-label="Vzhled aplikace">
+              <option value="graffiti">1 · Černé graffiti</option>
+              <option value="classic">2 · Současný vzhled</option>
+              <option value="hybrid">3 · Mezi tím</option>
+            </select>
+          </label>
+          <button class="utility-button" id="export-button" type="button" title="Stáhnout zálohu tabule">
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5v9m0 0 3.5-3.5M10 11.5 6.5 8M3.5 12.5v3A1.5 1.5 0 0 0 5 17h10a1.5 1.5 0 0 0 1.5-1.5v-3"/></svg>
-            <span>Export</span>
+            <span>Záloha</span>
           </button>
-          <button class="utility-button" id="import-button" type="button" title="Restore this board from a JSON backup">
+          <button class="utility-button" id="import-button" type="button" title="Obnovit tabuli ze záložního souboru">
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 12.5v-9m0 0L6.5 7M10 3.5 13.5 7M3.5 12.5v3A1.5 1.5 0 0 0 5 17h10a1.5 1.5 0 0 0 1.5-1.5v-3"/></svg>
-            <span>Import</span>
+            <span>Obnovit</span>
           </button>
           <input id="import-file" type="file" accept="application/json,.json" hidden>
         </div>
@@ -32,9 +39,9 @@
 
       <div class="board-summary" aria-live="polite">
         <span class="summary-dot" aria-hidden="true"></span>
-        <span id="summary-text">Your board is ready</span>
+        <span id="summary-text">Tabule je připravená</span>
         <span class="summary-divider" aria-hidden="true"></span>
-        <span class="save-status" id="save-status">Saved on this device</span>
+        <span class="save-status" id="save-status">Uloženo v tomto prohlížeči</span>
       </div>
 
       <section class="board-section priorities-section" aria-labelledby="priorities-heading">
@@ -42,27 +49,27 @@
           <div class="section-title-wrap">
             <span class="section-icon priority-icon" aria-hidden="true">↗</span>
             <div>
-              <div class="section-kicker">WHAT’S NEXT</div>
-              <h2 id="priorities-heading">Priorities <span class="count-pill" id="priority-count">0</span></h2>
+              <div class="section-kicker">CO BUDE DÁL</div>
+              <h2 id="priorities-heading">Priority <span class="count-pill" id="priority-count">0</span></h2>
             </div>
           </div>
-          <p class="section-note">Drag to reorder, or use the arrows. New items start as Medium.</p>
+          <p class="section-note">Přetažením změň pořadí. Nové položky začínají se střední důležitostí.</p>
         </div>
 
         <form class="add-form" id="priority-form" autocomplete="off">
-          <label class="sr-only" for="priority-input">Add a priority</label>
-          <input id="priority-input" name="task" maxlength="180" placeholder="Add a priority…" required>
-          <button class="dictate-button" type="button" data-dictate="priority-input" aria-label="Dictate a priority in Czech" title="Dictate in Czech">
+          <label class="sr-only" for="priority-input">Přidat prioritu</label>
+          <input id="priority-input" name="task" maxlength="180" placeholder="Přidat prioritu…" required>
+          <button class="dictate-button" type="button" data-dictate="priority-input" aria-label="Nadiktovat prioritu v češtině" title="Nadiktovat česky">
             <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="2.5" width="6" height="10" rx="3"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5m-3 0h6"/></svg>
           </button>
-          <button class="add-button" type="submit"><span aria-hidden="true">+</span> Add priority</button>
+          <button class="add-button" type="submit"><span aria-hidden="true">+</span> Přidat prioritu</button>
         </form>
 
-        <ol class="task-list" id="priority-list" data-list="priorities" aria-label="Priorities in current order"></ol>
+        <ol class="task-list" id="priority-list" data-list="priorities" aria-label="Priority v aktuálním pořadí"></ol>
         <div class="empty-state" id="priority-empty" data-list="priorities" hidden>
           <span class="empty-icon" aria-hidden="true">↗</span>
-          <p>No priorities yet.</p>
-          <span>Add a task above, or promote an idea when you’re ready.</span>
+          <p>Zatím tu nejsou žádné priority.</p>
+          <span>Přidej úkol výše nebo sem přesuň některý nápad.</span>
         </div>
       </section>
 
@@ -71,35 +78,35 @@
           <div class="section-title-wrap">
             <span class="section-icon idea-icon" aria-hidden="true">✳</span>
             <div>
-              <div class="section-kicker">SAVE FOR LATER</div>
-              <h2 id="ideas-heading">Ideas <span class="count-pill muted-count" id="idea-count">0</span></h2>
+              <div class="section-kicker">NEZATŘÍDĚNÉ</div>
+              <h2 id="ideas-heading">Nápady <span class="count-pill muted-count" id="idea-count">0</span></h2>
             </div>
           </div>
-          <p class="section-note">Keep an idea here until you have time to make it a priority.</p>
+          <p class="section-note">Ulož si sem nápad a přesuň ho mezi priority, až na něj bude čas.</p>
         </div>
 
         <form class="add-form idea-form" id="idea-form" autocomplete="off">
-          <label class="sr-only" for="idea-input">Add an idea</label>
-          <input id="idea-input" name="task" maxlength="180" placeholder="Capture an idea…" required>
-          <button class="dictate-button" type="button" data-dictate="idea-input" aria-label="Dictate an idea in Czech" title="Dictate in Czech">
+          <label class="sr-only" for="idea-input">Přidat nápad</label>
+          <input id="idea-input" name="task" maxlength="180" placeholder="Zapsat nápad…" required>
+          <button class="dictate-button" type="button" data-dictate="idea-input" aria-label="Nadiktovat nápad v češtině" title="Nadiktovat česky">
             <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="2.5" width="6" height="10" rx="3"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5m-3 0h6"/></svg>
           </button>
-          <button class="add-button idea-add-button" type="submit"><span aria-hidden="true">+</span> Add idea</button>
+          <button class="add-button idea-add-button" type="submit"><span aria-hidden="true">+</span> Přidat nápad</button>
         </form>
 
-        <ul class="task-list idea-list" id="idea-list" data-list="ideas" aria-label="Unsorted ideas"></ul>
+        <ul class="task-list idea-list" id="idea-list" data-list="ideas" aria-label="Nezatříděné nápady"></ul>
         <div class="empty-state idea-empty" id="idea-empty" data-list="ideas" hidden>
           <span class="empty-icon idea-empty-icon" aria-hidden="true">✳</span>
-          <p>Your idea list is clear.</p>
-          <span>When something comes to mind, save it here. You can sort it later.</span>
+          <p>Seznam nápadů je prázdný.</p>
+          <span>Až tě něco napadne, ulož si to sem. Zařadit to můžeš později.</span>
         </div>
       </section>
 
       <footer class="app-footer">
         <span class="footer-check" aria-hidden="true">✓</span>
-        <span>Changes save automatically in this browser.</span>
+        <span>Změny se ukládají automaticky v tomto prohlížeči.</span>
         <span class="footer-separator">·</span>
-        <span>Export a backup to move your board to another device.</span>
+        <span>Zálohu si stáhni, pokud chceš tabuli přenést jinam.</span>
       </footer>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </main>

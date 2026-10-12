@@ -2,12 +2,14 @@
   "use strict";
 
   const STORAGE_KEY = "vinmat-ideas-and-priorities-v1";
+  const THEME_KEY = "vinmat-ideas-and-priorities-theme-v1";
   const DATA_VERSION = 1;
+  const THEMES = ["graffiti", "classic", "hybrid"];
   const seededBoard = {
     version: DATA_VERSION,
     priorities: [
-      { id: "starter-coloring-pack", text: "Finish the Halloween coloring pack", importance: "high" },
-      { id: "starter-tracing-pack", text: "Finish the Halloween tracing pages", importance: "medium" }
+      { id: "starter-coloring-pack", text: "Dokončit halloweenský balíček omalovánek", importance: "high" },
+      { id: "starter-tracing-pack", text: "Dokončit halloweenské obtahovačky", importance: "medium" }
     ],
     ideas: []
   };
@@ -29,7 +31,8 @@
     toast: document.getElementById("toast"),
     exportButton: document.getElementById("export-button"),
     importButton: document.getElementById("import-button"),
-    importFile: document.getElementById("import-file")
+    importFile: document.getElementById("import-file"),
+    themeSelect: document.getElementById("theme-select")
   };
 
   let state = loadBoard();
@@ -38,11 +41,12 @@
   let toastTimer = null;
   let activeRecognition = null;
 
+  applySavedTheme();
   render();
   setupVoiceInput();
 
   function makeId() {
-    return globalThis.crypto?.randomUUID?.() || `task-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    return globalThis.crypto?.randomUUID?.() || `ukol-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   }
 
   function loadBoard() {
@@ -55,17 +59,37 @@
     }
   }
 
+  function loadTheme() {
+    try {
+      const saved = localStorage.getItem(THEME_KEY);
+      return THEMES.includes(saved) ? saved : "classic";
+    } catch {
+      return "classic";
+    }
+  }
+
+  function applySavedTheme() {
+    const theme = loadTheme();
+    document.body.dataset.theme = theme;
+    elements.themeSelect.value = theme;
+  }
+
   function normalizeBoard(value) {
     if (!value || !Array.isArray(value.priorities) || !Array.isArray(value.ideas)) {
-      throw new Error("This backup does not contain a valid board.");
+      throw new Error("Tato záloha neobsahuje platnou tabuli.");
     }
     const cleanItems = items => items
       .filter(item => item && typeof item.text === "string" && item.text.trim())
-      .map(item => ({
-        id: typeof item.id === "string" && item.id ? item.id : makeId(),
-        text: item.text.trim().slice(0, 180),
-        ...(items === value.priorities ? { importance: ["high", "medium", "low"].includes(item.importance) ? item.importance : "medium" } : {})
-      }));
+      .map(item => {
+        let text = item.text.trim();
+        if (item.id === "starter-coloring-pack" && text === "Finish the Halloween coloring pack") text = "Dokončit halloweenský balíček omalovánek";
+        if (item.id === "starter-tracing-pack" && text === "Finish the Halloween tracing pages") text = "Dokončit halloweenské obtahovačky";
+        return {
+          id: typeof item.id === "string" && item.id ? item.id : makeId(),
+          text: text.slice(0, 180),
+          ...(items === value.priorities ? { importance: ["high", "medium", "low"].includes(item.importance) ? item.importance : "medium" } : {})
+        };
+      });
     return {
       version: DATA_VERSION,
       priorities: cleanItems(value.priorities),
@@ -77,12 +101,12 @@
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       if (showSaved) {
-        const time = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" }).format(new Date());
-        elements.saveStatus.textContent = `Saved at ${time}`;
+        const time = new Intl.DateTimeFormat("cs-CZ", { hour: "2-digit", minute: "2-digit" }).format(new Date());
+        elements.saveStatus.textContent = `Uloženo v ${time}`;
       }
     } catch {
-      elements.saveStatus.textContent = "Could not save in this browser";
-      showToast("Your browser could not save this board. Export a backup to keep your changes.");
+      elements.saveStatus.textContent = "Uložení se nezdařilo";
+      showToast("V tomto prohlížeči se nepodařilo uložit změny. Stáhni si zálohu tabule.");
     }
   }
 
@@ -100,7 +124,7 @@
     elements.ideaCount.textContent = state.ideas.length;
     elements.priorityEmpty.hidden = state.priorities.length > 0;
     elements.ideaEmpty.hidden = state.ideas.length > 0;
-    elements.summaryText.textContent = `${state.priorities.length} ${pluralize(state.priorities.length, "priority", "priorities")} · ${state.ideas.length} ${pluralize(state.ideas.length, "idea", "ideas")}`;
+    elements.summaryText.textContent = `${state.priorities.length} ${czechCount(state.priorities.length, ["priorita", "priority", "priorit"])} · ${state.ideas.length} ${czechCount(state.ideas.length, ["nápad", "nápady", "nápadů"])}`;
   }
 
   function renderTask(item, listName, index) {
@@ -108,40 +132,46 @@
     const editing = editingItem?.id === item.id && editingItem?.list === listName;
     const safeText = escapeHTML(item.text);
     const importance = item.importance || "medium";
-    const dragLabel = isPriority ? `Drag priority ${index + 1}` : `Drag idea ${index + 1}`;
-    const moveLabel = isPriority ? "priority" : "idea";
+    const dragLabel = isPriority ? `Přetáhnout prioritu ${index + 1}` : `Přetáhnout nápad ${index + 1}`;
+    const moveLabel = isPriority ? "prioritu" : "nápad";
+    const accessibleRank = isPriority ? `Priorita ${index + 1}` : `Nápad ${index + 1}`;
 
     return `<li class="task-card ${isPriority ? "priority-card" : "idea-card"}" data-task-card data-item-id="${escapeHTML(item.id)}" data-list-name="${listName}">
-      <span class="task-rank ${isPriority ? "" : "idea-rank"}" aria-label="${isPriority ? `Priority ${index + 1}` : `Idea ${index + 1}`} ">${isPriority ? index + 1 : "✳"}</span>
-      <button class="drag-handle" type="button" draggable="true" aria-label="${dragLabel}" title="Drag to move">
+      <span class="task-rank ${isPriority ? "" : "idea-rank"}" aria-label="${accessibleRank}">${isPriority ? index + 1 : "✳"}</span>
+      <button class="drag-handle" type="button" draggable="true" aria-label="${dragLabel}" title="Přetáhnout a přesunout">
         <svg viewBox="0 0 16 20" aria-hidden="true"><circle cx="5" cy="4" r="1.3"/><circle cx="11" cy="4" r="1.3"/><circle cx="5" cy="10" r="1.3"/><circle cx="11" cy="10" r="1.3"/><circle cx="5" cy="16" r="1.3"/><circle cx="11" cy="16" r="1.3"/></svg>
       </button>
       <div class="task-content">
         ${editing ? `<form class="edit-form" data-edit-form data-list="${listName}" data-id="${escapeHTML(item.id)}">
-          <label class="sr-only" for="edit-${escapeHTML(item.id)}">Edit task</label>
+          <label class="sr-only" for="edit-${escapeHTML(item.id)}">Upravit položku</label>
           <input id="edit-${escapeHTML(item.id)}" class="edit-input" name="task" maxlength="180" value="${safeText}" required>
-          <button class="text-action save-edit" type="submit">Save</button>
-          <button class="text-action cancel-edit" type="button" data-action="cancel-edit">Cancel</button>
-        </form>` : `<div class="task-title-row"><span class="task-title">${safeText}</span><button class="text-action edit-action" type="button" data-action="edit" aria-label="Edit ${safeText}">Edit</button></div>
-          ${isPriority ? `<label class="importance-wrap"><span class="importance-label">IMPORTANCE</span><select class="importance-select importance-${importance}" data-action="importance" aria-label="Importance for ${safeText}">
-            <option value="high" ${importance === "high" ? "selected" : ""}>High</option>
-            <option value="medium" ${importance === "medium" ? "selected" : ""}>Medium</option>
-            <option value="low" ${importance === "low" ? "selected" : ""}>Low</option>
-          </select></label>` : ""}`}
+          <button class="text-action save-edit" type="submit">Uložit</button>
+          <button class="text-action cancel-edit" type="button" data-action="cancel-edit">Zrušit</button>
+        </form>` : `<div class="task-title-row"><span class="task-title">${safeText}</span><button class="text-action edit-action" type="button" data-action="edit" aria-label="Upravit: ${safeText}">Upravit</button>
+          ${isPriority ? `<select class="importance-select importance-${importance}" data-action="importance" aria-label="Důležitost: ${safeText}" title="Důležitost">
+            <option value="high" ${importance === "high" ? "selected" : ""}>Vysoká</option>
+            <option value="medium" ${importance === "medium" ? "selected" : ""}>Střední</option>
+            <option value="low" ${importance === "low" ? "selected" : ""}>Nízká</option>
+          </select>` : ""}
+        </div>`}
       </div>
-      <div class="task-actions" aria-label="${isPriority ? "Priority" : "Idea"} actions">
-        <button class="icon-button move-up" type="button" data-action="move-up" aria-label="Move ${moveLabel} up" title="Move up" ${index === 0 ? "disabled" : ""}>↑</button>
-        <button class="icon-button move-down" type="button" data-action="move-down" aria-label="Move ${moveLabel} down" title="Move down" ${index === (isPriority ? state.priorities : state.ideas).length - 1 ? "disabled" : ""}>↓</button>
+      <div class="task-actions" aria-label="Akce pro ${isPriority ? "prioritu" : "nápad"}">
+        <button class="icon-button move-up" type="button" data-action="move-up" aria-label="Posunout ${moveLabel} výš" title="Posunout výš" ${index === 0 ? "disabled" : ""}>↑</button>
+        <button class="icon-button move-down" type="button" data-action="move-down" aria-label="Posunout ${moveLabel} níž" title="Posunout níž" ${index === (isPriority ? state.priorities : state.ideas).length - 1 ? "disabled" : ""}>↓</button>
         ${isPriority
-          ? `<button class="text-action demote-action" type="button" data-action="demote" title="Move back to ideas">To ideas</button>`
-          : `<button class="text-action promote-action" type="button" data-action="promote" title="Make this a priority"><span aria-hidden="true">↗</span> Prioritize</button>`}
-        <button class="icon-button delete-action" type="button" data-action="delete" aria-label="Delete ${safeText}" title="Delete">×</button>
+          ? ""
+          : `<button class="text-action promote-action" type="button" data-action="promote" title="Zařadit mezi priority"><span aria-hidden="true">↗</span> Zařadit</button>`}
+        <button class="icon-button delete-action" type="button" data-action="delete" aria-label="Smazat: ${safeText}" title="Smazat">×</button>
       </div>
     </li>`;
   }
 
-  function pluralize(count, singular, plural) {
-    return count === 1 ? singular : plural;
+  function czechCount(count, forms) {
+    const lastTwo = count % 100;
+    const last = count % 10;
+    if (count === 1) return forms[0];
+    if (last >= 2 && last <= 4 && (lastTwo < 12 || lastTwo > 14)) return forms[1];
+    return forms[2];
   }
 
   function addTask(listName, text) {
@@ -164,6 +194,7 @@
     const actionButton = event.target.closest("[data-action]");
     const card = event.target.closest("[data-task-card]");
     if (!actionButton || !card) return;
+    if (actionButton.dataset.action === "importance" && event.type !== "change") return;
     const listName = card.dataset.listName;
     const id = card.dataset.itemId;
     const list = state[listName];
@@ -186,7 +217,7 @@
         editingItem = null;
         saveBoard();
         render();
-        showToast("Item removed.");
+        showToast("Položka byla smazána.");
         break;
       case "move-up":
       case "move-down": {
@@ -195,7 +226,7 @@
         [list[index], list[nextIndex]] = [list[nextIndex], list[index]];
         saveBoard();
         render();
-        showToast(`Moved to position ${nextIndex + 1}.`);
+        showToast(`Přesunuto na ${nextIndex + 1}. místo.`);
         break;
       }
       case "promote":
@@ -204,15 +235,7 @@
         editingItem = null;
         saveBoard();
         render();
-        showToast("Added to priorities as Medium.");
-        break;
-      case "demote":
-        state.priorities.splice(index, 1);
-        state.ideas.push({ id: item.id, text: item.text });
-        editingItem = null;
-        saveBoard();
-        render();
-        showToast("Moved back to ideas.");
+        showToast("Přidáno mezi priority se střední důležitostí.");
         break;
       case "importance":
         item.importance = actionButton.value;
@@ -242,14 +265,19 @@
     draggedItem = null;
     saveBoard();
     render();
-    showToast(fromListName === toListName ? `Moved to position ${targetIndex + 1}.` : toListName === "priorities" ? "Added to priorities as Medium." : "Moved back to ideas.");
+    const message = fromListName === toListName
+      ? `Přesunuto na ${targetIndex + 1}. místo.`
+      : toListName === "priorities"
+        ? "Nápad zařazen mezi priority se střední důležitostí."
+        : "Priorita přesunuta zpět mezi nápady.";
+    showToast(message);
   }
 
   function showToast(message) {
     elements.toast.textContent = message;
     elements.toast.classList.add("is-visible");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => elements.toast.classList.remove("is-visible"), 2300);
+    toastTimer = setTimeout(() => elements.toast.classList.remove("is-visible"), 2600);
   }
 
   function setupVoiceInput() {
@@ -272,7 +300,7 @@
         activeRecognition = recognition;
         button.classList.add("is-listening");
         button.setAttribute("aria-pressed", "true");
-        showToast("Listening… Speak your idea in Czech.");
+        showToast("Poslouchám… Teď nadiktuj nápad nebo prioritu.");
         recognition.onresult = event => {
           const transcript = event.results?.[0]?.[0]?.transcript?.trim();
           if (transcript) {
@@ -281,7 +309,7 @@
           }
         };
         recognition.onerror = event => {
-          if (event.error !== "no-speech" && event.error !== "aborted") showToast("Voice input is unavailable. You can type your item instead.");
+          if (event.error !== "no-speech" && event.error !== "aborted") showToast("Hlasový zápis není dostupný. Položku můžeš napsat.");
         };
         recognition.onend = () => {
           activeRecognition = null;
@@ -321,11 +349,17 @@
     editingItem = null;
     saveBoard();
     render();
-    showToast("Item updated.");
+    showToast("Položka byla upravena.");
   });
 
   elements.board.addEventListener("change", event => {
     if (event.target.matches("[data-action='importance']")) handleAction(event);
+  });
+
+  elements.themeSelect.addEventListener("change", () => {
+    const theme = THEMES.includes(elements.themeSelect.value) ? elements.themeSelect.value : "classic";
+    document.body.dataset.theme = theme;
+    try { localStorage.setItem(THEME_KEY, theme); } catch { /* The selection still applies for this page view. */ }
   });
 
   elements.board.addEventListener("dragstart", event => {
@@ -376,10 +410,10 @@
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `vinmat-ideas-and-priorities-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `vinmat-napady-a-priority-${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     URL.revokeObjectURL(url);
-    showToast("Board backup downloaded.");
+    showToast("Záloha tabule byla stažena.");
   });
 
   elements.importButton.addEventListener("click", () => elements.importFile.click());
@@ -389,14 +423,14 @@
     try {
       const parsed = JSON.parse(await file.text());
       const restored = normalizeBoard(parsed);
-      if (!window.confirm("Replace the current board with this backup?")) return;
+      if (!window.confirm("Nahradit současnou tabuli obsahem této zálohy?")) return;
       state = restored;
       editingItem = null;
       saveBoard();
       render();
-      showToast("Backup restored.");
+      showToast("Záloha byla obnovena.");
     } catch (error) {
-      showToast(error.message === "This backup does not contain a valid board." ? error.message : "Could not read that backup. Choose a valid board JSON file.");
+      showToast(error.message === "Tato záloha neobsahuje platnou tabuli." ? error.message : "Zálohu se nepodařilo načíst. Vyber platný JSON soubor tabule.");
     } finally {
       elements.importFile.value = "";
     }
