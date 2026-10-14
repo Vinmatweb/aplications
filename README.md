@@ -28,3 +28,10 @@ Public URL: https://vinmat.eu/aplications/ideas-and-priorities/
 Development files: `ideas-and-priorities/`
 
 The board is stored in the browser's localStorage and can be backed up/restored using JSON export/import.
+
+## ollie-classroom — Ollie's Classroom
+A small English practice game for young learners, with Czech translations, spoken prompts, and browser-local progress.
+
+Public URL: https://vinmat.eu/aplications/ollie-classroom/
+
+Development files: `ollie-classroom/`
