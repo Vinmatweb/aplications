@@ -30,7 +30,7 @@ Development files: `ideas-and-priorities/`
 The board is stored in the browser's localStorage and can be backed up/restored using JSON export/import.
 
 ## ollie-classroom — Ollie's Classroom
-A small English practice game for young learners, with Czech translations, spoken prompts, and browser-local progress.
+English practice activities with Ollie the owl for young learners.
 
 Public URL: https://vinmat.eu/aplications/ollie-classroom/
 
