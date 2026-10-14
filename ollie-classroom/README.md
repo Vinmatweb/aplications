@@ -1,5 +1,13 @@
 # Ollie’s Classroom
 
-A small English practice game for young learners, with Czech translations, spoken prompts, classroom vocabulary, colours, numbers, old and new objects, and the alphabet.
+English practice activities with Ollie the owl for young learners.
 
-Open `index.html` through a static web server. No build step or dependencies are required. Browser progress and the learner name are saved locally with `localStorage`. Microphone features depend on browser support and permission.
+## Activities
+
+- **Classroom English** — classroom vocabulary, colours, numbers, old and new objects, and the alphabet.  
+  https://vinmat.eu/aplications/ollie-classroom/
+
+- **Ollie’s Counting** — addition and subtraction practice in Czech or English.  
+  https://vinmat.eu/aplications/ollie-classroom/counting/
+
+Each activity is a standalone page. Settings and progress are stored in the current browser.
