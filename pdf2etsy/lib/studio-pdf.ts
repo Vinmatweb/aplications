@@ -1,11 +1,12 @@
 import { PDFDocument, PDFFont, PDFPage, rgb, degrees } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { ExportKind, PlanEntry, Project, buildPlan, isBookend, normalize } from "./studio-model";
+import { publicAssetUrl } from "./studio-runtime";
 
 let fontBytes:Promise<[ArrayBuffer,ArrayBuffer]>|undefined;
 async function fonts() {
   fontBytes ||= Promise.all(["/fonts/DejaVuSans.ttf","/fonts/DejaVuSans-Bold.ttf"].map(async path=>{
-    const response=await fetch(path);if(!response.ok) throw new Error("Nepodařilo se načíst písmo pro export. Zkus export znovu.");return response.arrayBuffer();
+    const response=await fetch(publicAssetUrl(path));if(!response.ok) throw new Error("Nepodařilo se načíst písmo pro export. Zkus export znovu.");return response.arrayBuffer();
   })) as Promise<[ArrayBuffer,ArrayBuffer]>;
   return fontBytes;
 }

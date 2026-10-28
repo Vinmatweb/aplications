@@ -1,11 +1,12 @@
 import { PDFDocument } from "pdf-lib";
 import { Asset, uid } from "./studio-model";
+import { publicAssetUrl } from "./studio-runtime";
 
 let pdfjsPromise:Promise<any>|undefined;
 export async function pdfjs() {
-  const modulePath="/vendor/pdf.min.mjs";
+  const modulePath=publicAssetUrl("/vendor/pdf.min.mjs");
   pdfjsPromise ||= import(/* @vite-ignore */ modulePath).then(module=>{
-    module.GlobalWorkerOptions.workerSrc="/vendor/pdf.worker.min.mjs";return module;
+    module.GlobalWorkerOptions.workerSrc=publicAssetUrl("/vendor/pdf.worker.min.mjs");return module;
   });
   return pdfjsPromise;
 }

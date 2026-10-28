@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@font-face{font-family:StudioSans;src:url("/fonts/DejaVuSans.ttf") format("truetype");font-weight:400;font-display:swap}
 :root{--bg:#f8f9f7;--paper:#fff;--ink:#282d2b;--muted:#8b918b;--border:#e7e9e4;--primary:#70434d;--primary-hover:#59333d;--primary-pale:#f3ebed;--green:#647b65;--orange:#cb9068;--sidebar:#f2f3ee}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Helvetica Neue",sans-serif;font-size:13px;-webkit-font-smoothing:antialiased}

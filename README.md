@@ -39,8 +39,10 @@ Development files: `ollie-classroom/`
 ## pdf2etsy — Etsy PDF Studio
 Czech workspace for assembling colouring sheets, tracing worksheets and colour references into Etsy PDF packs. Includes International Days Animals and mega-pack templates, automatic contents, optional branding, A4 / US Letter exports and browser-local project backups.
 
-Live application (private, sign in with ChatGPT): https://etsy-pdf-studio-w4k.jirik66.chatgpt.site
+Public URL: https://vinmat.eu/aplications/pdf2etsy/
+
+Server-hosted version (private, sign in with ChatGPT): https://etsy-pdf-studio-w4k.jirik66.chatgpt.site
 
 Development files: `pdf2etsy/`
 
-The complete React / Vinext source project and setup instructions are in `pdf2etsy/README.md`. Uploaded worksheets and saved projects stay in the browser's IndexedDB and are not committed to GitHub.
+The complete React / Vinext source project, GitHub Pages browser build and setup instructions are in `pdf2etsy/README.md`. Uploaded worksheets and saved projects stay in the browser's IndexedDB and are not committed to GitHub.

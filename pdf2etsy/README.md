@@ -1,6 +1,9 @@
-# Paperwork — Etsy PDF Studio
+# PDF2Etsy — Paperwork PDF Studio
 
 Česká webová aplikace pro sestavování PDF balíčků z vlastních obrázků a PDF.
+
+Veřejná aplikace: https://vinmat.eu/aplications/pdf2etsy/
+
 
 ## Použití
 
@@ -60,4 +63,17 @@ node --experimental-strip-types scripts/check-export-order.mjs
 pnpm build
 ```
 
-Aplikace používá Vinext a serverovou cestu pro import veřejného souboru z Disku. Tato složka obsahuje plný zdrojový projekt; GitHub Pages samo tento serverový projekt nespustí. Původní Sites identita je uložená v `.openai/hosting.json`; žádné přístupové tokeny ani uživatelské podklady součástí zdrojů nejsou.
+Aplikace používá Vinext a serverovou cestu pro import veřejného souboru z Disku. Tato složka obsahuje plný zdrojový projekt; Pro GitHub Pages použij níže uvedený příkaz pnpm build:web; serverový import odkazu z Disku vyžaduje serverové hostování. Původní Sites identita je uložená v `.openai/hosting.json`; žádné přístupové tokeny ani uživatelské podklady součástí zdrojů nejsou.
+
+
+## Publikování na GitHub Pages
+
+Veřejná verze používá stejnou tabulku a klientské generování PDF. Nevyžaduje přihlášení ani server pro místní soubory. Zdroje, náhledy, písma i PDF knihovny načítá relativně ke své složce, takže funguje také v podadresáři webu.
+
+```bash
+pnpm build:web
+```
+
+Sestavení vytvoří adresář `web/`. Jeho obsah se publikuje do `aplications/pdf2etsy/` v repozitáři `Vinmatweb/vinmatweb.github.io`. Zdrojová verze zůstává v `Vinmatweb/aplications/pdf2etsy`.
+
+Veřejný web nemá serverový proxy pro Google Drive. Modal proto nabízí stažení z Disku a hromadný import místních podkladů. Serverová cesta `/api/drive` zůstává součástí serverové verze projektu.
