@@ -1,0 +1,1137 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etsy PDF balíčky</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root{
+  --bg:#f6f4ef; --panel:#fff; --ink:#22262b; --muted:#6b7178; --line:#e3dfd6;
+  --accent:#2f6f5e; --accent-2:#e7f1ee; --warn:#b5531c; --sel:#f2b544;
+  --bw:#4b5563; --trace:#7c5cbf; --color:#d9752b;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Nunito,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+button,input,select{font:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;color:var(--ink)}
+button:hover{border-color:#bdb7aa}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+button.primary:hover{filter:brightness(1.08)}
+button.ghost{background:transparent;border-color:transparent}
+button:disabled{opacity:.45;cursor:default}
+input[type=text],input[type=number],input:not([type]),select,textarea{border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:#fff;color:var(--ink)}
+header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 16px}
+.bar + .bar{border-top:1px solid var(--line)}
+.brand{font-weight:800;font-size:17px;margin-right:6px;white-space:nowrap}
+.brand span{color:var(--accent)}
+.tabs{display:inline-flex;background:#efece5;border-radius:10px;padding:3px}
+.tabs button{border:0;background:transparent;border-radius:8px;padding:6px 12px}
+.tabs button.on{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12);font-weight:700}
+.pkg{display:flex;align-items:center;gap:6px}
+.pkg input{width:220px;font-weight:700}
+.spacer{flex:1}
+.exp{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.exp .grp{display:inline-flex}
+.exp .grp button:first-child{border-radius:8px 0 0 8px}
+.exp .grp button:last-child{border-radius:0 8px 8px 0;border-left:0;padding:6px 8px}
+.exp small{opacity:.75;font-weight:400}
+.lbl-muted{color:var(--muted);font-size:12px}
+.src-status{font-size:12px;color:var(--muted)}
+.src-status b{color:var(--accent)}
+main{padding:14px 16px 80px}
+.hint{display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13px;margin:0 0 10px}
+.hint kbd{background:#fff;border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:12px}
+table{width:100%;border-collapse:separate;border-spacing:0;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+thead th:first-child{border-top-left-radius:12px} thead th:last-child{border-top-right-radius:12px}
+thead th{position:sticky;top:var(--hdr,104px);z-index:5;background:#faf8f4;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:9px 8px;border-bottom:1px solid var(--line)}
+th.c-bw{color:var(--bw)} th.c-trace{color:var(--trace)} th.c-color{color:var(--color)}
+td{border-bottom:1px solid var(--line);padding:6px 8px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr.off td{opacity:.42}
+tr.sec-start td{border-top:2px solid #d8d2c4}
+td.num{width:40px;text-align:center;color:var(--muted);font-weight:700}
+td.name{width:270px}
+.namewrap{display:flex;align-items:center;gap:6px}
+.namewrap input.lbl{flex:1;min-width:0;border-color:transparent;background:transparent;font-weight:700;padding:4px 6px}
+.namewrap input.lbl:hover,.namewrap input.lbl:focus{border-color:var(--line);background:#fff}
+.rowtools{display:flex;gap:2px;opacity:.25;transition:opacity .15s}
+tr:hover .rowtools{opacity:1}
+.rowtools button{padding:2px 6px;font-size:12px;border-color:transparent;background:transparent}
+.rowtools button:hover{border-color:var(--line);background:#fff}
+.tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;border-radius:5px;padding:1px 5px;background:#efece5;color:var(--muted);white-space:nowrap}
+.tag.t-level,.tag.t-item{background:#e8eefb;color:#3a5aa8}
+.tag.t-story{background:#f6eadf;color:#9a5a24}
+.tag.t-info{background:#e7f3ea;color:#2c7a45}
+.tag.t-maze{background:#f3e8f6;color:#7d3a96}
+.cell{position:relative;height:104px;border:1.5px dashed #d6d0c3;border-radius:10px;display:flex;align-items:center;gap:8px;padding:6px;background:#fdfcfa;transition:background .12s,border-color .12s;min-width:190px}
+.cell.empty{justify-content:center;color:#a39d90;font-size:12px;text-align:center}
+.cell.full{border-style:solid;border-color:var(--line);background:#fff}
+.cell.over{border-color:var(--accent);background:var(--accent-2)}
+.cell.sel{outline:2.5px solid var(--sel);outline-offset:1px}
+.cell img{height:90px;max-width:80px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff;cursor:grab;flex:none}
+.cell .meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;font-size:12px}
+.cell .fname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.cell .kind{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase}
+.cell .ctools{position:absolute;right:4px;bottom:4px;display:flex;gap:2px}
+.cell.empty .ctools{position:static;margin-top:6px;justify-content:center}
+.cell .ctools button{padding:1px 6px;font-size:12px;background:#fff}
+.cell select{font-size:11px;padding:1px 4px;max-width:90px}
+.cell .auto{font-size:11px;color:var(--accent);font-weight:700}
+.cell.na{border:0;background:transparent;color:#c2bcaf;justify-content:center}
+.addrow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.tray{margin-top:18px;background:var(--panel);border:1px dashed #cfc8b8;border-radius:12px;padding:10px 12px}
+.tray h3{margin:0 0 8px;font-size:13px;color:var(--muted)}
+.tray .items{display:flex;flex-wrap:wrap;gap:8px;min-height:40px}
+.titem{width:96px;font-size:11px;text-align:center;position:relative}
+.titem img{width:96px;height:120px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:6px;cursor:grab}
+.titem div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titem button{position:absolute;top:2px;right:2px;padding:0 5px;font-size:11px}
+body.dragging-files main{outline:3px dashed var(--accent);outline-offset:-6px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#22262b;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:99;max-width:90vw}
+#toast.show{opacity:1}
+#busy{position:fixed;inset:0;background:rgba(246,244,239,.75);display:none;align-items:center;justify-content:center;z-index:90;font-weight:700;font-size:15px}
+#busy.show{display:flex}
+#busy .box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 26px;box-shadow:0 8px 30px rgba(0,0,0,.1)}
+dialog{border:1px solid var(--line);border-radius:14px;padding:0;max-width:min(900px,94vw);width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+dialog::backdrop{background:rgba(30,30,30,.35)}
+.dhead{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.dhead h2{margin:0;font-size:17px}
+.dbody{padding:14px 18px;max-height:72vh;overflow:auto}
+.dfoot{padding:12px 18px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}
+fieldset{border:1px solid var(--line);border-radius:10px;margin:0 0 14px;padding:10px 14px}
+legend{font-weight:800;padding:0 6px}
+.frm{display:grid;grid-template-columns:220px 1fr;gap:8px 12px;align-items:center}
+.frm label{color:var(--muted)}
+.frm input[type=text],.frm select{width:100%}
+.frm .full{grid-column:1/-1}
+.note{font-size:12px;color:var(--muted);line-height:1.5}
+.note ol{margin:4px 0;padding-left:18px}
+.pv{display:flex;flex-wrap:wrap;gap:10px}
+.pv .pg{width:110px;text-align:center;font-size:11px}
+.pv .pg .im{width:110px;height:150px;border:1px solid var(--line);border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pv .pg img{max-width:100%;max-height:100%}
+.pv .pg .no{font-weight:800}
+.pv .pg .k-bw{color:var(--bw)} .pv .pg .k-trace{color:var(--trace)} .pv .pg .k-color{color:var(--color)}
+.plist{display:flex;flex-direction:column;gap:6px}
+.plist .pi{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.plist .pi span{flex:1}
+.dlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.dlist .df{border:1px solid var(--line);border-radius:8px;padding:6px;cursor:pointer;font-size:11px;text-align:center;background:#fff}
+.dlist .df:hover{border-color:var(--accent)}
+.dlist .df img{width:100%;height:120px;object-fit:contain}
+.dlist .df .ph{height:120px;display:flex;align-items:center;justify-content:center;font-size:30px;color:#bbb}
+.dlist .df div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head>
+<body>
+<header id="hdr">
+  <div class="bar">
+    <div class="brand">Etsy <span>PDF</span> balíčky</div>
+    <div class="tabs" id="modeTabs">
+      <button data-mode="ida" class="on">International Days – Animals</button>
+      <button data-mode="mega">Mega Etsy balíček</button>
+    </div>
+    <div class="pkg">
+      <label for="pkgInput" class="lbl-muted">Pro koho:</label>
+      <input id="pkgInput" list="pkgList" placeholder="např. Irbis, Buvol, Lemur…" autocomplete="off">
+      <datalist id="pkgList"></datalist>
+      <button id="btnPrefill" title="Předvyplnit tabulku z vybrané složky (lokální / Google Drive)">⚡ Předvyplnit</button>
+    </div>
+    <div class="spacer"></div>
+    <button id="btnLocal" title="Vyber hlavní složku se složkami zvířat (např. synchronizovaný Google Drive na disku G:)">📂 Lokální složka</button>
+    <input type="file" id="localInput" webkitdirectory directory multiple hidden>
+    <button id="btnDrive" title="Připojit Google Drive">☁️ Google Drive</button>
+    <span class="src-status" id="srcStatus"></span>
+    <button id="btnProjects" title="Uložené projekty">💾 Projekty</button>
+    <button id="btnSettings" title="Nastavení">⚙️</button>
+  </div>
+  <div class="bar exp" id="expBar"></div>
+</header>
+
+<main id="main">
+  <div class="hint">
+    <span>Přetáhni soubory do buňky, nebo <b>víc souborů najednou kamkoliv do stránky</b> – rozřadí se podle názvu (level 1, story 3, tracing, color…).</span>
+    <span>Klikni na buňku a <kbd>Ctrl</kbd>+<kbd>V</kbd> vloží obrázek ze schránky. Náhledy jde přetahovat mezi buňkami.</span>
+  </div>
+  <table>
+    <thead><tr id="theadRow"></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <div class="addrow" id="addRow"></div>
+  <div class="tray" id="tray">
+    <h3>Nepřiřazené soubory <span class="lbl-muted">– přetáhni je do tabulky</span></h3>
+    <div class="items" id="trayItems"></div>
+  </div>
+</main>
+
+<input type="file" id="fileInput" accept="image/*,application/pdf,.pdf" multiple hidden>
+<div id="toast"></div>
+<div id="busy"><div class="box" id="busyText">Pracuji…</div></div>
+
+<!-- Nastavení -->
+<dialog id="dlgSettings">
+  <div class="dhead"><h2>Nastavení</h2><button class="ghost" data-close>✕</button></div>
+  <div class="dbody">
+    <fieldset><legend>Stránky PDF</legend>
+      <div class="frm">
+        <label>Formát stránky</label>
+        <select data-key="pageSize"><option value="A4">A4 (210 × 297 mm)</option><option value="Letter">US Letter (8,5 × 11")</option></select>
+        <label>Umístění obrázku</label>
+        <select data-key="fit"><option value="contain">Vejít celý (zachovat poměr)</option><option value="stretch">Roztáhnout na celou stranu</option></select>
+        <label>Okraj (mm)</label>
+        <input type="number" data-key="marginMm" min="0" max="40" step="1">
+        <label>Čísla stránek</label>
+        <select data-key="pageNumbers"><option value="false">Ne</option><option value="true">Ano (kromě titulky)</option></select>
+        <label>Obtahovačka chybí</label>
+        <select data-key="traceFallback"><option value="true">Použít ČB omalovánku</option><option value="false">Vynechat stranu</option></select>
+      </div>
+    </fieldset>
+    <fieldset><legend>Obsah (generuje se automaticky)</legend>
+      <div class="frm">
+        <label>Obsah</label>
+        <select data-key="tocAuto"><option value="true">Generovat z nahraných stran</option><option value="false">Použít nahraný obrázek beze změn</option></select>
+        <label>Jazyk obsahu</label>
+        <select data-key="lang"><option value="en">English</option><option value="cs">Čeština</option><option value="de">Deutsch</option></select>
+        <label>Nahraný obrázek v řádku Obsah</label>
+        <select data-key="tocBg"><option value="true">Použít jako pozadí (šablonu)</option><option value="false">Ignorovat</option></select>
+        <label>Nadpis přes pozadí</label>
+        <select data-key="tocTitleOnBg"><option value="false">Ne – nadpis je v šabloně</option><option value="true">Ano – vypsat nadpis</option></select>
+        <label>Volné místo nahoře / dole na šabloně (%)</label>
+        <div><input type="number" data-key="tocTopPct" min="0" max="60" style="width:80px"> / <input type="number" data-key="tocBottomPct" min="0" max="40" style="width:80px"></div>
+      </div>
+    </fieldset>
+    <fieldset><legend>Branding</legend>
+      <div class="frm">
+        <label>Obrázky</label>
+        <select data-key="brandMode"><option value="pre">Už jsou obrandované – nic nepřidávat</option><option value="app">Obrandovat v aplikaci</option></select>
+        <label>Nadpis nahoře</label>
+        <input type="text" data-key="brandTitle" placeholder="{name}">
+        <label>Kde nadpis</label>
+        <select data-key="titleRule"><option value="lv13">Jen Level 1–3 (+ příběhy, bludiště)</option><option value="all">Všude</option><option value="none">Nikde</option></select>
+        <label>Patička dole</label>
+        <input type="text" data-key="brandFooter" placeholder="© VinMat Coloring · vinmat.eu">
+        <label>Písmo</label>
+        <input type="text" data-key="font">
+        <div class="full note"><code>{name}</code> se nahradí jménem balíčku (Irbis…), <code>{label}</code> názvem řádku. Branding se přidává jen na omalovánky, obtahovačky, vzory a bludiště – ne na titulku, obsah, info karty a closing.</div>
+      </div>
+    </fieldset>
+    <fieldset><legend>Google Drive</legend>
+      <div class="frm">
+        <label>OAuth Client ID</label>
+        <input type="text" data-key="driveClientId" placeholder="xxxx.apps.googleusercontent.com">
+        <label>Hlavní složka (odkaz nebo ID)</label>
+        <input type="text" data-key="driveRoot" placeholder="https://drive.google.com/drive/folders/…">
+        <div class="full note">
+          Hlavní složka = složka, ve které je podsložka pro každé zvíře (Irbis, Buvol, Lemur…). Jednorázové nastavení:
+          <ol>
+            <li><a href="https://console.cloud.google.com/" target="_blank">console.cloud.google.com</a> → nový projekt → <i>APIs &amp; Services → Library</i> → zapni <b>Google Drive API</b>.</li>
+            <li><i>OAuth consent screen</i> → External → vyplň název, svůj e-mail a přidej se jako <b>test user</b>.</li>
+            <li><i>Credentials → Create credentials → OAuth client ID</i> → typ <b>Web application</b> → do <i>Authorized JavaScript origins</i> dej <code>http://localhost:8765</code>.</li>
+            <li>Client ID vlož sem. Aplikaci pak spouštěj přes <b>spustit.bat</b> (Drive nefunguje při otevření souboru dvojklikem).</li>
+          </ol>
+          Bez nastavování: použij <b>📂 Lokální složka</b> a vyber složku z Google Drive pro počítač (disk G:) – funguje stejně.
+        </div>
+      </div>
+    </fieldset>
+    <fieldset><legend>Rozpoznávání názvů souborů</legend>
+      <div class="note">
+        <b>Řádek:</b> titul/title/cover · obsah/contents/toc · level1/lv1/lvl 1 · pribeh/story 3 · info/karta/card 2 · bludiste/maze · closing/zaver/thank you · v Mega režimu první číslo v názvu = číslo řádku.<br>
+        <b>Sloupec:</b> obtah/trace/tracing → Obtahovačka · barev/color/colour/vzor/sample → Barevný vzor · ostatní (i „coloring“) → ČB omalovánka. Počítají se i názvy podsložek.
+      </div>
+    </fieldset>
+  </div>
+  <div class="dfoot"><button class="primary" data-close>Hotovo</button></div>
+</dialog>
+
+<!-- Náhled -->
+<dialog id="dlgPreview">
+  <div class="dhead"><h2 id="pvTitle">Náhled</h2><button class="ghost" data-close>✕</button></div>
+  <div class="dbody"><div class="pv" id="pvBody"></div></div>
+  <div class="dfoot"><button data-close>Zavřít</button><button class="primary" id="pvDownload">⬇ Stáhnout PDF</button></div>
+</dialog>
+
+<!-- Projekty -->
+<dialog id="dlgProjects">
+  <div class="dhead"><h2>Uložené projekty</h2><button class="ghost" data-close>✕</button></div>
+  <div class="dbody">
+    <p class="note">Projekt se ukládá i s obrázky přímo v prohlížeči (na tomto počítači). Rozpracovaný stav se navíc ukládá automaticky.</p>
+    <div class="plist" id="projList"></div>
+  </div>
+  <div class="dfoot"><button id="btnClearTable">🧹 Vyprázdnit tabulku</button><span class="spacer"></span><button class="primary" id="btnSaveProj">💾 Uložit aktuální (Ctrl+S)</button></div>
+</dialog>
+
+<!-- Drive výběr souboru -->
+<dialog id="dlgDrive">
+  <div class="dhead"><h2 id="dvTitle">Vybrat z Google Drive</h2><button class="ghost" data-close>✕</button></div>
+  <div class="dbody"><div class="dlist" id="dvList"></div></div>
+</dialog>
+
+<script>
+'use strict';
+/* ================= Utility ================= */
+const $ = s => document.querySelector(s);
+const uid = () => Math.random().toString(36).slice(2, 10);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[_\-.\s+()\[\],]+/g, ' ').trim();
+const natural = (a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'});
+const MM = 72 / 25.4;
+const SIZES = {A4: [595.28, 841.89], Letter: [612, 792]};
+const THUMB_W = 400;
+const COLS = ['bw', 'trace', 'color'];
+const COL_LABEL = {bw: 'ČB omalovánka', trace: 'Obtahovačka', color: 'Barevný vzor'};
+const IMG_EXT = {png:'image/png', jpg:'image/jpeg', jpeg:'image/jpeg', webp:'image/webp', gif:'image/gif', bmp:'image/bmp', svg:'image/svg+xml', pdf:'application/pdf'};
+const extOf = n => (n.split('.').pop() || '').toLowerCase();
+const isSupportedName = n => !!IMG_EXT[extOf(n)];
+
+if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+let toastT;
+function toast(msg, ms = 3200) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), ms);
+}
+function busy(on, text) {
+  $('#busy').classList.toggle('show', !!on);
+  if (text) $('#busyText').textContent = text;
+}
+function mkCanvas(w, h) { const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w)); c.height = Math.max(1, Math.round(h)); return c; }
+function canvasPng(c) { return new Promise(res => c.toBlob(b => b.arrayBuffer().then(x => res(new Uint8Array(x))), 'image/png')); }
+async function loadImg(src) {
+  const url = src instanceof Blob ? URL.createObjectURL(src) : src;
+  const img = new Image(); img.src = url;
+  try { await img.decode(); } finally { if (src instanceof Blob) setTimeout(() => URL.revokeObjectURL(url), 5000); }
+  return img;
+}
+async function pool(items, n, fn) {
+  const out = new Array(items.length); let i = 0;
+  await Promise.all(Array.from({length: Math.min(n, items.length)}, async () => {
+    while (i < items.length) { const k = i++; out[k] = await fn(items[k], k); }
+  }));
+  return out;
+}
+
+/* ================= Nastavení ================= */
+const DEFAULTS = {
+  pageSize: 'A4', fit: 'contain', marginMm: 0, pageNumbers: false, traceFallback: true,
+  tocAuto: true, lang: 'en', tocBg: true, tocTitleOnBg: false, tocTopPct: 20, tocBottomPct: 8,
+  brandMode: 'pre', brandTitle: '{name}', titleRule: 'lv13', brandFooter: '', font: "Nunito, 'Segoe UI', Arial, sans-serif",
+  driveClientId: '', driveRoot: ''
+};
+const S = (() => { try { return Object.assign({}, DEFAULTS, JSON.parse(localStorage.getItem('etsyPdfSettings') || '{}')); } catch { return {...DEFAULTS}; } })();
+function saveSettings() { try { localStorage.setItem('etsyPdfSettings', JSON.stringify(S)); } catch {} }
+
+const L = {
+  cs: {toc: 'Obsah', p: 'str.', bw: 'Omalovánka', trace: 'Obtahovačka', color: 'Barevný vzor', maze: 'Bludiště', info: 'Informační karta', level: 'Level', story: 'Příběh', item: 'Omalovánka'},
+  en: {toc: 'Contents', p: 'p.', bw: 'Coloring page', trace: 'Tracing page', color: 'Color sample', maze: 'Maze', info: 'Fact card', level: 'Level', story: 'Story', item: 'Coloring page'},
+  de: {toc: 'Inhalt', p: 'S.', bw: 'Malvorlage', trace: 'Nachspuren', color: 'Farbvorlage', maze: 'Labyrinth', info: 'Infokarte', level: 'Level', story: 'Geschichte', item: 'Malvorlage'}
+};
+
+/* ================= Stav ================= */
+const RANK = {title: 0, toc: 1, level: 2, item: 2, story: 3, info: 4, maze: 5, closing: 9};
+const TYPE_TAG = {title: 'titulka', toc: 'obsah', level: 'level', item: 'položka', story: 'příběh', info: 'info', maze: 'bludiště', closing: 'closing'};
+function defaultLabel(type, n) {
+  return ({title: 'Titulka', toc: 'Obsah', level: `Omalovánka – level ${n}`, story: `Příběh ${n}`, info: `Informační karta ${n}`,
+    maze: 'Bludiště', closing: 'Closing (závěrečná strana)', item: `Omalovánka ${n}`})[type];
+}
+function mkRow(type, n = 0) { return {id: uid(), type, n, label: defaultLabel(type, n), custom: false, include: true, cells: {bw: null, trace: null, color: null}}; }
+function defaultRows(mode) {
+  const r = [mkRow('title'), mkRow('toc')];
+  if (mode === 'ida') {
+    for (let i = 1; i <= 5; i++) r.push(mkRow('level', i));
+    for (let i = 1; i <= 12; i++) r.push(mkRow('story', i));
+    for (let i = 1; i <= 3; i++) r.push(mkRow('info', i));
+    r.push(mkRow('maze', 1));
+  } else for (let i = 1; i <= 20; i++) r.push(mkRow('item', i));
+  r.push(mkRow('closing'));
+  return r;
+}
+const app = {
+  mode: 'ida',
+  proj: {ida: {pkg: '', rows: defaultRows('ida')}, mega: {pkg: '', rows: defaultRows('mega')}},
+  tray: [],
+  selected: null,
+  local: null,          // Map normName -> {name, files:[{file, rel}]}
+  drive: {token: null, exp: 0, folders: null, files: new Map()},
+  target: null
+};
+const P = () => app.proj[app.mode];
+const rows = () => P().rows;
+const findRow = id => rows().find(r => r.id === id);
+
+/* ================= Assety (obrázky / PDF) ================= */
+const pdfCache = new Map();
+function pdfDoc(a) {
+  if (!pdfCache.has(a.srcId)) pdfCache.set(a.srcId, a.blob.arrayBuffer().then(b => pdfjsLib.getDocument({data: new Uint8Array(b)}).promise));
+  return pdfCache.get(a.srcId);
+}
+async function assetFromBlob(blob, name) {
+  const head = new Uint8Array(await blob.slice(0, 5).arrayBuffer());
+  const isPdf = head[0] === 0x25 && head[1] === 0x50 && head[2] === 0x44 && head[3] === 0x46;
+  const mime = isPdf ? 'application/pdf' : (blob.type || IMG_EXT[extOf(name)] || '');
+  if (!isPdf && !/^image\//.test(mime)) throw new Error('Nepodporovaný soubor: ' + name);
+  const id = uid();
+  const a = {id, srcId: id, name, kind: isPdf ? 'pdf' : 'image', mime, blob, page: 1, pageCount: 1, thumb: null, w: 0, h: 0};
+  if (isPdf) a.pageCount = (await pdfDoc(a)).numPages;
+  await makeThumb(a);
+  return a;
+}
+async function makeThumb(a) {
+  let c;
+  if (a.kind === 'pdf') {
+    const p = await (await pdfDoc(a)).getPage(a.page);
+    const v0 = p.getViewport({scale: 1}); a.w = v0.width; a.h = v0.height;
+    const v = p.getViewport({scale: THUMB_W / v0.width});
+    c = mkCanvas(v.width, v.height); const g = c.getContext('2d');
+    g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+    await p.render({canvasContext: g, viewport: v}).promise;
+  } else {
+    const img = await loadImg(a.blob);
+    a.w = img.naturalWidth || 1000; a.h = img.naturalHeight || 1414;
+    c = mkCanvas(THUMB_W, THUMB_W * a.h / a.w); const g = c.getContext('2d');
+    g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+  }
+  a.thumb = c.toDataURL('image/jpeg', 0.82);
+}
+async function pdfPageAssets(a) {   // rozloží vícestránkové PDF na jednotlivé assety
+  const out = [];
+  for (let k = 1; k <= a.pageCount; k++) {
+    const b = k === 1 ? a : {...a, id: uid(), page: k, thumb: null};
+    if (k > 1) await makeThumb(b);
+    out.push(b);
+  }
+  return out;
+}
+
+/* ================= Vykreslení tabulky ================= */
+function render() {
+  document.querySelectorAll('#modeTabs button').forEach(b => b.classList.toggle('on', b.dataset.mode === app.mode));
+  $('#pkgInput').value = P().pkg;
+  $('#theadRow').innerHTML = `<th>#</th><th>Pracovní list</th>` + COLS.map(c => `<th class="c-${c}">${COL_LABEL[c]}</th>`).join('');
+  let prevType = null;
+  $('#tbody').innerHTML = rows().map((r, i) => {
+    const sec = prevType !== null && prevType !== r.type ? 'sec-start' : ''; prevType = r.type;
+    const fixed = r.type === 'title' || r.type === 'toc' || r.type === 'closing';
+    return `<tr data-row="${r.id}" class="${r.include ? '' : 'off'} ${sec}">
+      <td class="num">${i + 1}</td>
+      <td class="name"><div class="namewrap">
+        <input type="checkbox" data-act="inc" ${r.include ? 'checked' : ''} title="Zahrnout do exportu">
+        <input class="lbl" data-act="label" value="${esc(r.label)}">
+        <span class="tag t-${r.type}">${TYPE_TAG[r.type]}</span>
+        <div class="rowtools">
+          <button data-act="up" title="Posunout nahoru">↑</button><button data-act="down" title="Posunout dolů">↓</button>
+          ${fixed ? '' : '<button data-act="del" title="Smazat řádek">🗑</button>'}
+        </div></div></td>
+      ${COLS.map(c => `<td>${cellHtml(r, c)}</td>`).join('')}
+    </tr>`;
+  }).join('');
+  renderAddRow(); renderTray(); renderExportBar(); scheduleAutosave();
+}
+function cellHtml(r, col) {
+  const a = r.cells[col];
+  const sel = app.selected && app.selected.row === r.id && app.selected.col === col ? 'sel' : '';
+  const drive = app.drive.token ? '<button data-act="drive" title="Vybrat z Google Drive">☁️</button>' : '';
+  if (!a) {
+    let txt = 'Přetáhni obrázek / PDF';
+    if (r.type === 'toc') txt = S.tocAuto ? '<span class="auto">✓ Generuje se automaticky</span><br>sem můžeš dát šablonu pozadí' : 'Nahraj hotový obsah';
+    if (r.type === 'info' && col !== 'bw') txt = 'stejná karta do všech balíčků – stačí jeden sloupec';
+    return `<div class="cell empty ${sel}" data-col="${col}"><div>${txt}<div class="ctools"><button data-act="browse" title="Vybrat soubor">📁</button>${drive}</div></div></div>`;
+  }
+  const pages = a.kind === 'pdf' && a.pageCount > 1
+    ? `<select data-act="page" title="Stránka PDF">${Array.from({length: a.pageCount}, (_, k) => `<option value="${k + 1}" ${k + 1 === a.page ? 'selected' : ''}>str. ${k + 1}/${a.pageCount}</option>`).join('')}</select>` : '';
+  return `<div class="cell full ${sel}" data-col="${col}">
+    <img src="${a.thumb}" draggable="true" data-drag="cell" alt="">
+    <div class="meta"><span class="kind">${a.kind === 'pdf' ? 'PDF' : 'obrázek'}</span><span class="fname" title="${esc(a.name)}">${esc(a.name)}</span>${pages}</div>
+    <div class="ctools"><button data-act="browse" title="Nahradit">📁</button>${drive}<button data-act="clear" title="Odebrat">✕</button></div>
+  </div>`;
+}
+function renderAddRow() {
+  const el = $('#addRow');
+  if (app.mode === 'ida') {
+    el.innerHTML = `<button data-add="level">+ Omalovánka (level)</button><button data-add="story">+ Příběh</button>
+      <button data-add="info">+ Informační karta</button><button data-add="maze">+ Bludiště</button>`;
+  } else {
+    const n = rows().filter(r => r.type === 'item').length;
+    el.innerHTML = `<button data-add="item">+ 1 řádek</button><button data-add="item" data-count="10">+ 10 řádků</button>
+      <span class="lbl-muted" style="align-self:center">Položek: <b>${n}</b></span>`;
+  }
+}
+function renderTray() {
+  $('#tray').style.display = app.tray.length ? '' : 'none';
+  $('#trayItems').innerHTML = app.tray.map((a, i) => `<div class="titem"><img src="${a.thumb}" draggable="true" data-drag="tray" data-idx="${i}" title="${esc(a.name)}"><div>${esc(a.name)}</div><button data-tray-del="${i}">✕</button></div>`).join('');
+}
+const EXPORTS = {
+  bw: {label: 'ČB omalovánky', file: 'omalovanky-CB'},
+  trace: {label: 'Obtahovačky', file: 'obtahovacky'},
+  color: {label: 'Omalovánky + barevné vzory', file: 'omalovanky-barevne-vzory'},
+  complete: {label: 'Kompletní balíček', file: 'kompletni-balicek'}
+};
+function renderExportBar() {
+  $('#expBar').innerHTML = '<span class="lbl-muted">Export:</span>' + Object.entries(EXPORTS).map(([k, e]) => {
+    const n = planFor(k).total;
+    return `<span class="grp"><button class="${k === 'complete' ? 'primary' : ''}" data-export="${k}" ${n ? '' : 'disabled'}>⬇ ${e.label} <small>(${n} str.)</small></button><button data-preview="${k}" title="Náhled pořadí stran" ${n ? '' : 'disabled'}>👁</button></span>`;
+  }).join('') + `<button data-export="all">⬇ Vše (4 PDF)</button>`;
+  document.documentElement.style.setProperty('--hdr', $('#hdr').offsetHeight + 'px');
+}
+
+/* ================= Úpravy řádků / buněk ================= */
+function insertRow(type, n) {
+  const R = rows();
+  if (n == null) n = Math.max(0, ...R.filter(r => r.type === type).map(r => r.n)) + 1;
+  const row = mkRow(type, n);
+  let idx = -1;
+  R.forEach((r, i) => { if (RANK[r.type] < RANK[type] || (r.type === type && r.n < n)) idx = i; });
+  R.splice(idx + 1, 0, row);
+  return row;
+}
+function ensureRow(type, n) {
+  let r = rows().find(x => x.type === type && (x.n === n || ['title', 'toc', 'closing', 'maze'].includes(type)));
+  if (r) return r;
+  if (type === 'maze') return insertRow('maze', 1);
+  for (let k = 1; k <= n; k++) if (!rows().some(x => x.type === type && x.n === k)) insertRow(type, k);
+  return rows().find(x => x.type === type && x.n === n);
+}
+function setCell(rowId, col, a) { const r = findRow(rowId); if (r) r.cells[col] = a; }
+function takeFrom(src) {
+  if (src.from === 'tray') return app.tray.splice(src.idx, 1)[0];
+  const r = findRow(src.row); const a = r?.cells[src.col]; if (r) r.cells[src.col] = null; return a;
+}
+function moveAsset(src, dst) {
+  if (src.from === 'cell' && src.row === dst.row && src.col === dst.col) return;
+  if (dst.tray) { const a = takeFrom(src); if (a) app.tray.push(a); render(); return; }
+  const r = findRow(dst.row); const existing = r.cells[dst.col];
+  const a = takeFrom(src); r.cells[dst.col] = a;
+  if (existing) {
+    if (src.from === 'cell') findRow(src.row).cells[src.col] = existing; else app.tray.push(existing);
+  }
+  render();
+}
+async function assignFiles(files, rowId, col) {
+  files = files.filter(f => isSupportedName(f.name) || /^image\/|pdf/.test(f.type)).sort((a, b) => natural(a.name, b.name));
+  if (!files.length) return toast('Žádný podporovaný soubor (obrázek nebo PDF).');
+  busy(true, 'Načítám soubory…');
+  try {
+    let assets = (await pool(files, 4, f => assetFromBlob(f, f.name).catch(e => (toast(e.message), null)))).filter(Boolean);
+    if (assets.length === 1 && assets[0].kind === 'pdf' && assets[0].pageCount > 1) {
+      busy(false);
+      if (confirm(`PDF „${assets[0].name}“ má ${assets[0].pageCount} stran.\n\nOK = rozložit stránky do dalších řádků ve sloupci „${COL_LABEL[col]}“\nZrušit = vložit jen 1. stránku (jinou vybereš v buňce)`)) {
+        busy(true, 'Rozkládám PDF…'); assets = await pdfPageAssets(assets[0]);
+      }
+    }
+    if (assets.length === 1) { setCell(rowId, col, assets[0]); return; }
+    fillDown(assets, rowId, col);
+  } finally { busy(false); render(); }
+}
+function fillDown(assets, rowId, col) {
+  const R = rows(); let i = R.findIndex(r => r.id === rowId);
+  const startType = R[i].type;
+  for (const a of assets) {
+    while (i < R.length && ['title', 'toc', 'closing'].includes(R[i].type) && R[i].type !== startType) i++;
+    if (i >= R.length || R[i].type === 'closing' && startType !== 'closing') {
+      const t = app.mode === 'mega' ? 'item' : (['level', 'story', 'info'].includes(startType) ? startType : 'story');
+      const nr = insertRow(t); i = R.indexOf(nr);
+    }
+    R[i].cells[col] = a; i++;
+  }
+  toast(`Vloženo ${assets.length} stran pod sebe.`);
+}
+
+/* ================= Rozpoznání názvů souborů ================= */
+function classify(path, mode) {
+  const parts = path.split('/'); const base = norm(parts.pop().replace(/\.[^.]+$/, '')); const dirs = norm(parts.join(' '));
+  const all = ' ' + dirs + ' ' + base + ' ';
+  let col = 'bw';
+  if (/obtah|trac(e|ing)|nachspur/.test(all)) col = 'trace';
+  else if (/barev|colou?r(?!ing)|vzor|sample|pattern|farb/.test(all)) col = 'color';
+  const test = s => {
+    if (/\b(titul\w*|title|cover|titelseite)\b/.test(s)) return {type: 'title', n: 0};
+    if (/\b(obsah|contents?|toc|inhalt)\b/.test(s)) return {type: 'toc', n: 0};
+    if (/\b(closing|zaver\w*|thank\w*|outro|konec|ende)\b/.test(s)) return {type: 'closing', n: 0};
+    if (mode === 'ida') {
+      let m;
+      if ((m = s.match(/\b(?:level|lvl|lv|uroven|stufe|l)\s?0*([1-9])\b/))) return {type: 'level', n: +m[1]};
+      if ((m = s.match(/\b(?:pribeh\w*|story|stories|geschichte)\s?0*(\d+)/))) return {type: 'story', n: +m[1]};
+      if ((m = s.match(/\b(?:info\w*|karta|karty|card|cards|fact\w*)\s?\D{0,10}?0*(\d+)/))) return {type: 'info', n: +m[1]};
+      if (/\b(info\w*|karta|card|fact\w*)\b/.test(s)) return {type: 'info', n: null};
+      if (/\b(bludist\w*|maze|labyrint\w*)\b/.test(s)) return {type: 'maze', n: 1};
+    } else {
+      const m = s.match(/(\d+)/); if (m && +m[1] > 0 && +m[1] < 1000) return {type: 'item', n: +m[1]};
+    }
+    return null;
+  };
+  const r = test(base) || test(' ' + dirs + ' ' + base);
+  return r ? {...r, col} : null;
+}
+async function bulkAssign(entries, label = 'soubory') {   // entries: [{file, rel}]
+  entries = entries.filter(e => isSupportedName(e.file.name));
+  if (!entries.length) return toast('Žádné obrázky ani PDF.');
+  busy(true, `Načítám ${entries.length} souborů…`);
+  let done = 0, ok = 0, over = 0, unk = 0;
+  try {
+    const assets = await pool(entries, 4, async e => {
+      const a = await assetFromBlob(e.file, e.file.name).catch(() => null);
+      busy(true, `Načítám ${label}… ${++done}/${entries.length}`); return a;
+    });
+    entries.forEach((e, i) => {
+      const a = assets[i]; if (!a) return;
+      const c = classify(e.rel || e.file.name, app.mode);
+      if (!c) { app.tray.push(a); unk++; return; }
+      let row;
+      if (c.type === 'info' && c.n == null) {
+        row = rows().find(r => r.type === 'info' && !r.cells[c.col]) || insertRow('info');
+      } else row = ensureRow(c.type, c.n);
+      if (row.cells[c.col]) over++;
+      row.cells[c.col] = a; ok++;
+    });
+  } finally { busy(false); render(); }
+  toast(`Přiřazeno ${ok} souborů` + (unk ? `, ${unk} nerozpoznaných (dole v „Nepřiřazené“)` : '') + (over ? `, ${over} přepsáno` : '') + '.', 5000);
+}
+
+/* ================= Události v tabulce ================= */
+const tbody = $('#tbody');
+tbody.addEventListener('click', async e => {
+  const tr = e.target.closest('tr[data-row]'); if (!tr) return;
+  const r = findRow(tr.dataset.row); const cell = e.target.closest('.cell'); const col = cell?.dataset.col;
+  const act = e.target.closest('[data-act]')?.dataset.act;
+  if (act === 'up' || act === 'down') {
+    const R = rows(), i = R.indexOf(r), j = act === 'up' ? i - 1 : i + 1;
+    if (j >= 0 && j < R.length) { [R[i], R[j]] = [R[j], R[i]]; render(); } return;
+  }
+  if (act === 'del') {
+    if (Object.values(r.cells).some(Boolean) && !confirm(`Smazat řádek „${r.label}“ i s obrázky?`)) return;
+    rows().splice(rows().indexOf(r), 1); render(); return;
+  }
+  if (act === 'browse') { app.target = {row: r.id, col}; $('#fileInput').value = ''; $('#fileInput').click(); return; }
+  if (act === 'clear') { r.cells[col] = null; render(); return; }
+  if (act === 'drive') { openDrivePicker({row: r.id, col}); return; }
+  if (cell && !act) { app.selected = {row: r.id, col}; document.querySelectorAll('.cell.sel').forEach(c => c.classList.remove('sel')); cell.classList.add('sel'); }
+});
+tbody.addEventListener('dblclick', e => {
+  const cell = e.target.closest('.cell'); const tr = e.target.closest('tr[data-row]');
+  if (cell && tr && !e.target.closest('button,select')) { app.target = {row: tr.dataset.row, col: cell.dataset.col}; $('#fileInput').value = ''; $('#fileInput').click(); }
+});
+tbody.addEventListener('change', async e => {
+  const tr = e.target.closest('tr[data-row]'); if (!tr) return; const r = findRow(tr.dataset.row);
+  const act = e.target.dataset.act;
+  if (act === 'inc') { r.include = e.target.checked; render(); }
+  if (act === 'label') { r.label = e.target.value; r.custom = r.label !== defaultLabel(r.type, r.n); scheduleAutosave(); renderExportBar(); }
+  if (act === 'page') {
+    const col = e.target.closest('.cell').dataset.col; const a = r.cells[col];
+    const b = {...a, id: uid(), page: +e.target.value}; busy(true, 'Načítám stránku…');
+    try { await makeThumb(b); r.cells[col] = b; } finally { busy(false); render(); }
+  }
+});
+tbody.addEventListener('keydown', e => { if (e.target.dataset.act === 'label' && e.key === 'Enter') e.target.blur(); });
+$('#fileInput').addEventListener('change', e => { const t = app.target; if (t && e.target.files.length) assignFiles([...e.target.files], t.row, t.col); });
+
+// Drag & drop
+let dragSrc = null;
+document.addEventListener('dragstart', e => {
+  const im = e.target.closest?.('[data-drag]'); if (!im) return;
+  if (im.dataset.drag === 'tray') dragSrc = {from: 'tray', idx: +im.dataset.idx};
+  else { const tr = im.closest('tr'); dragSrc = {from: 'cell', row: tr.dataset.row, col: im.closest('.cell').dataset.col}; }
+  e.dataTransfer.setData('text/x-asset', '1'); e.dataTransfer.effectAllowed = 'move';
+});
+document.addEventListener('dragend', () => { dragSrc = null; document.body.classList.remove('dragging-files'); });
+const hasFiles = e => [...(e.dataTransfer?.types || [])].includes('Files');
+document.addEventListener('dragover', e => {
+  if (!dragSrc && !hasFiles(e)) return;
+  e.preventDefault();
+  const cell = e.target.closest('.cell');
+  document.querySelectorAll('.cell.over').forEach(c => c !== cell && c.classList.remove('over'));
+  if (cell) cell.classList.add('over');
+  document.body.classList.toggle('dragging-files', !cell && hasFiles(e));
+});
+document.addEventListener('dragleave', e => { if (!e.relatedTarget) { document.body.classList.remove('dragging-files'); document.querySelectorAll('.cell.over').forEach(c => c.classList.remove('over')); } });
+document.addEventListener('drop', async e => {
+  if (!dragSrc && !hasFiles(e)) return;
+  e.preventDefault(); document.body.classList.remove('dragging-files');
+  document.querySelectorAll('.cell.over').forEach(c => c.classList.remove('over'));
+  const cell = e.target.closest('.cell'); const tr = e.target.closest('tr[data-row]');
+  if (dragSrc) {
+    const src = dragSrc; dragSrc = null;
+    if (cell && tr) moveAsset(src, {row: tr.dataset.row, col: cell.dataset.col});
+    else if (e.target.closest('#tray') && src.from === 'cell') moveAsset(src, {tray: true});
+    return;
+  }
+  const entries = await filesFromDrop(e.dataTransfer);
+  if (cell && tr) assignFiles(entries.map(x => x.file), tr.dataset.row, cell.dataset.col);
+  else bulkAssign(entries);
+});
+async function filesFromDrop(dt) {   // podporuje i přetažení celé složky
+  const items = [...(dt.items || [])].map(i => i.webkitGetAsEntry?.()).filter(Boolean);
+  if (!items.some(x => x.isDirectory)) return [...dt.files].map(f => ({file: f, rel: f.name}));
+  const out = [];
+  const walk = async (entry, path) => {
+    if (entry.isFile) { const f = await new Promise((res, rej) => entry.file(res, rej)); out.push({file: f, rel: path + f.name}); }
+    else if (entry.isDirectory) {
+      const rd = entry.createReader(); let batch;
+      do { batch = await new Promise((res, rej) => rd.readEntries(res, rej)); for (const x of batch) await walk(x, path + entry.name + '/'); } while (batch.length);
+    }
+  };
+  for (const it of items) await walk(it, '');
+  return out;
+}
+document.addEventListener('paste', async e => {
+  if (!app.selected || e.target.matches('input,textarea')) return;
+  const files = [...(e.clipboardData?.files || [])];
+  if (!files.length) return toast('Ve schránce není obrázek.');
+  e.preventDefault();
+  const f = files[0]; const named = new File([f], f.name && f.name !== 'image.png' ? f.name : `vlozeno-${Date.now()}.png`, {type: f.type});
+  assignFiles([named], app.selected.row, app.selected.col);
+});
+$('#addRow').addEventListener('click', e => {
+  const b = e.target.closest('[data-add]'); if (!b) return;
+  for (let k = 0; k < (+b.dataset.count || 1); k++) insertRow(b.dataset.add);
+  if (app.mode === 'mega' && rows().filter(r => r.type === 'item').length > 100) toast('Pozor, přes 100 položek – PDF bude hodně velké.');
+  render();
+});
+$('#trayItems').addEventListener('click', e => { const b = e.target.closest('[data-tray-del]'); if (b) { app.tray.splice(+b.dataset.trayDel, 1); render(); } });
+$('#modeTabs').addEventListener('click', e => { const b = e.target.closest('[data-mode]'); if (b) { app.mode = b.dataset.mode; app.selected = null; render(); } });
+$('#pkgInput').addEventListener('change', e => {
+  P().pkg = e.target.value.trim(); scheduleAutosave();
+  const empty = !rows().some(r => Object.values(r.cells).some(Boolean));
+  if (empty && findSource(P().pkg)) prefill();
+});
+
+/* ================= Zdroje: lokální složka + Google Drive ================= */
+function updateDatalist() {
+  const names = new Set();
+  app.local?.forEach(v => names.add(v.name));
+  app.drive.folders?.forEach(v => names.add(v.name));
+  savedNames.forEach(n => names.add(n));
+  $('#pkgList').innerHTML = [...names].sort(natural).map(n => `<option value="${esc(n)}">`).join('');
+  const st = [];
+  if (app.local) st.push(`📂 <b>${app.local.size}</b> složek`);
+  if (app.drive.folders) st.push(`☁️ <b>${app.drive.folders.size}</b> složek`);
+  $('#srcStatus').innerHTML = st.join(' · ');
+}
+function findSource(pkg) {
+  const k = norm(pkg); if (!k) return null;
+  const find = m => m && (m.get(k) || [...m.entries()].find(([key]) => key.includes(k) || k.includes(key))?.[1]);
+  const loc = find(app.local); if (loc) return {kind: 'local', ...loc};
+  const dr = find(app.drive.folders); if (dr) return {kind: 'drive', ...dr};
+  return null;
+}
+$('#btnLocal').addEventListener('click', () => { $('#localInput').value = ''; $('#localInput').click(); });
+$('#localInput').addEventListener('change', e => {
+  const map = new Map();
+  for (const f of e.target.files) {
+    if (!isSupportedName(f.name)) continue;
+    const parts = (f.webkitRelativePath || f.name).split('/');
+    let name, rel;
+    if (parts.length >= 3) { name = parts[1]; rel = parts.slice(2).join('/'); } else { name = parts[0]; rel = parts.slice(1).join('/'); }
+    const k = norm(name); if (!map.has(k)) map.set(k, {name, files: []});
+    map.get(k).files.push({file: f, rel});
+  }
+  if (!map.size) return toast('Ve složce nejsou žádné obrázky ani PDF.');
+  app.local = map; updateDatalist();
+  if (map.size === 1) { P().pkg = [...map.values()][0].name; $('#pkgInput').value = P().pkg; prefill(); }
+  else toast(`Načteno ${map.size} složek. Vyber nahoře „Pro koho“ – tabulka se předvyplní.`, 5000);
+});
+async function prefill() {
+  const pkg = P().pkg; if (!pkg) return toast('Nejdřív vyber, pro koho balíček děláš.');
+  const src = findSource(pkg);
+  if (!src) return toast(`Pro „${pkg}“ jsem nenašla složku. Připoj lokální složku nebo Google Drive.`, 5000);
+  const filled = rows().some(r => Object.values(r.cells).some(Boolean));
+  if (filled && !confirm(`Vyprázdnit tabulku a předvyplnit ze složky „${src.name}“?`)) return;
+  rows().forEach(r => COLS.forEach(c => r.cells[c] = null));
+  if (src.kind === 'local') return bulkAssign(src.files, src.name);
+  try {
+    busy(true, 'Načítám seznam souborů z Drive…');
+    const files = await driveFilesFor(src);
+    busy(true, `Stahuji ${files.length} souborů z Drive…`);
+    let n = 0;
+    const entries = await pool(files, 4, async f => { const file = await driveDownload(f); busy(true, `Stahuji z Drive… ${++n}/${files.length}`); return {file, rel: f.rel}; });
+    await bulkAssign(entries, src.name);
+  } catch (err) { busy(false); toast('Google Drive: ' + err.message, 6000); }
+}
+$('#btnPrefill').addEventListener('click', prefill);
+
+function loadScript(src) { return new Promise((res, rej) => { if ([...document.scripts].some(s => s.src === src)) return res(); const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = () => rej(new Error('Nepodařilo se načíst ' + src)); document.head.appendChild(s); }); }
+function driveRootId() { const v = S.driveRoot.trim(); const m = v.match(/folders\/([\w-]+)/) || v.match(/[?&]id=([\w-]+)/); return m ? m[1] : v; }
+async function driveToken() {
+  if (app.drive.token && Date.now() < app.drive.exp) return app.drive.token;
+  if (location.protocol === 'file:') throw new Error('Google Drive funguje jen při spuštění přes spustit.bat (http://localhost:8765).');
+  if (!S.driveClientId) throw new Error('Doplň v Nastavení OAuth Client ID.');
+  await loadScript('https://accounts.google.com/gsi/client');
+  return new Promise((res, rej) => {
+    const tc = google.accounts.oauth2.initTokenClient({
+      client_id: S.driveClientId.trim(), scope: 'https://www.googleapis.com/auth/drive.readonly',
+      callback: r => { if (r.error) return rej(new Error(r.error_description || r.error)); app.drive.token = r.access_token; app.drive.exp = Date.now() + (r.expires_in - 60) * 1000; res(r.access_token); },
+      error_callback: err => rej(new Error(err.message || err.type || 'přihlášení zrušeno'))
+    });
+    tc.requestAccessToken();
+  });
+}
+async function gdrive(path, params = {}) {
+  const u = new URL('https://www.googleapis.com/drive/v3/' + path);
+  Object.entries({supportsAllDrives: true, ...params}).forEach(([k, v]) => u.searchParams.set(k, v));
+  const r = await fetch(u, {headers: {Authorization: 'Bearer ' + await driveToken()}});
+  if (r.status === 401) { app.drive.token = null; throw new Error('přihlášení vypršelo, klikni znovu na ☁️'); }
+  if (!r.ok) throw new Error(`chyba ${r.status}`);
+  return r;
+}
+async function driveList(folderId, foldersOnly) {
+  const out = []; let pageToken = '';
+  do {
+    const q = `'${folderId}' in parents and trashed=false` + (foldersOnly ? ` and mimeType='application/vnd.google-apps.folder'` : '');
+    const r = await (await gdrive('files', {q, pageSize: 1000, orderBy: 'name', includeItemsFromAllDrives: true,
+      fields: 'nextPageToken,files(id,name,mimeType,thumbnailLink)', ...(pageToken ? {pageToken} : {})})).json();
+    out.push(...r.files); pageToken = r.nextPageToken || '';
+  } while (pageToken);
+  return out;
+}
+async function driveFilesFor(src) {
+  if (app.drive.files.has(src.id)) return app.drive.files.get(src.id);
+  const out = [];
+  const walk = async (id, prefix, depth) => {
+    for (const f of await driveList(id)) {
+      if (f.mimeType === 'application/vnd.google-apps.folder') { if (depth < 3) await walk(f.id, prefix + f.name + '/', depth + 1); }
+      else if (/^image\/|pdf/.test(f.mimeType)) out.push({id: f.id, name: f.name, mime: f.mimeType, rel: prefix + f.name, thumb: f.thumbnailLink});
+    }
+  };
+  await walk(src.id, '', 0);
+  out.sort((a, b) => natural(a.rel, b.rel));
+  app.drive.files.set(src.id, out); return out;
+}
+async function driveDownload(f) {
+  const r = await gdrive('files/' + f.id, {alt: 'media'});
+  const b = await r.blob(); return new File([b], f.name, {type: f.mime || b.type});
+}
+$('#btnDrive').addEventListener('click', async () => {
+  if (!S.driveClientId || !S.driveRoot) { openSettings(); return toast('Vyplň dole v Nastavení Client ID a hlavní složku na Drive.', 5000); }
+  try {
+    busy(true, 'Připojuji Google Drive…');
+    app.drive.files.clear();
+    const folders = await driveList(driveRootId(), true);
+    app.drive.folders = new Map(folders.map(f => [norm(f.name), {name: f.name, id: f.id}]));
+    updateDatalist(); render();
+    toast(`Google Drive připojen – ${folders.length} složek. Vyber „Pro koho“.`, 4500);
+  } catch (err) { toast('Google Drive: ' + err.message, 6000); }
+  finally { busy(false); }
+});
+async function openDrivePicker(target) {
+  const src = findSource(P().pkg);
+  if (!src || src.kind !== 'drive') return toast('Nejdřív vyber „Pro koho“ – složku z Google Drive.');
+  try {
+    busy(true, 'Načítám soubory…'); const files = await driveFilesFor(src); busy(false);
+    $('#dvTitle').textContent = `Google Drive – ${src.name}`;
+    $('#dvList').innerHTML = files.map((f, i) => `<div class="df" data-i="${i}">${f.thumb ? `<img src="${esc(f.thumb)}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=ph>🖼</div>'">` : '<div class="ph">📄</div>'}<div title="${esc(f.rel)}">${esc(f.rel)}</div></div>`).join('') || '<p>Složka je prázdná.</p>';
+    $('#dvList').onclick = async e => {
+      const d = e.target.closest('.df'); if (!d) return;
+      $('#dlgDrive').close();
+      busy(true, 'Stahuji…');
+      try { const file = await driveDownload(files[+d.dataset.i]); busy(false); await assignFiles([file], target.row, target.col); }
+      catch (err) { busy(false); toast('Google Drive: ' + err.message); }
+    };
+    $('#dlgDrive').showModal();
+  } catch (err) { busy(false); toast('Google Drive: ' + err.message, 6000); }
+}
+
+/* ================= Plán exportu (pořadí stran) ================= */
+const CONTENT = new Set(['level', 'story', 'item']);
+function tocLabel(r) {
+  if (r.custom) return r.label;
+  const l = L[S.lang];
+  return ({level: `${l.level} ${r.n}`, story: `${l.story} ${r.n}`, info: `${l.info} ${r.n}`, maze: l.maze, item: `${l.item} ${r.n}`})[r.type] || r.label;
+}
+function tocLayout(entries) {
+  const lines = Math.max(1, ...entries.map(e => e.pages.length));
+  return {cols: 4, rows: lines > 1 ? 4 : 5};
+}
+function planFor(type) {
+  const colorish = type === 'color' || type === 'complete';
+  const pick = (r, order) => { for (const c of order) if (r.cells[c]) return r.cells[c]; return null; };
+  const single = colorish ? ['color', 'bw', 'trace'] : ['bw', 'color', 'trace'];
+  const items = [], entries = [];
+  for (const r of rows()) {
+    if (!r.include) continue;
+    if (r.type === 'toc') { items.push({toc: true, row: r, bg: pick(r, single)}); continue; }
+    if (r.type === 'title' || r.type === 'closing') { const a = pick(r, single); if (a) items.push({asset: a, row: r, kind: r.type}); continue; }
+    let list = [];
+    if (CONTENT.has(r.type)) {
+      const c = r.cells;
+      list = type === 'bw' ? [['bw', c.bw]]
+        : type === 'trace' ? [['trace', c.trace || (S.traceFallback ? c.bw : null)]]
+        : type === 'color' ? [['bw', c.bw], ['color', c.color]]
+        : [['bw', c.bw], ['trace', c.trace], ['color', c.color]];
+    } else if (r.type === 'info') list = [['info', pick(r, colorish ? ['color', 'bw', 'trace'] : ['bw', 'color', 'trace'])]];
+    else if (r.type === 'maze') list = [['maze', pick(r, type === 'trace' ? ['trace', 'bw', 'color'] : ['bw', 'trace', 'color'])]];
+    list = list.filter(x => x[1]);
+    if (!list.length) continue;
+    const entry = {row: r, thumb: list[0][1].thumb, pages: []};
+    list.forEach(([kind, a]) => items.push({asset: a, row: r, kind, entry}));
+    entries.push(entry);
+  }
+  const toc = items.find(i => i.toc);
+  if (toc) {
+    if (S.tocAuto) { const lay = tocLayout(entries.map(e => ({pages: items.filter(i => i.entry === e)}))); toc.pages = entries.length ? Math.ceil(entries.length / (lay.cols * lay.rows)) : 0; }
+    else toc.pages = toc.bg ? 1 : 0;
+  }
+  let p = 1;
+  for (const it of items) {
+    if (it.toc) { it.start = p; p += it.pages; }
+    else { it.pageNo = p; it.entry?.pages.push({kind: it.kind, no: p}); p++; }
+  }
+  return {items: items.filter(i => !i.toc || i.pages), entries, total: p - 1};
+}
+
+/* ================= Tvorba PDF ================= */
+async function buildPdf(type) {
+  const plan = planFor(type);
+  if (!plan.total) throw new Error('Balíček je prázdný.');
+  await document.fonts?.ready;
+  const {PDFDocument} = PDFLib;
+  const doc = await PDFDocument.create();
+  const name = P().pkg || 'Balíček';
+  doc.setTitle(`${name} – ${EXPORTS[type].label}`); doc.setCreator('Etsy PDF balíčky'); doc.setProducer('Etsy PDF balíčky');
+  const [W, H] = SIZES[S.pageSize];
+  const ctx = {doc, W, H, emb: new Map(), src: new Map(), txt: new Map(), plan, name};
+  let n = 0;
+  for (const it of plan.items) {
+    busy(true, `Skládám ${EXPORTS[type].label}… ${Math.min(++n, plan.items.length)}/${plan.items.length}`);
+    if (it.toc) {
+      if (S.tocAuto) for (let k = 0; k < it.pages; k++) await addTocPage(ctx, it, k);
+      else await addAssetPage(ctx, {...it, asset: it.bg, kind: 'toc', pageNo: it.start});
+    } else await addAssetPage(ctx, it);
+  }
+  return doc.save();
+}
+async function embedAsset(ctx, a) {
+  const key = a.srcId + '#' + a.page;
+  if (ctx.emb.has(key)) return ctx.emb.get(key);
+  let e;
+  if (a.kind === 'pdf') {
+    try {
+      let src = ctx.src.get(a.srcId);
+      if (!src) { src = await PDFLib.PDFDocument.load(await a.blob.arrayBuffer(), {ignoreEncryption: true}); ctx.src.set(a.srcId, src); }
+      const [pg] = await ctx.doc.embedPdf(src, [a.page - 1]);
+      e = {obj: pg, isPage: true, w: pg.width, h: pg.height};
+    } catch (err) {
+      console.warn('PDF nejde vložit vektorově, rasterizuji', a.name, err);
+      const img = await ctx.doc.embedPng(await rasterPdf(a, 300));
+      e = {obj: img, w: a.w, h: a.h};
+    }
+  } else {
+    let img;
+    const bytes = new Uint8Array(await a.blob.arrayBuffer());
+    try {
+      if (a.mime === 'image/jpeg') img = await ctx.doc.embedJpg(bytes);
+      else if (a.mime === 'image/png') img = await ctx.doc.embedPng(bytes);
+    } catch (err) { console.warn('Převádím obrázek přes canvas', a.name, err); }
+    if (!img) {
+      const el = await loadImg(a.blob); const c = mkCanvas(el.naturalWidth || 2480, el.naturalHeight || 3508);
+      const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(el, 0, 0, c.width, c.height);
+      img = await ctx.doc.embedPng(await canvasPng(c));
+    }
+    e = {obj: img, w: img.width, h: img.height};
+  }
+  ctx.emb.set(key, e); return e;
+}
+async function rasterPdf(a, dpi) {
+  const p = await (await pdfDoc(a)).getPage(a.page);
+  let sc = dpi / 72; const v0 = p.getViewport({scale: 1});
+  sc = Math.min(sc, 6000 / Math.max(v0.width, v0.height));
+  const v = p.getViewport({scale: sc}); const c = mkCanvas(v.width, v.height); const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+  await p.render({canvasContext: g, viewport: v}).promise;
+  return canvasPng(c);
+}
+function fillTpl(t, ctx, row) { return (t || '').replaceAll('{name}', ctx.name).replaceAll('{label}', row ? tocLabel(row) : ''); }
+async function addAssetPage(ctx, it) {
+  const {W, H} = ctx; const page = ctx.doc.addPage([W, H]);
+  const m = (+S.marginMm || 0) * MM;
+  const brandable = S.brandMode === 'app' && ['bw', 'trace', 'color', 'maze'].includes(it.kind);
+  const showTitle = brandable && S.brandTitle && (S.titleRule === 'all' || (S.titleRule === 'lv13' && !(it.row.type === 'level' && it.row.n > 3)));
+  const showFooter = brandable && S.brandFooter;
+  const top = showTitle ? Math.max(m, 20 * MM) : m;
+  const bottom = showFooter ? Math.max(m, 13 * MM) : m;
+  const box = {x: m, y: bottom, w: W - 2 * m, h: H - top - bottom};
+  const e = await embedAsset(ctx, it.asset);
+  let dw = box.w, dh = box.h, x = box.x, y = box.y;
+  if (S.fit !== 'stretch') { const s = Math.min(box.w / e.w, box.h / e.h); dw = e.w * s; dh = e.h * s; x = box.x + (box.w - dw) / 2; y = box.y + (box.h - dh) / 2; }
+  if (e.isPage) page.drawPage(e.obj, {x, y, width: dw, height: dh}); else page.drawImage(e.obj, {x, y, width: dw, height: dh});
+  if (showTitle) await drawText(ctx, page, fillTpl(S.brandTitle, ctx, it.row), {size: 22, weight: 800, cx: W / 2, cy: H - top / 2 - 1 * MM, maxW: W - 30 * MM});
+  if (showFooter) await drawText(ctx, page, fillTpl(S.brandFooter, ctx, it.row), {size: 10, weight: 700, cx: W / 2, cy: bottom / 2 + 1 * MM, maxW: W - 40 * MM, color: '#444'});
+  if (S.pageNumbers && it.kind !== 'title' && it.pageNo) await drawText(ctx, page, String(it.pageNo), {size: 9, weight: 700, cx: W - 10 * MM, cy: 6 * MM, color: '#666'});
+}
+async function drawText(ctx, page, text, o) {
+  if (!text) return;
+  const key = [text, o.size, o.weight, o.color].join('|');
+  let t = ctx.txt.get(key);
+  if (!t) {
+    const k = 4, px = o.size * k; const font = `${o.weight || 700} ${px}px ${S.font}`;
+    const c0 = mkCanvas(1, 1).getContext('2d'); c0.font = font;
+    const w = c0.measureText(text).width + px * 0.4, h = px * 1.45;
+    const c = mkCanvas(w, h); const g = c.getContext('2d');
+    g.font = font; g.fillStyle = o.color || '#222'; g.textBaseline = 'middle'; g.textAlign = 'center'; g.fillText(text, c.width / 2, c.height / 2);
+    t = {img: await ctx.doc.embedPng(await canvasPng(c)), w: c.width / k, h: c.height / k};
+    ctx.txt.set(key, t);
+  }
+  const s = o.maxW && t.w > o.maxW ? o.maxW / t.w : 1;
+  page.drawImage(t.img, {x: o.cx - t.w * s / 2, y: o.cy - t.h * s / 2, width: t.w * s, height: t.h * s});
+}
+const imgCache = new Map();
+const cachedImg = src => { if (!imgCache.has(src)) imgCache.set(src, loadImg(src)); return imgCache.get(src); };
+async function addTocPage(ctx, it, k) {
+  const {W, H, plan} = ctx; const l = L[S.lang];
+  const PX = 2.5, cw = Math.round(W * PX), ch = Math.round(H * PX);
+  const c = mkCanvas(cw, ch); const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.fillRect(0, 0, cw, ch);
+  const bg = S.tocBg && it.bg;
+  let top = ch * 0.05, bottom = ch * 0.05;
+  if (bg) {
+    const src = bg.kind === 'pdf' ? URL.createObjectURL(new Blob([await rasterPdf(bg, 150)], {type: 'image/png'})) : bg.blob;
+    g.drawImage(await loadImg(src), 0, 0, cw, ch);
+    top = ch * (+S.tocTopPct || 0) / 100; bottom = ch * (+S.tocBottomPct || 0) / 100;
+  }
+  const font = (w, px) => `${w} ${px}px ${S.font}`;
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic'; g.fillStyle = '#22262b';
+  if (!bg || S.tocTitleOnBg) {
+    g.font = font(800, cw * 0.055); g.fillText(l.toc, cw / 2, top + cw * 0.06);
+    top += cw * 0.075;
+    if (ctx.name && !bg) { g.font = font(700, cw * 0.024); g.fillStyle = '#6b7178'; g.fillText(ctx.name, cw / 2, top + cw * 0.025); top += cw * 0.045; }
+    top += cw * 0.02;
+  }
+  const lay = tocLayout(plan.entries); const per = lay.cols * lay.rows;
+  const list = plan.entries.slice(k * per, (k + 1) * per);
+  const side = cw * 0.07, gap = cw * 0.025;
+  const cellW = (cw - 2 * side - (lay.cols - 1) * gap) / lay.cols;
+  const cellH = (ch - top - bottom - (lay.rows - 1) * gap) / lay.rows;
+  const labelPx = cw * 0.0165, linePx = cw * 0.0135;
+  const maxLines = Math.max(1, ...list.map(e => e.pages.length));
+  const textH = labelPx * 1.5 + (maxLines > 1 ? maxLines : 1) * linePx * 1.4;
+  for (let i = 0; i < list.length; i++) {
+    const e = list[i]; const col = i % lay.cols, row = Math.floor(i / lay.cols);
+    const x = side + col * (cellW + gap), y = top + row * (cellH + gap);
+    const th = cellH - textH - 6;
+    const img = await cachedImg(e.thumb);
+    const s = Math.min(cellW / img.width, th / img.height); const iw = img.width * s, ih = img.height * s;
+    const ix = x + (cellW - iw) / 2, iy = y + (th - ih) / 2;
+    g.fillStyle = '#fff'; g.fillRect(ix, iy, iw, ih); g.drawImage(img, ix, iy, iw, ih);
+    g.strokeStyle = '#d9d4c9'; g.lineWidth = 2; g.strokeRect(ix, iy, iw, ih);
+    let ty = y + th + 6 + labelPx * 1.1;
+    g.fillStyle = '#22262b'; g.font = font(800, labelPx);
+    g.fillText(ellipsis(g, tocLabel(e.row), cellW), x + cellW / 2, ty);
+    g.font = font(400, linePx); g.fillStyle = '#4b5057';
+    if (e.pages.length === 1) g.fillText(`${l.p} ${e.pages[0].no}`, x + cellW / 2, ty + linePx * 1.4);
+    else e.pages.forEach((p, j) => g.fillText(ellipsis(g, `${l[p.kind] || ''} · ${p.no}`, cellW), x + cellW / 2, ty + linePx * 1.4 * (j + 1)));
+  }
+  const png = await ctx.doc.embedPng(await canvasPng(c));
+  const page = ctx.doc.addPage([W, H]); page.drawImage(png, {x: 0, y: 0, width: W, height: H});
+  if (S.pageNumbers) await drawText(ctx, page, String(it.start + k), {size: 9, weight: 700, cx: W - 10 * MM, cy: 6 * MM, color: '#666'});
+}
+function ellipsis(g, t, w) { if (g.measureText(t).width <= w) return t; while (t.length > 1 && g.measureText(t + '…').width > w) t = t.slice(0, -1); return t + '…'; }
+
+function safeName(s) { return (s || 'balicek').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-') || 'balicek'; }
+function download(bytes, name) {
+  const url = URL.createObjectURL(new Blob([bytes], {type: 'application/pdf'}));
+  const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+async function doExport(type) {
+  const types = type === 'all' ? Object.keys(EXPORTS).filter(t => planFor(t).total) : [type];
+  try {
+    for (const t of types) {
+      const bytes = await buildPdf(t);
+      download(bytes, `${app.mode === 'mega' ? 'MEGA_' : ''}${safeName(P().pkg)}_${EXPORTS[t].file}.pdf`);
+    }
+    toast(types.length > 1 ? `Hotovo – staženo ${types.length} PDF.` : 'Hotovo – PDF se stahuje.');
+  } catch (err) { console.error(err); toast('Export selhal: ' + err.message, 6000); }
+  finally { busy(false); }
+}
+$('#expBar').addEventListener('click', e => {
+  const ex = e.target.closest('[data-export]'); if (ex) return doExport(ex.dataset.export);
+  const pv = e.target.closest('[data-preview]'); if (pv) openPreview(pv.dataset.preview);
+});
+function openPreview(type) {
+  const plan = planFor(type); const KL = {bw: 'ČB', trace: 'obtahovačka', color: 'barevný vzor', title: 'titulka', closing: 'closing', info: 'info', maze: 'bludiště'};
+  $('#pvTitle').textContent = `Náhled: ${EXPORTS[type].label} – ${plan.total} stran`;
+  $('#pvBody').innerHTML = plan.items.map(it => it.toc
+    ? Array.from({length: it.pages}, (_, k) => `<div class="pg"><div class="im" style="background:#f3f1ec;font-weight:800">${L[S.lang].toc}${it.pages > 1 ? ' ' + (k + 1) : ''}<br>(auto)</div><div class="no">${it.start + k}</div><div>obsah</div></div>`).join('')
+    : `<div class="pg"><div class="im"><img src="${it.asset.thumb}"></div><div class="no">${it.pageNo}</div><div class="k-${it.kind}">${esc(it.row.label)}${CONTENT.has(it.row.type) ? ' · ' + KL[it.kind] : ''}</div></div>`).join('');
+  $('#pvDownload').onclick = () => { $('#dlgPreview').close(); doExport(type); };
+  $('#dlgPreview').showModal();
+}
+
+/* ================= Ukládání (IndexedDB) ================= */
+let dbP;
+function db() {
+  if (!dbP) dbP = new Promise((res, rej) => { const r = indexedDB.open('etsy-pdf-balicky', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+  return dbP;
+}
+async function idb(mode, fn) { const d = await db(); return new Promise((res, rej) => { const tx = d.transaction('kv', mode); const st = tx.objectStore('kv'); const r = fn(st); tx.oncomplete = () => res(r?.result); tx.onerror = () => rej(tx.error); }); }
+const idbGet = k => idb('readonly', s => s.get(k));
+const idbSet = (k, v) => idb('readwrite', s => s.put(v, k));
+const idbDel = k => idb('readwrite', s => s.delete(k));
+const idbKeys = () => idb('readonly', s => s.getAllKeys());
+let saveT, savedNames = [];
+function scheduleAutosave() {
+  clearTimeout(saveT);
+  saveT = setTimeout(() => idbSet('autosave', {mode: app.mode, proj: app.proj, tray: app.tray}).catch(e => console.warn('Autosave', e)), 1200);
+}
+async function saveProject() {
+  const pkg = P().pkg; if (!pkg) return toast('Nejdřív vyplň „Pro koho“ – podle toho se projekt pojmenuje.');
+  try { await idbSet(`p:${app.mode}:${pkg}`, {mode: app.mode, pkg, savedAt: Date.now(), rows: rows()}); toast(`Uloženo: ${pkg}`); refreshSaved(); }
+  catch (e) { toast('Uložení selhalo: ' + e.message); }
+}
+async function refreshSaved() {
+  try { const keys = (await idbKeys()).filter(k => String(k).startsWith('p:')); savedNames = keys.map(k => k.split(':').slice(2).join(':')); updateDatalist(); return keys; }
+  catch { return []; }
+}
+async function openProjects() {
+  const keys = await refreshSaved();
+  const items = await Promise.all(keys.map(async k => ({k, v: await idbGet(k)})));
+  items.sort((a, b) => b.v.savedAt - a.v.savedAt);
+  $('#projList').innerHTML = items.map(({k, v}) => `<div class="pi"><span><b>${esc(v.pkg)}</b> <span class="lbl-muted">· ${v.mode === 'mega' ? 'Mega' : 'International Days'} · ${new Date(v.savedAt).toLocaleString('cs-CZ')}</span></span>
+    <button data-load="${esc(k)}">Načíst</button><button data-delp="${esc(k)}">🗑</button></div>`).join('') || '<p class="note">Zatím nic uloženého.</p>';
+  $('#dlgProjects').showModal();
+}
+$('#projList').addEventListener('click', async e => {
+  const ld = e.target.closest('[data-load]'), dl = e.target.closest('[data-delp]');
+  if (ld) { const v = await idbGet(ld.dataset.load); app.mode = v.mode; app.proj[v.mode] = {pkg: v.pkg, rows: v.rows}; $('#dlgProjects').close(); render(); toast(`Načteno: ${v.pkg}`); }
+  if (dl && confirm('Smazat uložený projekt?')) { await idbDel(dl.dataset.delp); openProjects(); }
+});
+$('#btnProjects').addEventListener('click', openProjects);
+$('#btnSaveProj').addEventListener('click', saveProject);
+$('#btnClearTable').addEventListener('click', () => {
+  if (!confirm('Vyprázdnit celou tabulku (aktuální režim)?')) return;
+  app.proj[app.mode] = {pkg: P().pkg, rows: defaultRows(app.mode)}; app.tray = []; $('#dlgProjects').close(); render();
+});
+document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); saveProject(); } });
+
+/* ================= Nastavení – dialog ================= */
+function openSettings() {
+  document.querySelectorAll('#dlgSettings [data-key]').forEach(el => { el.value = String(S[el.dataset.key]); });
+  $('#dlgSettings').showModal();
+}
+$('#dlgSettings').addEventListener('change', e => {
+  const k = e.target.dataset.key; if (!k) return;
+  let v = e.target.value;
+  if (typeof DEFAULTS[k] === 'boolean') v = v === 'true'; else if (typeof DEFAULTS[k] === 'number') v = +v || 0;
+  S[k] = v; saveSettings(); render();
+});
+$('#btnSettings').addEventListener('click', openSettings);
+document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', e => { if (e.target.closest('[data-close]') || e.target === d) d.close(); }));
+
+/* ================= Start ================= */
+(async () => {
+  if (!window.PDFLib || !window.pdfjsLib) {
+    alert('Nepodařilo se načíst knihovny pro PDF (pdf-lib, pdf.js). Aplikace potřebuje při spuštění připojení k internetu.');
+  }
+  try {
+    const saved = await idbGet('autosave');
+    if (saved?.proj) { app.mode = saved.mode || 'ida'; Object.assign(app.proj, saved.proj); app.tray = saved.tray || []; }
+  } catch (e) { console.warn('Autosave nelze načíst', e); }
+  await refreshSaved();
+  render();
+  window.addEventListener('resize', () => document.documentElement.style.setProperty('--hdr', $('#hdr').offsetHeight + 'px'));
+})();
+</script>
+</body>
+</html>

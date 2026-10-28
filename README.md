@@ -46,3 +46,10 @@ Server-hosted version (private, sign in with ChatGPT): https://etsy-pdf-studio-w
 Development files: `pdf2etsy/`
 
 The complete React / Vinext source project, GitHub Pages browser build and setup instructions are in `pdf2etsy/README.md`. Uploaded worksheets and saved projects stay in the browser's IndexedDB and are not committed to GitHub.
+
+## pdf2etsy-claude — Etsy PDF balíčky v2
+Samostatná HTML aplikace z dodaného souboru, publikovaná přes GitHub Pages.
+
+Public URL: https://vinmat.eu/aplications/pdf2etsy-v2/
+
+Development files: `pdf2etsy-claude/`
