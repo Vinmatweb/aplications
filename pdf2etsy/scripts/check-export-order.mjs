@@ -1,0 +1,36 @@
+import assert from "node:assert/strict";
+import { makeProject, makeRow, buildPlan, guessAssignment } from "../lib/studio-model.ts";
+
+const asset=(name,pages=1)=>({id:name,name,mime:"application/pdf",blob:new Blob(),thumbnail:"",pages,origin:"local"});
+const project=makeProject();
+const level=project.rows.find(r=>r.kind==="coloring");
+level.sources={bw:asset("level-bw",2),trace:asset("level-trace"),color:asset("level-color")};
+const card=project.rows.find(r=>r.kind==="info");
+card.sources={bw:asset("card-bw"),color:asset("card-color")};
+const sources=(kind,color)=>buildPlan(project,kind,color).filter(p=>p.source).map(p=>p.source.name);
+assert.deepEqual(sources("coloring",false),["level-bw","card-bw"]);
+assert.deepEqual(sources("tracing",false),["level-trace","card-bw"]);
+assert.deepEqual(sources("coloring",true),["level-bw","level-color","card-color"]);
+assert.deepEqual(sources("tracing",true),["level-trace","level-color","card-color"]);
+assert.deepEqual(sources("complete",false),["level-bw","level-trace","level-color","card-color"]);
+const plan=buildPlan(project,"complete",true);
+assert.equal(plan.find(p=>p.source?.name==="level-bw").start,3);
+assert.equal(plan.find(p=>p.source?.name==="level-trace").start,5);
+assert.equal(plan.find(p=>p.source?.name==="card-color").start,7);
+assert.equal(plan.at(-1).start,8);
+level.enabled=false;assert.deepEqual(sources("complete",true),["card-color"]);level.enabled=true;
+assert.equal(guessAssignment("irbis_level_1_trace.pdf",project,0).variant,"trace");
+assert.equal(guessAssignment("irbis_story_12_color.jpg",project,0).rowId,project.rows.filter(r=>r.kind==="story")[11].id);
+assert.equal(guessAssignment("irbis_level_1_coloring.png",project,0).variant,"bw");
+assert.equal(guessAssignment("irbis_informační_karta_2_čb.pdf",project,0).rowId,project.rows.filter(r=>r.kind==="info")[1].id);
+const large=makeProject("etsy","Mega");
+large.rows=large.rows.filter(r=>["cover","contents","closing"].includes(r.kind));
+const extra=[];
+for(let i=1;i<=100;i++){const row=makeRow("coloring","List "+i,"Worksheet "+i);row.sources={bw:asset("bw"+i),trace:asset("trace"+i),color:asset("color"+i)};extra.push(row);}
+large.rows.splice(2,0,...extra);
+const longPlan=buildPlan(large,"complete",true);
+assert.equal(longPlan.find(p=>p.generated==="contents").count,11);
+assert.equal(longPlan[2].start,13);
+assert.equal(longPlan.at(-1).start,313);
+assert.equal(longPlan.reduce((n,p)=>n+p.count,0),313);
+console.log("Export order verified: five variants, shared cards, exclusions, multi-page PDF, filename matching, and 100 worksheets / 313 pages.");
