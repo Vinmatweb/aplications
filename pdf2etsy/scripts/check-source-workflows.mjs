@@ -1,0 +1,83 @@
+import assert from "node:assert/strict";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import ts from "typescript";
+
+// Run real pure functions with Node; generated modules stay outside the source tree.
+const target=new URL("../.sites-runtime/source-checks/",import.meta.url);
+await mkdir(target,{recursive:true});
+for(const name of ["studio-model","studio-sources","studio-drive"]){
+  const source=await readFile(new URL("../lib/"+name+".ts",import.meta.url),"utf8");
+  const output=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from (["'])\.\/(studio-[\w-]+)\1/g,'from "./$2.mjs"');
+  await writeFile(new URL(name+".mjs",target),output);
+}
+const {makeProject,makeRow,guessAssignment,buildPlan,transferSource}=await import(new URL("studio-model.mjs",target));
+const {catalogLocalFiles,expandForSources,readDroppedFiles}=await import(new URL("studio-sources.mjs",target));
+const drive=await import(new URL("studio-drive.mjs",target));
+const asset=name=>({id:name,name,mime:"image/png",blob:new Blob([name]),thumbnail:"",pages:1,origin:"local"});
+const p=makeProject(),rows=p.rows.filter(r=>r.kind==="coloring");
+rows[0].sources.bw=asset("first");rows[1].sources.bw=asset("second");
+const swapped=transferSource(p,{rowId:rows[0].id,variant:"bw"},{rowId:rows[1].id,variant:"bw"},"first");
+assert.equal(swapped.rows.find(r=>r.id===rows[0].id).sources.bw.name,"second");
+assert.equal(swapped.rows.find(r=>r.id===rows[1].id).sources.bw.name,"first");
+assert.equal(rows[0].sources.bw.name,"first","original project remains untouched");
+assert.equal(transferSource(p,{rowId:rows[0].id,variant:"bw"},{rowId:rows[1].id,variant:"bw"},"stale"),p);
+const moved=transferSource(p,{rowId:rows[0].id,variant:"bw"},{rowId:rows[0].id,variant:"trace"},"first");
+assert.equal(moved.rows.find(r=>r.id===rows[0].id).sources.bw,undefined);
+assert.equal(moved.rows.find(r=>r.id===rows[0].id).sources.trace.name,"first");
+const file=(path)=>{const f=new File(["test"],path.split("/").at(-1),{type:"image/png"});Object.defineProperty(f,"webkitRelativePath",{value:path});return f;};
+const catalog=catalogLocalFiles([file("Animals/Irbis/bw/lv1.png"),file("Animals/Irbis/color/lv1.png"),file("Animals/Lemur/bw/lv2.png"),file("Animals/ignored.txt")]);
+assert.deepEqual(catalog.map(f=>[f.name,f.entries.length]),[["Irbis",2],["Lemur",1]]);
+assert.equal(catalog[0].entries[0].path,"bw/lv1.png");
+assert.equal(catalogLocalFiles([file("Irbis/bw/lv1.png"),file("Irbis/color/lv1.png")]).length,1);
+assert.equal(catalogLocalFiles([file("Irbis/bw/lv1.png")])[0].name,"Irbis");
+assert.equal(guessAssignment("color/story3.png",p,0).rowId,p.rows.filter(r=>r.kind==="story")[2].id);
+assert.equal(guessAssignment("info/02.png",p,0).rowId,p.rows.filter(r=>r.kind==="info")[1].id);
+assert.equal(guessAssignment("bw/lv1_coloring.png",p,0).variant,"bw");
+assert.equal(guessAssignment("tracing/lv1.png",p,0).variant,"trace");
+assert.equal(guessAssignment("contents_color.pdf",p,0).rowId,p.rows.find(r=>r.kind==="contents").id);
+const mega=makeProject("etsy"),expanded=expandForSources(mega,["100_color.png","100_trace.pdf","100_bw.png"]);
+assert.equal(mega.rows.length,23);assert.equal(expanded.rows.filter(r=>r.kind==="coloring").length,100);
+assert.equal(guessAssignment("100_color.png",expanded,0).rowId,expanded.rows.filter(r=>r.kind==="coloring")[99].id);
+for(const r of expanded.rows.filter(r=>r.kind==="coloring"))r.sources={bw:asset(r.id+"bw"),trace:asset(r.id+"trace"),color:asset(r.id+"color")};
+assert.equal(buildPlan(expanded,"complete",true).reduce((n,e)=>n+e.count,0),313);
+expanded.settings.contentsStyle="gallery";
+assert.equal(buildPlan(expanded,"complete",true).reduce((n,e)=>n+e.count,0),327);
+assert.equal(buildPlan(expanded,"complete",true).find(e=>e.generated==="contents").count,25);
+// Directory drops must consume all batches returned by a directory reader.
+let batch=0;
+const item={isDirectory:true,isFile:false,name:"Irbis",createReader:()=>({readEntries:ok=>ok(batch++<2?[{isFile:true,isDirectory:false,name:"lv"+batch+".png",file:ok=>ok(file("lv"+batch+".png"))}]:[])})};
+const dropped=await readDroppedFiles({items:[{webkitGetAsEntry:()=>item}],files:[]});
+assert.deepEqual(dropped.map(e=>e.path),["Irbis/lv1.png","Irbis/lv2.png"]);
+
+const folder="root_folder_123",animal="animal_folder_123",nested="nested_folder_123",image="image_file_123";
+let oauthConfig;
+globalThis.window={google:{accounts:{oauth2:{initTokenClient:config=>{oauthConfig=config;return {requestAccessToken:()=>config.callback({access_token:"test-token",expires_in:3600})};},hasGrantedAllScopes:()=>true}}}};
+await drive.connectDrive("123-test.apps.googleusercontent.com");
+assert.equal(oauthConfig.scope,"https://www.googleapis.com/auth/drive.readonly");
+assert.equal(oauthConfig.include_granted_scopes,false);
+assert.throws(()=>drive.driveFolderId("https://example.com/drive/folders/"+folder));
+assert.throws(()=>drive.driveFolderId("root' or trashed=true"));
+assert.equal(drive.driveFolderId("https://drive.google.com/drive/folders/"+folder),folder);
+let calls=0;
+globalThis.fetch=async (url,options)=>{
+  calls++;url=new URL(url);assert.equal(url.origin,"https://www.googleapis.com");assert.equal(options.headers.Authorization,"Bearer test-token");assert.equal(options.credentials,"omit");
+  const q=url.searchParams.get("q")||"";
+  if(url.searchParams.get("alt")==="media")return new Response(new Uint8Array([1,2,3]));
+  if(url.pathname.endsWith("/"+folder))return Response.json({id:folder,name:"Animals",mimeType:"application/vnd.google-apps.folder"});
+  if(q.includes(folder))return Response.json({files:[{id:animal,name:"Irbis",mimeType:"application/vnd.google-apps.folder"}]});
+  if(q.includes(animal))return Response.json({files:[{id:nested,name:"color",mimeType:"application/vnd.google-apps.folder"}]});
+  if(q.includes(nested)&&!url.searchParams.has("pageToken"))return Response.json({files:[],nextPageToken:"page2"});
+  if(q.includes(nested))return Response.json({files:[{id:image,name:"lv1.png",mimeType:"image/png",size:"3"}]});
+  throw new Error("Unexpected request");
+};
+const folders=await drive.driveCatalog(folder);assert.equal(folders[0].name,"Irbis");
+const sources=await drive.listDriveSources(animal);assert.equal(sources[0].path,"color/lv1.png");
+const downloaded=await drive.downloadDriveSource(sources[0]);assert.equal(downloaded.size,3);assert.equal(downloaded.type,"image/png");
+const before=calls;await assert.rejects(drive.downloadDriveSource({...sources[0],size:String(41*1024*1024)}),/40 MB/);assert.equal(calls,before);
+globalThis.fetch=async url=>{url=new URL(url);if(url.pathname.endsWith("/"+folder))return Response.json({id:folder,name:"Irbis",mimeType:"application/vnd.google-apps.folder"});return Response.json({files:[{id:nested,name:"bw",mimeType:"application/vnd.google-apps.folder"}]});};
+const singleAnimal=await drive.driveCatalog(folder);assert.equal(singleAnimal.length,1);assert.equal(singleAnimal[0].name,"Irbis");assert.equal(singleAnimal[0].driveId,folder);
+globalThis.fetch=async()=>new Response("",{status:401});
+await assert.rejects(drive.listDriveSources(animal),/vypršelo/);
+await assert.rejects(drive.listDriveSources(animal),/vypršelo/);
+drive.disconnectDrive();delete globalThis.window;
+console.log("Source workflows verified: lossless swaps, stale drag protection, folder catalogs, directory batches, filename matching, 100-row expansion, gallery pagination, and mocked Drive OAuth / recursive pagination / download / expiry / limits.");

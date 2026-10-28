@@ -12,6 +12,7 @@ export type StudioRow = {
 export type ProjectSettings = {
   format: "A4" | "LETTER"; language: "en" | "cs"; brand: boolean;
   brandName: string; accent: string; exportTitle: string; closingText: string;
+  contentsStyle?: "list" | "gallery"; contentsTopPct?: number; contentsBottomPct?: number;
 };
 export type Project = {
   id: string; name: string; mode: "animals" | "etsy"; rows: StudioRow[];
@@ -44,6 +45,21 @@ export function makeProject(mode: Project["mode"] = "animals", name = "Irbis"): 
 }
 export const isShared = (row: StudioRow) => row.kind === "info" || row.kind === "maze";
 export const isBookend = (row: StudioRow) => ["cover","contents","closing"].includes(row.kind);
+export const exportPresets: {kind:ExportKind;withColor:boolean;label:string}[] = [
+  {kind:"coloring",withColor:false,label:"Omalovánky ČB"},
+  {kind:"tracing",withColor:false,label:"Obtahovačky ČB"},
+  {kind:"coloring",withColor:true,label:"Omalovánky s barevnými vzory"},
+  {kind:"tracing",withColor:true,label:"Obtahovačky s barevnými vzory"},
+  {kind:"complete",withColor:true,label:"Kompletní balíček"},
+];
+export function contentsCapacity(project:Project,background=false):number {
+  const height=project.settings.format==="LETTER"?792:841.89;
+  const top=background?height*(1-Math.max(0,Math.min(60,project.settings.contentsTopPct??20))/100):height-142;
+  const bottom=background?height*Math.max(0,Math.min(30,project.settings.contentsBottomPct??8))/100:55;
+  return project.settings.contentsStyle==="gallery"
+    ? 3*Math.max(1,Math.min(4,Math.floor((top-bottom)/125)))
+    : Math.max(1,Math.min(28,Math.floor((top-bottom)/21)));
+}
 export function pageLabel(pages: number): string {
   return pages === 1 ? "strana" : pages > 1 && pages < 5 ? "strany" : "stran";
 }
@@ -59,8 +75,8 @@ export function buildPlan(project: Project, kind: ExportKind, withColor: boolean
   for(const row of project.rows.filter(r=>r.enabled)) {
     if(isBookend(row)) {
       const variant = colored ? "color" : "bw";
-      const source = row.kind==="contents" ? undefined : row.sources[variant];
-      add(row,variant,source,source?undefined:row.kind as PlanEntry["generated"]);
+      const source = row.sources[variant];
+      add(row,variant,source,row.kind==="contents"?"contents":source?undefined:row.kind as PlanEntry["generated"]);
     } else if(isShared(row)) {
       const source = (colored ? row.sources.color : undefined) || row.sources.bw || row.sources.trace;
       if(source) add(row,source===row.sources.color?"color":"bw",source);
@@ -72,7 +88,7 @@ export function buildPlan(project: Project, kind: ExportKind, withColor: boolean
     }
   }
   const listed = entries.filter(e=>!isBookend(project.rows.find(r=>r.id===e.rowId)!));
-  for(const entry of entries) if(entry.generated==="contents") entry.count = Math.max(1,Math.ceil(listed.length/28));
+  for(const entry of entries) if(entry.generated==="contents") entry.count = Math.max(1,Math.ceil(listed.length/contentsCapacity(project,!!entry.source)));
   let start = 1;
   for(const entry of entries) {entry.start=start; start+=entry.count;}
   return entries;
@@ -98,20 +114,40 @@ export function normalize(value: string) {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
 }
 export function guessAssignment(name: string, project: Project, index: number): {rowId:string;variant:Variant;matched:boolean} {
-  const text=normalize(name);
-  const variant:Variant = /\b(trace|tracing|obtahovacka|obtahovacky|obtah|dotted)\b/.test(text) ? "trace"
-    : /\b(color|colour|colored|colourful|barevny|barevna|barevne|barev|vzor|reference|rgb)\b/.test(text) ? "color" : "bw";
-  let row:StudioRow|undefined;
-  if(/\b(cover|titulka|titulni)\b/.test(text)) row=project.rows.find(r=>r.kind==="cover");
-  else if(/\b(closing|zaver|zaverecna|thank)\b/.test(text)) row=project.rows.find(r=>r.kind==="closing");
-  else if(/\b(maze|bludiste)\b/.test(text)) row=project.rows.find(r=>r.kind==="maze");
-  else {
-    const number = text.match(/(?:level|lvl|uroven|story|pribeh|card|karta|list|worksheet|info)\s*(\d+)/)?.[1] || text.match(/\b(\d{1,3})\b/)?.[1];
-    const kind:RowKind = /\b(story|pribeh)\b/.test(text) ? "story" : /\b(card|karta|info|fact)\b/.test(text) ? "info" : "coloring";
-    if(number) row=project.rows.filter(r=>r.kind===kind)[Number(number)-1];
-    if(!row) row=project.rows.find(r=>!isBookend(r)&&text.includes(normalize(r.title)));
-  }
+  const match=classifySource(name,project.mode),text=normalize(name);
+  const variant=match.variant;
+  let row=match.kind?project.rows.filter(r=>r.kind===match.kind)[(match.number||1)-1]:undefined;
+  if(!row) row=project.rows.find(r=>!isBookend(r)&&text.includes(normalize(r.title)));
   const matched=!!row;
   row ||= project.rows.filter(r=>!isBookend(r))[index % Math.max(1,project.rows.length-3)];
   return {rowId:row?.id || project.rows[0].id,variant,matched};
+}
+export function classifySource(path:string,mode:Project["mode"]):{kind?:RowKind;number?:number;variant:Variant} {
+  const parts=path.replace(/\\/g,"/").split("/"),base=normalize((parts.pop()||"").replace(/\.[^.]+$/,"")).replace(/([a-z])(\d)/g,"$1 $2"),all=normalize(parts.join(" ")+" "+base);
+  const variant:Variant=/\b(?:trac(?:e|ing)|obtah\w*|dotted|nachspur\w*)\b/.test(all)?"trace":/\b(?:colou?r(?!ing)\w*|barev\w*|vzor\w*|sample|reference|pattern|rgb|farb\w*)\b/.test(all)?"color":"bw";
+  const parse=(text:string):{kind:RowKind;number?:number}|undefined=>{
+    if(/\b(?:cover|title|titul\w*)\b/.test(text))return {kind:"cover"};
+    if(/\b(?:obsah|contents?|toc)\b/.test(text))return {kind:"contents"};
+    if(/\b(?:closing|zaver\w*|thank\w*|outro)\b/.test(text))return {kind:"closing"};
+    if(/\b(?:maze|bludist\w*|labyrint\w*)\b/.test(text))return {kind:"maze"};
+    const kind:RowKind=/\b(?:stor(?:y|ies)|pribeh\w*)\b/.test(text)?"story":/\b(?:cards?|kart\w*|info\w*|facts?)\b/.test(text)?"info":"coloring";
+    const number=Number(text.match(/\b(?:level|lvl|lv|uroven|story|stories|pribeh\w*|card|karta|list|worksheet|info)\s*0*(\d{1,3})\b/)?.[1]||text.match(/\b0*([1-9]\d{0,2})\b/)?.[1]);
+    if(number>0&&number<=997)return {kind:mode==="etsy"&&kind!=="info"&&kind!=="story"?"coloring":kind,number};
+    return undefined;
+  };
+  const explicit=/\b(?:cover|title|titul\w*|obsah|contents?|toc|closing|zaver\w*|thank\w*|outro|maze|bludist\w*|labyrint\w*|level|lvl|lv|uroven|stor(?:y|ies)|pribeh\w*|cards?|kart\w*|info\w*|facts?|worksheet|list)\b/.test(base);
+  return {...((explicit||!parts.length?parse(base):undefined)||parse(all)),variant};
+}
+export type SourceTarget={rowId:string;variant:Variant};
+export function transferSource(project:Project,from:SourceTarget,to:SourceTarget,assetId:string):Project {
+  if(from.rowId===to.rowId&&from.variant===to.variant)return project;
+  const a=project.rows.find(r=>r.id===from.rowId),b=project.rows.find(r=>r.id===to.rowId),source=a?.sources[from.variant];
+  if(!a||!b||!source||source.id!==assetId||((isBookend(a)||isShared(a))&&from.variant==="trace")||((isBookend(b)||isShared(b))&&to.variant==="trace"))return project;
+  const replacement=b.sources[to.variant];
+  return {...project,rows:project.rows.map(row=>{
+    const sources={...row.sources};
+    if(row.id===a.id){if(replacement)sources[from.variant]=replacement;else delete sources[from.variant];}
+    if(row.id===b.id)sources[to.variant]=source;
+    return row.id===a.id||row.id===b.id?{...row,sources}:row;
+  })};
 }

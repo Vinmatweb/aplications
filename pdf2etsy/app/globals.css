@@ -616,3 +616,34 @@ body{font-size:17px}
 .tableToolbar{gap:20px;min-height:60px}
 .tableTabs{flex:1;overflow-y:hidden}
 .filterButton{flex-shrink:0}
+
+/* Workflow improvements from the alternate PDF builder. */
+.sourceCatalog{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:14px 0 4px;padding:16px 18px;background:#f4f6ef;border:1px solid var(--border);border-radius:8px}
+.sourceCatalog>p{font-size:14px;line-height:1.7;color:#627157;flex:1;min-width:240px}
+.sourceCatalog>label{display:flex;align-items:center;gap:10px;font-size:14px;color:#627157;flex:1;min-width:230px}
+.sourceCatalog select{flex:1;min-width:0;max-width:420px;font:inherit;font-size:16px;border:1px solid var(--border);border-radius:6px;padding:10px;background:white;color:var(--ink)}
+.tableInteractionHint{font-size:14px;color:#627157;line-height:1.7;margin:0 0 13px}
+.tableInteractionHint kbd{font-family:inherit;font-weight:600;font-size:13px;background:white;border:1px solid #d5dccd;border-radius:4px;padding:1px 5px}
+.sourceSlot.selectedSlot,.sourceSlot.selectedSlot.filled{outline:2px solid #976a42;outline-offset:2px}
+.sourceSlot:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.assetMain[draggable=true]{cursor:grab}
+.assetMain[draggable=true]:active{cursor:grabbing}
+.allExports{width:100%;margin-top:12px;justify-content:center;white-space:normal;text-align:center;line-height:1.5}
+.driveSetup{font-size:14px;line-height:1.8;margin:16px 0;padding:12px 14px;border:1px solid var(--border);border-radius:7px;background:#fafbf7}
+.driveSetup summary{cursor:pointer;font-size:16px;color:#405732}
+.driveSetup ol{padding-left:22px;margin:10px 0}
+.driveSetup code{overflow-wrap:anywhere;font-size:13px}
+.driveSetup a{display:inline-flex;align-items:center;gap:6px;color:var(--primary)}
+.driveConnectActions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.driveWorkspace{border-top:1px solid var(--border);padding-top:20px;margin-top:20px}
+.driveFileList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;max-height:330px;overflow:auto}
+.driveFileList>button{display:flex;align-items:center;gap:12px;text-align:left;border:1px solid var(--border);background:white;padding:13px;border-radius:7px;min-width:0;color:var(--ink)}
+.driveFileList>button:hover{border-color:var(--primary);background:#fafbf7}
+.driveFileList>button>span{flex:1;min-width:0}
+.driveFileList strong{display:block;font-size:15px;font-weight:600;overflow-wrap:anywhere}
+.driveFileList small{display:block;font-size:13px;color:#627157;overflow-wrap:anywhere;margin-top:4px}
+.readyFileList{width:100%;display:grid;gap:18px}
+.readyFileList>div{border:1px solid var(--border);border-radius:8px;padding:20px 14px}
+.readyFileList h3{overflow-wrap:anywhere;font-size:18px;margin:0}
+.readyFileList p{font-size:14px;margin:8px 0 14px;color:#627157}
+@media(max-width:760px){.sourceCatalog{padding:14px;gap:12px}.sourceCatalog>label{flex-basis:100%;flex-wrap:wrap}.sourceCatalog select{flex-basis:100%;max-width:100%}.sourceCatalog>.button{width:100%;justify-content:center}.sourceCatalog>p{min-width:0}.tableInteractionHint{font-size:13px}.driveFileList{grid-template-columns:1fr}.driveConnectActions>.button{width:100%;justify-content:center}}

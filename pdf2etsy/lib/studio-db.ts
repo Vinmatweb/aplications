@@ -71,5 +71,7 @@ export async function restoreProject(file:File):Promise<Project> {
   }
   project.id=uid();project.updatedAt=Date.now();
   project.settings.accent=/^#[0-9a-fA-F]{6}$/.test(project.settings.accent)?project.settings.accent:"#75414b";
+  project.settings.contentsStyle=project.settings.contentsStyle==="gallery"?"gallery":"list";
+  for(const [key,fallback,max] of [["contentsTopPct",20,60],["contentsBottomPct",8,30]] as const){const value=Number(project.settings[key]);project.settings[key]=Number.isFinite(value)?Math.max(0,Math.min(max,value)):fallback;}
   return project;
 }

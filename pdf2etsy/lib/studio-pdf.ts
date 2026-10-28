@@ -1,6 +1,6 @@
 import { PDFDocument, PDFFont, PDFPage, rgb, degrees } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
-import { ExportKind, PlanEntry, Project, buildPlan, isBookend, normalize } from "./studio-model";
+import { Asset, ExportKind, PlanEntry, Project, buildPlan, contentsCapacity, isBookend, normalize } from "./studio-model";
 import { publicAssetUrl } from "./studio-runtime";
 
 let fontBytes:Promise<[ArrayBuffer,ArrayBuffer]>|undefined;
@@ -63,15 +63,46 @@ function cover(page:PDFPage,project:Project,kind:ExportKind,colored:boolean,regu
   drawPaw(page,w/2,base+47,98,accent);
   page.drawText(cs?"Poznávej. Tvoř. Objevuj.":"Learn. Create. Explore.",{x:54,y:78,size:11,font:regular,color:accent});
 }
-function contents(page:PDFPage,project:Project,items:PlanEntry[],index:number,total:number,regular:PDFFont,bold:PDFFont,colored:boolean) {
+async function contents(document:PDFDocument,page:PDFPage,project:Project,items:PlanEntry[],index:number,total:number,regular:PDFFont,bold:PDFFont,colored:boolean,background?:Asset) {
   const {width:w,height:h}=page.getSize(),cs=project.settings.language==="cs";
   const accent=colored?hexColor(project.settings.accent):dark;
-  page.drawText(cs?"Co je uvnitř":"What's inside",{x:44,y:h-74,size:29,font:bold,color:dark});
-  page.drawText(fitText(project.settings.exportTitle||project.name,regular,11,w-90),{x:45,y:h-100,size:11,font:regular,color:muted});
-  if(total>1)page.drawText(String(index+1)+" / "+total,{x:w-80,y:h-100,size:10,font:regular,color:muted});
-  page.drawLine({start:{x:44,y:h-122},end:{x:w-44,y:h-122},thickness:1,color:accent});
-  let y=h-153;
-  for(const item of items.slice(index*28,(index+1)*28)) {
+  if(background){
+    const bytes=await background.blob.arrayBuffer();
+    if(background.mime==="application/pdf"){
+      const input=await PDFDocument.load(bytes),source=input.getPage(0),crop=source.getCropBox();
+      const image=await document.embedPage(source,{left:crop.x,bottom:crop.y,right:crop.x+crop.width,top:crop.y+crop.height});
+      const rotation=((source.getRotation().angle%360)+360)%360,vw=rotation%180?image.height:image.width,vh=rotation%180?image.width:image.height,scale=Math.min(w/vw,h/vh);
+      page.drawPage(image,{x:(w-vw*scale)/2+(rotation===180||rotation===270?vw*scale:0),y:(h-vh*scale)/2+(rotation===90||rotation===180?vh*scale:0),width:image.width*scale,height:image.height*scale,rotate:degrees(-rotation)});
+    }else{const image=background.mime==="image/jpeg"?await document.embedJpg(bytes):await document.embedPng(bytes),scale=Math.min(w/image.width,h/image.height);page.drawImage(image,{x:(w-image.width*scale)/2,y:(h-image.height*scale)/2,width:image.width*scale,height:image.height*scale});}
+  }else{
+    page.drawText(cs?"Co je uvnitř":"What's inside",{x:44,y:h-74,size:29,font:bold,color:dark});
+    page.drawText(fitText(project.settings.exportTitle||project.name,regular,11,w-90),{x:45,y:h-100,size:11,font:regular,color:muted});
+    if(total>1)page.drawText(String(index+1)+" / "+total,{x:w-80,y:h-100,size:10,font:regular,color:muted});
+    page.drawLine({start:{x:44,y:h-122},end:{x:w-44,y:h-122},thickness:1,color:accent});
+  }
+  const capacity=contentsCapacity(project,!!background),entries=items.slice(index*capacity,(index+1)*capacity);
+  const top=background?h*(1-(project.settings.contentsTopPct??20)/100):h-142,bottom=background?h*(project.settings.contentsBottomPct??8)/100:55;
+  if(project.settings.contentsStyle==="gallery"){
+    const gap=12,cellW=(w-88-gap*2)/3,cellH=(top-bottom)/(capacity/3);
+    for(let i=0;i<entries.length;i++){
+      const item=entries[i],x=44+(i%3)*(cellW+gap),y=top-Math.floor(i/3)*cellH;
+      const thumbHeight=cellH-48;
+      let drawn=false;
+      if(item.source?.thumbnail){
+        try{const image=item.source.thumbnail.startsWith("data:image/png")?await document.embedPng(item.source.thumbnail):await document.embedJpg(item.source.thumbnail),scale=Math.min((cellW-8)/image.width,thumbHeight/image.height);page.drawImage(image,{x:x+(cellW-image.width*scale)/2,y:y-thumbHeight+(thumbHeight-image.height*scale)/2,width:image.width*scale,height:image.height*scale});drawn=true;}
+        catch{/* A missing thumbnail does not prevent the full-resolution source export. */}
+      }
+      if(!drawn){const label=item.source?.mime==="application/pdf"?"PDF":cs?"Pracovní list":"Worksheet";page.drawText(label,{x:x+(cellW-bold.widthOfTextAtSize(label,12))/2,y:y-thumbHeight/2,size:12,font:bold,color:muted});}
+      page.drawRectangle({x,y:y-thumbHeight,width:cellW,height:thumbHeight,borderColor:line,borderWidth:.4});
+      page.drawText(fitText(item.title,bold,9,cellW),{x,y:y-thumbHeight-13,size:9,font:bold,color:dark});
+      if(item.subtitle)page.drawText(fitText(item.subtitle,regular,8,cellW),{x,y:y-thumbHeight-25,size:8,font:regular,color:muted});
+      const number=(cs?"str. ":"p. ")+item.start+(item.count>1?"–"+(item.start+item.count-1):"");
+      page.drawText(number,{x,y:y-thumbHeight-37,size:8,font:regular,color:accent});
+    }
+    return;
+  }
+  let y=top-11;
+  for(const item of entries) {
     const title=item.title+(item.subtitle?" · "+item.subtitle:"");
     const number=item.start+(item.count>1?" - "+(item.start+item.count-1):"");
     page.drawText(fitText(title,regular,9.5,w-145),{x:45,y,size:9.5,font:regular,color:dark});
@@ -110,7 +141,7 @@ export async function generatePdf(project:Project,kind:ExportKind,withColor:bool
       for(let i=0;i<entry.count;i++) {
         const page=document.addPage(dimensions);
         if(entry.generated==="cover")cover(page,project,kind,colored,regular,bold);
-        if(entry.generated==="contents")contents(page,project,activity,i,entry.count,regular,bold,colored);
+        if(entry.generated==="contents")await contents(document,page,project,activity,i,entry.count,regular,bold,colored,entry.source);
         if(entry.generated==="closing")closing(page,project,regular,bold,colored);
         footer(page,project,regular,entry.start+i,colored?hexColor(project.settings.accent):dark,true);
         done++;onProgress?.(done,total);
