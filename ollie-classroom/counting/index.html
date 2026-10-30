@@ -1,15 +1,14 @@
 <!doctype html>
 <html lang="cs">
 <head>
-<script data-goatcounter="https://vinmat.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <meta charset="utf-8">
+<script data-goatcounter="https://vinmat.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Počítání">
-<title>Ollie's Numbers</title>
 <meta name="description" content="Počítání a procvičování příkladů s Olliem v češtině i angličtině.">
-</head>
-<body>
+
+<title>Ollie's Numbers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Baloo+2:wght@600;800&display=swap">
 <style>
@@ -118,6 +117,8 @@ button.chip{cursor:pointer}
 .note{font-size:.9rem;color:var(--muted);line-height:1.45}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <div class="bar" id="bar"></div>
@@ -453,5 +454,7 @@ document.documentElement.lang=S.lang;
 renderPad();cur=generate();renderAll();
 </script>
 
+<a href="../" class="home-pill" aria-label="Zpět na všechny hry">&#8962; Hry</a>
+<style>.home-pill{position:fixed;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:50;background:rgba(36,73,60,.88);color:#f4f1e4;font:700 15px/1 "Baloo 2","Trebuchet MS",system-ui,sans-serif;padding:9px 14px;border-radius:999px;text-decoration:none;box-shadow:0 3px 0 rgba(0,0,0,.2)}</style>
 </body>
 </html>

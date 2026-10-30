@@ -1,13 +1,10 @@
-# Ollie’s Classroom
+# Hry s Olliem
 
-English practice activities with Ollie the owl for young learners.
+Sada tří dětských aktivit. Každá hra ukládá svůj postup do místního úložiště prohlížeče.
 
-## Activities
+- **Angličtina · mluvení:** https://vinmat.eu/aplications/ollie-classroom/anglictina/
+- **Počítání:** https://vinmat.eu/aplications/ollie-classroom/pocitani/ (původní adresa `/counting/` zůstává funkční)
+- **Angličtina · čtení:** https://vinmat.eu/aplications/ollie-classroom/cteni/
+- **Kartičky k tisku (PDF):** https://vinmat.eu/aplications/ollie-classroom/cteni/Learn_to_Read_karticky.pdf
 
-- **Classroom English** — classroom vocabulary, colours, numbers, old and new objects, and the alphabet.  
-  https://vinmat.eu/aplications/ollie-classroom/
-
-- **Ollie’s Counting** — addition and subtraction practice in Czech or English.  
-  https://vinmat.eu/aplications/ollie-classroom/counting/
-
-Each activity is a standalone page. Settings and progress are stored in the current browser.
+Všechny stránky mají tlačítko pro návrat na hlavní rozcestník.
